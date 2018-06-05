@@ -20,6 +20,7 @@ public class Character : MonoBehaviour {
     private Collider2D _collider;
     public Text WeaponNameGui;
     public Text WeaponAmmoGui;
+    public WeaponTarget WeaponTarget;
    
     FiniteStateMachine<Character> _stateMachine;
     CharacterJumping _JumpingState = new CharacterJumping();
@@ -76,7 +77,9 @@ public class Character : MonoBehaviour {
         currentWeapon = currentWeaponObject.GetComponent<Weapon>();
         
         currentWeapon.transform.position = transform.position;
-        currentWeapon.holder = this;
+        currentWeapon.IgnoreCollider = _collider;
+        currentWeapon.IgnoreTarget = WeaponTarget;
+        currentWeapon.Holder = this;
 
     }
     void Update()
@@ -94,8 +97,8 @@ public class Character : MonoBehaviour {
         }
         else
         {
-            WeaponNameGui.text = currentWeapon.WeaponName;
-            WeaponAmmoGui.text = currentWeapon.CurrentAmmo.ToString() + "/" + currentWeapon.MaxAmmo.ToString();
+            WeaponNameGui.text = currentWeapon.Name;
+            WeaponAmmoGui.text = currentWeapon.Ammo.ToString() + "/" + currentWeapon.MaxAmmo.ToString();
         }
     }
     public void Move()
@@ -106,6 +109,10 @@ public class Character : MonoBehaviour {
 
     bool CheckIsGrounded()
     {
+		if(Rigidbody.velocity.y > 0)
+		{
+			return false;
+		}
         int groundCollisionMask = LayerMask.GetMask("Ground");
         float maxGroundDistance = 0.1f;
         float rayDistance = _collider.bounds.extents.y + maxGroundDistance;
@@ -118,7 +125,6 @@ public class Character : MonoBehaviour {
         Vector2 pos = transform.position;
         foreach (float xOrigin in xOrigins)
         {
-            Ray2D ray = new Ray2D(pos + new Vector2(xOrigin, 0), Vector2.down);
             Vector2 origin = new Vector2(pos.x + xOrigin, pos.y);
             var hit = Physics2D.Raycast(origin, Vector2.down, rayDistance, groundCollisionMask);
             if(hit.collider != null)

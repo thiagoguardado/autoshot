@@ -28,7 +28,6 @@ public class TargetFinder : MonoBehaviour {
             {
                 continue;
             }
-            float distance = Vector2.Distance(transform.position, character.transform.position);
             Vector2 direction = character.transform.position - transform.position;
             var hit = Physics2D.Raycast(transform.position, direction, direction.magnitude, layerMask);
             if(hit.collider == null)

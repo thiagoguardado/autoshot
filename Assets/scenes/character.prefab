@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 50620696102849454}
   - component: {fileID: 114863765430879918}
   - component: {fileID: 58463786167478246}
+  - component: {fileID: 114645861002896938}
   m_Layer: 9
   m_Name: character
   m_TagString: Character
@@ -179,7 +180,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &114041523065898198
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -229,6 +229,17 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Pistol
+--- !u!114 &114645861002896938
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1041547604849916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3636f8765e54a86478e7507610718be5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114687175491453212
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -276,10 +287,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Animator: {fileID: 95696887765805910}
-  target: {fileID: 0}
+  target: {fileID: 114863765430879918}
   currentWeapon: {fileID: 0}
   walkDirection: {x: 0, y: 0}
-  speed: 4
+  speed: 2
   input_jumping: 0
   StunTime: 1
   StunDirection: {x: 1, y: 0}
@@ -287,7 +298,8 @@ MonoBehaviour:
   Rigidbody: {fileID: 0}
   WeaponNameGui: {fileID: 114077040280557508}
   WeaponAmmoGui: {fileID: 114942852016508008}
-  JumpForce: 2
+  WeaponTarget: {fileID: 114645861002896938}
+  JumpForce: 4
 --- !u!114 &114942852016508008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -334,7 +346,6 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
@@ -357,7 +368,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 4a52220109497794e8560a81525dbdf5, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
