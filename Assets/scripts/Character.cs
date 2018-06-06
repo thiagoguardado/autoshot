@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using FiniteStateMachines;
 using UnityEngine.UI;
+using System;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Collider2D))]
@@ -10,9 +11,13 @@ public class Character : MonoBehaviour {
     public Animator Animator;
     public Character target;
     public Weapon currentWeapon;
+    private Vector2 previousWalkDirection = Vector2.zero;
     public Vector2 walkDirection;
     public float speed = 3;
     public bool input_jumping = false;
+    public bool canWallJump = false;
+    public float testWallRaycastDistance = 1f;
+    public Vector2 wallJumpForce = new Vector2(2,10);
     public float StunTime = 1.0f;
     public Vector2 StunDirection = new Vector2(1, 0);
     public float StunForce = 3.0f;
@@ -23,9 +28,9 @@ public class Character : MonoBehaviour {
     public WeaponTarget WeaponTarget;
 
     FiniteStateMachine<Character> _stateMachine;
-    CharacterJumping _JumpingState = new CharacterJumping();
-    CharacterGrounded _GroundedState = new CharacterGrounded();
-    CharacterStunned _StunnedState = new CharacterStunned();
+    CharacterJumping _JumpingState;
+    CharacterGrounded _GroundedState;
+    CharacterStunned _StunnedState;
 
     public enum EventTriggers
     {
@@ -36,10 +41,16 @@ public class Character : MonoBehaviour {
 
 
     public float JumpForce = 1.0f;
+
+
     void Awake()
     {
         Rigidbody = GetComponent<Rigidbody2D>();
         _collider = GetComponent<Collider2D>();
+
+        _JumpingState = new CharacterJumping(canWallJump);
+        _GroundedState = new CharacterGrounded();
+        _StunnedState = new CharacterStunned();
 
         _GroundedState.AddCondition(() => input_jumping, _JumpingState);
         _GroundedState.AddTrigger((int)EventTriggers.Stunned, _StunnedState);
@@ -49,12 +60,15 @@ public class Character : MonoBehaviour {
         _JumpingState.AddTrigger((int)EventTriggers.Stunned, _StunnedState);
         _JumpingState.AddTrigger((int)EventTriggers.Springed, _JumpingState);
 
+
         _StunnedState.AddTrigger((int)EventTriggers.EndState, _GroundedState);
         _StunnedState.AddTrigger((int)EventTriggers.Stunned, _StunnedState);
 
         _stateMachine = new FiniteStateMachine<Character>(this);
         _stateMachine.SetState(_GroundedState);
     }
+
+
 
     public void Stun(Vector2 direction, float force, float time)
     {
@@ -105,11 +119,27 @@ public class Character : MonoBehaviour {
         }
     }
 
+
+    public void StopMoving() {
+
+        Rigidbody.velocity -= previousWalkDirection;
+        previousWalkDirection = Vector2.zero;
+
+    }
+
     public void Move()
     {
+
         //  Rigidbody.AddForce(walkDirection * speed, ForceMode2D.Force);
         Rigidbody.velocity = new Vector2(walkDirection.x * speed, Rigidbody.velocity.y);
         // Rigidbody.MovePosition(Rigidbody.position + new Vector2(walkDirection.x * speed * Time.deltaTime, 0));
+
+        
+        //Rigidbody.velocity -= previousWalkDirection;
+        //Vector2 walkingVelocity = new Vector2(walkDirection.x * speed, 0);
+        //Rigidbody.velocity += walkingVelocity;
+        //previousWalkDirection = walkingVelocity;
+        
     }
 
     public void Spring(Vector2 force)
@@ -125,7 +155,12 @@ public class Character : MonoBehaviour {
         _stateMachine.TriggerEvent((int)EventTriggers.Springed);
     }
 
+    public void WallJump(float directionx)
+    {
 
+        Rigidbody.AddForce(Vector2.Scale(new Vector2(directionx,1), wallJumpForce), ForceMode2D.Impulse);
+
+    }
 
     bool CheckIsGrounded()
     {
