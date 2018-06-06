@@ -13,6 +13,7 @@ public class CharacterJumping : State<Character>
         Vector2 velocity = Agent.Rigidbody.velocity;
         velocity.y += Agent.JumpForce;
         Agent.Rigidbody.velocity = velocity;
+
     }
 
     public override void Update()

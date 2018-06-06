@@ -21,7 +21,7 @@ public class Character : MonoBehaviour {
     public Text WeaponNameGui;
     public Text WeaponAmmoGui;
     public WeaponTarget WeaponTarget;
-   
+
     FiniteStateMachine<Character> _stateMachine;
     CharacterJumping _JumpingState = new CharacterJumping();
     CharacterGrounded _GroundedState = new CharacterGrounded();
@@ -30,10 +30,11 @@ public class Character : MonoBehaviour {
     public enum EventTriggers
     {
         EndState,
-        Stunned
+        Stunned,
+        Springed
     }
 
-    
+
     public float JumpForce = 1.0f;
     void Awake()
     {
@@ -42,9 +43,11 @@ public class Character : MonoBehaviour {
 
         _GroundedState.AddCondition(() => input_jumping, _JumpingState);
         _GroundedState.AddTrigger((int)EventTriggers.Stunned, _StunnedState);
+        _GroundedState.AddTrigger((int)EventTriggers.Springed, _JumpingState);
 
         _JumpingState.AddCondition(CheckIsGrounded, _GroundedState);
         _JumpingState.AddTrigger((int)EventTriggers.Stunned, _StunnedState);
+        _JumpingState.AddTrigger((int)EventTriggers.Springed, _JumpingState);
 
         _StunnedState.AddTrigger((int)EventTriggers.EndState, _GroundedState);
         _StunnedState.AddTrigger((int)EventTriggers.Stunned, _StunnedState);
@@ -52,30 +55,30 @@ public class Character : MonoBehaviour {
         _stateMachine = new FiniteStateMachine<Character>(this);
         _stateMachine.SetState(_GroundedState);
     }
-    
+
     public void Stun(Vector2 direction, float force, float time)
     {
         StunDirection = direction;
         StunForce = force;
         StunTime = time;
         _stateMachine.TriggerEvent((int)EventTriggers.Stunned);
-        
+
     }
     public void StateEnded()
     {
         _stateMachine.TriggerEvent((int)EventTriggers.EndState);
-        
+
     }
 
     void PickupWeapon(GameObject prefab)
     {
-        if(currentWeapon != null)
+        if (currentWeapon != null)
         {
             currentWeapon.DestroyWeapon();
         }
         var currentWeaponObject = Instantiate(prefab);
         currentWeapon = currentWeaponObject.GetComponent<Weapon>();
-        
+
         currentWeapon.transform.position = transform.position;
         currentWeapon.IgnoreCollider = _collider;
         currentWeapon.IgnoreTarget = WeaponTarget;
@@ -90,7 +93,7 @@ public class Character : MonoBehaviour {
 
     void UpdateWeaponGui()
     {
-        if(currentWeapon == null)
+        if (currentWeapon == null)
         {
             WeaponNameGui.text = "";
             WeaponAmmoGui.text = "";
@@ -101,11 +104,28 @@ public class Character : MonoBehaviour {
             WeaponAmmoGui.text = currentWeapon.Ammo.ToString() + "/" + currentWeapon.MaxAmmo.ToString();
         }
     }
+
     public void Move()
     {
-     //   Rigidbody.AddForce(walkDirection * speed, ForceMode2D.Force);
+        //  Rigidbody.AddForce(walkDirection * speed, ForceMode2D.Force);
         Rigidbody.velocity = new Vector2(walkDirection.x * speed, Rigidbody.velocity.y);
+        // Rigidbody.MovePosition(Rigidbody.position + new Vector2(walkDirection.x * speed * Time.deltaTime, 0));
     }
+
+    public void Spring(Vector2 force)
+    {
+
+        // remove velocity component in force direction and add force
+        Vector2 vel = Rigidbody.velocity;
+        Vector2 reducingComponent = Vector2.Dot(force.normalized, vel) * force.normalized;
+        vel -= reducingComponent;
+        Rigidbody.velocity = vel;
+        Rigidbody.AddForce(force, ForceMode2D.Impulse);
+
+        _stateMachine.TriggerEvent((int)EventTriggers.Springed);
+    }
+
+
 
     bool CheckIsGrounded()
     {
