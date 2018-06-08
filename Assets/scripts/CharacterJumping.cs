@@ -4,34 +4,43 @@ using UnityEngine;
 using FiniteStateMachines;
 public class CharacterJumping : State<Character>
 {
-    public string animationUp;
-    public string animationDown;
+    public int _JumpingAnimation = Animator.StringToHash("jump");
+    public int _FallingAnimation = Animator.StringToHash("fall");
+    public bool _StoppedJumping = false;
     public override void Enter()
     {
         base.Enter();
-        //Agent.Rigidbody.AddForce(Vector2.up * Agent.JumpForce, ForceMode2D.Impulse);
+        
         Vector2 velocity = Agent.Rigidbody.velocity;
-        velocity.y += Agent.JumpForce;
+        velocity.y += Agent.JumpForceMax;
         Agent.Rigidbody.velocity = velocity;
+        _StoppedJumping = false;
     }
 
     public override void Update()
     {
         base.Update();
-        if(Agent.input_jumping)
+        if(!_StoppedJumping)
         {
-            Agent.Rigidbody.AddForce(Vector2.up * 5, ForceMode2D.Force);
+            if(!Agent.InputIsJumping)
+            {
+                Vector2 velocity = Agent.Rigidbody.velocity;
+                velocity.y = Mathf.Min(Agent.JumpForceMin, velocity.y);
+                Agent.Rigidbody.velocity = velocity;
+                _StoppedJumping = true;
+            }
         }
         
         Agent.Move();
 
         if(Agent.Rigidbody.velocity.y > 0)
         {
-            Agent.Animator.Play("jump");
+            Agent.Animator.Play(_JumpingAnimation);
         }
         else
         {
-            Agent.Animator.Play("fall");
+            Agent.Animator.Play(_FallingAnimation);
         }
+
     }
 }

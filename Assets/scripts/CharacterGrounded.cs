@@ -13,7 +13,7 @@ public class CharacterGrounded :  State<Character>
     {
         base.Update();
         Agent.Move();
-        if(Agent.walkDirection.x != 0)
+        if(Agent.InputWalkDirection.x != 0)
         {
             Agent.Animator.Play("walk");
         }

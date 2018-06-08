@@ -4,16 +4,14 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-   
-
     [HideInInspector]
     public Collider2D IgnoreCollider = null;
 
     [HideInInspector]
-    public WeaponTarget IgnoreTarget = null;
+    public GameObject IgnoreTarget = null;
 
-    private List<WeaponTarget> _Targets = new List<WeaponTarget>();
-    private WeaponTarget _ClosestTarget = null;
+    private List<GameObject> _Targets = new List<GameObject>();
+    private GameObject _ClosestTarget = null;
     
     [Header("Configuration")]
     public string Name = "No Name";
@@ -88,8 +86,8 @@ public class Weapon : MonoBehaviour
                 {
                     Shot();
                     _CurrentCooldown = Cooldown;
-                    Ammo--;
                 }
+                Ammo--;
             }
         }
     }
@@ -109,6 +107,11 @@ public class Weapon : MonoBehaviour
             }
         }
     }
+    bool CheckIsTarget(GameObject target)
+    {
+        return target.GetComponent<IWeaponTarget>() != null;
+    }
+
     void FindTargets()
     {
         _Targets.Clear();
@@ -118,9 +121,9 @@ public class Weapon : MonoBehaviour
 
         foreach (Collider2D collider in colliders)
         {
+            var target = collider.gameObject;
 
-            WeaponTarget target = collider.GetComponent<WeaponTarget>();
-            if (target == null)
+            if (!CheckIsTarget(target))
             {
                 continue;
             }
@@ -138,7 +141,7 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    bool CheckOnSight(WeaponTarget target)
+    bool CheckOnSight(GameObject target)
     {
         int groundLayerMask = LayerMask.GetMask("Ground");
         Vector2 distanceVector = target.transform.position - transform.position;

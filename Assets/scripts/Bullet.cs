@@ -9,36 +9,27 @@ public class Bullet : MonoBehaviour {
     Rigidbody2D _RigidBody;
     private float _Force = 10;
     private float _Time = 0.1f;
+
     void Awake()
     {
         _RigidBody = GetComponent<Rigidbody2D>();
     }
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
-
+   
     void OnCollisionEnter2D(Collision2D col)
     {
-        
         if(col.collider == IgnoreCollider)
         {
             return;
         }
 
-        if(col.collider.tag == "Character")
+        var target = col.gameObject.GetComponent<IWeaponTarget>();
+        if(target != null)
         {
-            var character = col.collider.GetComponent<Character>();
-            if(character != null)
-            {
-                character.Stun(_RigidBody.velocity.normalized, _Force, _Time);
-            }
+            HitInfo hit = new HitInfo();
+            hit.StunDirection = _RigidBody.velocity;
+            hit.StunForce = _Force;
+            hit.StunTime = _Time;
+            target.ApplyHit(hit);
         }
 
         Destroy(gameObject);

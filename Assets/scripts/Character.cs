@@ -1,28 +1,38 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using FiniteStateMachines;
-using UnityEngine.UI;
+using System;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Collider2D))]
-public class Character : MonoBehaviour {
+public class Character : MonoBehaviour, IWeaponTarget {
+
     public Animator Animator;
-    public Character target;
-    public Weapon currentWeapon;
-    public Vector2 walkDirection;
-    public float speed = 3;
-    public bool input_jumping = false;
-    public float StunTime = 1.0f;
-    public Vector2 StunDirection = new Vector2(1, 0);
-    public float StunForce = 3.0f;
+    public float WalkingMaxSpeed = 3;
+    public float WalkingAcceleration = 3;
+    public float ReactivityPercent = 0.5f;
+    public float JumpForceMax = 6;
+    public float JumpForceMin = 4;
+
+    public Vector2 _MovementDirection;
+
+    [HideInInspector]
+    public Weapon CurrentWeapon { get; private set; }
+
+    [HideInInspector]
+    public Vector2 InputWalkDirection;
+
+    [HideInInspector]
+    public bool InputIsJumping;
+
+    [HideInInspector]
+    public HitInfo HitInfo { get; private set; }
+
+    [HideInInspector]
     public Rigidbody2D Rigidbody;
-    private Collider2D _collider;
-    public Text WeaponNameGui;
-    public Text WeaponAmmoGui;
-    public WeaponTarget WeaponTarget;
-   
-    FiniteStateMachine<Character> _stateMachine;
+
+    private Collider2D _Collider;
+
+    FiniteStateMachine<Character> _StateMachine;
     CharacterJumping _JumpingState = new CharacterJumping();
     CharacterGrounded _GroundedState = new CharacterGrounded();
     CharacterStunned _StunnedState = new CharacterStunned();
@@ -32,15 +42,13 @@ public class Character : MonoBehaviour {
         EndState,
         Stunned
     }
-
     
-    public float JumpForce = 1.0f;
     void Awake()
     {
         Rigidbody = GetComponent<Rigidbody2D>();
-        _collider = GetComponent<Collider2D>();
+        _Collider = GetComponent<Collider2D>();
 
-        _GroundedState.AddCondition(() => input_jumping, _JumpingState);
+        _GroundedState.AddCondition(() => InputIsJumping, _JumpingState);
         _GroundedState.AddTrigger((int)EventTriggers.Stunned, _StunnedState);
 
         _JumpingState.AddCondition(CheckIsGrounded, _GroundedState);
@@ -49,100 +57,94 @@ public class Character : MonoBehaviour {
         _StunnedState.AddTrigger((int)EventTriggers.EndState, _GroundedState);
         _StunnedState.AddTrigger((int)EventTriggers.Stunned, _StunnedState);
 
-        _stateMachine = new FiniteStateMachine<Character>(this);
-        _stateMachine.SetState(_GroundedState);
+        _StateMachine = new FiniteStateMachine<Character>(this);
+        _StateMachine.SetState(_GroundedState);
     }
     
-    public void Stun(Vector2 direction, float force, float time)
+    void Start()
     {
-        StunDirection = direction;
-        StunForce = force;
-        StunTime = time;
-        _stateMachine.TriggerEvent((int)EventTriggers.Stunned);
         
+
     }
     public void StateEnded()
     {
-        _stateMachine.TriggerEvent((int)EventTriggers.EndState);
-        
+        _StateMachine.TriggerEvent((int)EventTriggers.EndState);
     }
 
     void PickupWeapon(GameObject prefab)
     {
-        if(currentWeapon != null)
+        if(CurrentWeapon != null)
         {
-            currentWeapon.DestroyWeapon();
+            CurrentWeapon.DestroyWeapon();
         }
         var currentWeaponObject = Instantiate(prefab);
-        currentWeapon = currentWeaponObject.GetComponent<Weapon>();
+        CurrentWeapon = currentWeaponObject.GetComponent<Weapon>();
         
-        currentWeapon.transform.position = transform.position;
-        currentWeapon.IgnoreCollider = _collider;
-        currentWeapon.IgnoreTarget = WeaponTarget;
-        currentWeapon.Holder = this;
-
+        CurrentWeapon.transform.position = transform.position;
+        CurrentWeapon.IgnoreCollider = _Collider;
+        CurrentWeapon.IgnoreTarget = gameObject;
+        CurrentWeapon.Holder = this;
     }
+
     void Update()
     {
-        _stateMachine.Update();
-        UpdateWeaponGui();
+        _StateMachine.Update();
     }
-
-    void UpdateWeaponGui()
-    {
-        if(currentWeapon == null)
-        {
-            WeaponNameGui.text = "";
-            WeaponAmmoGui.text = "";
-        }
-        else
-        {
-            WeaponNameGui.text = currentWeapon.Name;
-            WeaponAmmoGui.text = currentWeapon.Ammo.ToString() + "/" + currentWeapon.MaxAmmo.ToString();
-        }
-    }
+    
     public void Move()
     {
-     //   Rigidbody.AddForce(walkDirection * speed, ForceMode2D.Force);
-        Rigidbody.velocity = new Vector2(walkDirection.x * speed, Rigidbody.velocity.y);
+        _MovementDirection = InputWalkDirection;
     }
 
+
+    public void FixedUpdate()
+    {
+      
+        Vector2 v = Rigidbody.velocity;
+        
+        float acceleration = WalkingAcceleration;
+        
+        //if is moveing in opposite direction, Add reaction to acceleration
+        if(( _MovementDirection.x > 0 && v.x < 0) ||
+            (_MovementDirection.x < 0 && v.x > 0))
+        {
+            acceleration += acceleration * ReactivityPercent;
+        }
+       
+        v.x = Mathf.MoveTowards(v.x, _MovementDirection.x * WalkingMaxSpeed, acceleration * Time.fixedDeltaTime);
+
+        v.x = Mathf.Sign(v.x) * Mathf.Min(Mathf.Abs(v.x), WalkingMaxSpeed);
+        Rigidbody.velocity = v;
+    }
+    
     bool CheckIsGrounded()
     {
 		if(Rigidbody.velocity.y > 0)
 		{
 			return false;
 		}
+
         int groundCollisionMask = LayerMask.GetMask("Ground");
-        float maxGroundDistance = 0.1f;
-        float rayDistance = _collider.bounds.extents.y + maxGroundDistance;
-        float[] xOrigins = new float[]{
-            -_collider.bounds.extents.x + 0.1f,
-            0,
-            _collider.bounds.extents.x - 0.1f
-        };
+        float rayDistance = _Collider.bounds.extents.y + 0.1f;
 
-        Vector2 pos = transform.position;
-        foreach (float xOrigin in xOrigins)
-        {
-            Vector2 origin = new Vector2(pos.x + xOrigin, pos.y);
-            var hit = Physics2D.Raycast(origin, Vector2.down, rayDistance, groundCollisionMask);
-            if(hit.collider != null)
-            {
-                return true;
-            }
-        }
-
-        return false;
+        var hit = Physics2D.Raycast(transform.position, Vector2.down, rayDistance, groundCollisionMask);
+        return hit.collider != null;  
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.tag == "Box")
+        WeaponBox box = other.GetComponent<WeaponBox>();
+        if(box != null)
         {
             var weaponBox = other.GetComponent<WeaponBox>();
             PickupWeapon(weaponBox.WeaponPrefab);
             weaponBox.DestroyBox();
         }
+    }
+
+    void IWeaponTarget.ApplyHit(HitInfo hitInfo)
+    {
+        HitInfo = hitInfo;
+        _StateMachine.TriggerEvent((int)EventTriggers.Stunned);
     }
 }

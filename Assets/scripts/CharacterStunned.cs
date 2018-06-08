@@ -9,8 +9,9 @@ public class CharacterStunned : State<Character>
     public override void Enter()
     {
         base.Enter();
-        Timeout = Agent.StunTime;
-        Agent.Rigidbody.velocity += Agent.StunDirection.normalized * Agent.StunForce;
+        HitInfo hit = Agent.HitInfo;
+        Timeout = hit.StunTime;
+        Agent.Rigidbody.velocity += hit.StunDirection.normalized * hit.StunForce;
         Agent.Animator.Play("stun");
     }
 

@@ -2,59 +2,62 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
+[RequireComponent(typeof(PlayerInput))]
 public class PlayerInput : MonoBehaviour {
-    public Character Character;
-    public bool touch_jump = false;
-    public bool touch_left = false;
-    public bool touch_right = false;
+    private Character _Character;
+    bool _TouchInputJump = false;
+    bool _TouchInputLeft = false;
+    bool _TouchInputRight = false;
 
-    public void pressRight()
+    public void PressRight()
     {
-        touch_right = true;
+        _TouchInputRight = true;
     }
-    public void releaseRight()
+    public void ReleaseRight()
     {
-        touch_right = false;
+        _TouchInputRight = false;
     }
-    public void presLeft()
+    public void PressLeft()
     {
-        touch_left = true;
+        _TouchInputLeft = true;
     }
-    public void releaseLeft()
+    public void ReleaseLeft()
     {
-        touch_left = false;
+        _TouchInputLeft = false;
     }
-    public void pressJump()
+    public void PressJump()
     {
-        touch_jump = true;
+        _TouchInputJump = true;
     }
-    public void releaseJump()
+
+    public void ReleaseJump()
     {
-        touch_jump = false;
+        _TouchInputJump = false;
     }
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        Character.walkDirection.x = Input.GetAxis("Horizontal");
-        if(touch_left || touch_right)
+
+    void Awake()
+    {
+        _Character = GetComponent<Character>();
+    }
+
+    void Update () {
+
+        _Character.InputWalkDirection.x = Input.GetAxis("Horizontal");
+        _Character.InputIsJumping = Input.GetButton("Jump");
+
+      
+        if(_TouchInputLeft)
         {
-            if(touch_left)
-            {
-                Character.walkDirection.x = -1;
-            }
-            else if(touch_right)
-            {
-                Character.walkDirection.x = 1;
-            }        }
-        Character.input_jumping = Input.GetButton("Jump");
-        if(touch_jump == true)
+            _Character.InputWalkDirection.x = -1;
+        }
+        else if(_TouchInputRight)
         {
-            Character.input_jumping = true;
+            _Character.InputWalkDirection.x = 1;
+        }
+        
+        if(_TouchInputJump == true)
+        {
+            _Character.InputIsJumping = true;
         }
 	}
 }
