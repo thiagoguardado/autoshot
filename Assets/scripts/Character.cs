@@ -96,17 +96,33 @@ public class Character : MonoBehaviour, IWeaponTarget {
         _MovementDirection = InputWalkDirection;
     }
 
-
     public void FixedUpdate()
     {
       
         Vector2 v = Rigidbody.velocity;
-        
+
+        bool movingInSameDirection =
+            (_MovementDirection.x > 0 && v.x > 0) ||
+            (_MovementDirection.x < 0 && v.x < 0);
+
+        if (movingInSameDirection)
+        {
+            
+            if (Mathf.Abs(v.x) > WalkingMaxSpeed)
+            {
+                return;
+            }
+
+        }
+
         float acceleration = WalkingAcceleration;
+
+        bool movingInOppositeDirection = 
+            (_MovementDirection.x > 0 && v.x < 0) || 
+            (_MovementDirection.x < 0 && v.x > 0);
         
         //if is moveing in opposite direction, Add reaction to acceleration
-        if(( _MovementDirection.x > 0 && v.x < 0) ||
-            (_MovementDirection.x < 0 && v.x > 0))
+        if (movingInOppositeDirection)
         {
             acceleration += acceleration * ReactivityPercent;
         }
