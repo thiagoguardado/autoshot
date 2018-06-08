@@ -12,6 +12,9 @@ public class Character : MonoBehaviour, IWeaponTarget {
     public float ReactivityPercent = 0.5f;
     public float JumpForceMax = 6;
     public float JumpForceMin = 4;
+    public bool UseGravity = true;
+    public bool LockYMovement = true;
+    public bool ShouldCheckCollisions = true;
 
     public GameObject _Ground = null;
     public GameObject _RightWall = null;
@@ -24,7 +27,7 @@ public class Character : MonoBehaviour, IWeaponTarget {
     public bool IgnoreBullets = false;
     int _GroundLayerMask;
     int _PlatformLayerMask;
-    
+    bool _Moving = false;
 
     [HideInInspector]
     public Weapon CurrentWeapon { get; private set; }
@@ -75,8 +78,6 @@ public class Character : MonoBehaviour, IWeaponTarget {
         _StunnedState.AddTrigger((int)EventTriggers.Stunned, _StunnedState);
        
 
-        
-
         _StateMachine = new FiniteStateMachine<Character>(this);
         _StateMachine.SetState(_IdleState);
     }
@@ -108,6 +109,8 @@ public class Character : MonoBehaviour, IWeaponTarget {
 
     void Update()
     {
+        _Moving = false;
+        _MovementDirection = Vector2.zero;
         _StateMachine.Update();
         if(CheckIsGrounded())
         {
@@ -129,33 +132,30 @@ public class Character : MonoBehaviour, IWeaponTarget {
     
     public void Move()
     {
+        _Moving = true;
         _MovementDirection = InputWalkDirection;
     }
 
     public Vector2 velocity = new Vector2();
 
-    void ApplySmoothMovement()
+    float GetSmoothMovementAxis(float currentVelocity, float inputVelocity, float acceleration, float maxVelocity)
     {
-        Vector2 v = velocity;
+        float newVelocity = currentVelocity;
         bool movingInSameDirection =
-            (_MovementDirection.x > 0 && v.x > 0) ||
-            (_MovementDirection.x < 0 && v.x < 0);
+            (inputVelocity > 0 && currentVelocity > 0) ||
+            (inputVelocity < 0 && currentVelocity < 0);
 
         if (movingInSameDirection)
         {
-
-            if (Mathf.Abs(v.x) > WalkingMaxSpeed)
+            if (Mathf.Abs(currentVelocity) > maxVelocity)
             {
-                return;
+                return currentVelocity;
             }
-
         }
-
-        float acceleration = WalkingAcceleration;
-
+        
         bool movingInOppositeDirection =
-            (_MovementDirection.x > 0 && v.x < 0) ||
-            (_MovementDirection.x < 0 && v.x > 0);
+            (inputVelocity > 0 && currentVelocity < 0) ||
+            (inputVelocity < 0 && currentVelocity > 0);
 
         //if is moveing in opposite direction, Add reaction to acceleration
         if (movingInOppositeDirection)
@@ -163,12 +163,25 @@ public class Character : MonoBehaviour, IWeaponTarget {
             acceleration += acceleration * ReactivityPercent;
         }
 
-        v.x = Mathf.MoveTowards(v.x, _MovementDirection.x * WalkingMaxSpeed, acceleration * Time.fixedDeltaTime);
+        newVelocity = Mathf.MoveTowards(currentVelocity, inputVelocity * maxVelocity, acceleration * Time.fixedDeltaTime);
 
-        v.x = Mathf.Sign(v.x) * Mathf.Min(Mathf.Abs(v.x), WalkingMaxSpeed);
+        newVelocity = Mathf.Sign(newVelocity) * Mathf.Min(Mathf.Abs(newVelocity), WalkingMaxSpeed);
+        return newVelocity;
+
+    }
+    void ApplySmoothMovement()
+    {
+        Vector2 v = velocity;
+        v.x = GetSmoothMovementAxis(v.x, _MovementDirection.x, WalkingAcceleration, WalkingMaxSpeed);
+        if(!LockYMovement)
+        {
+            v.y = GetSmoothMovementAxis(v.y, _MovementDirection.y, WalkingAcceleration, WalkingMaxSpeed);
+        }
+
         velocity = v;
         // Rigidbody.velocity = v;
     }
+
 
     public void ApplyGravity()
     {
@@ -206,9 +219,19 @@ public class Character : MonoBehaviour, IWeaponTarget {
 
     public void FixedUpdate()
     {
-        ApplySmoothMovement();
-        ApplyGravity();
-        CheckCollisions();
+        if(_Moving)
+        {
+            ApplySmoothMovement();
+        }
+        if(UseGravity)
+        {
+            ApplyGravity();
+        }
+        if(ShouldCheckCollisions)
+        {
+            CheckCollisions();
+        }
+        
         transform.position += (Vector3) velocity * Time.fixedDeltaTime;
     }
 

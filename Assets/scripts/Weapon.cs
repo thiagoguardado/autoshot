@@ -152,7 +152,7 @@ public class Weapon : MonoBehaviour
 
     bool CheckOnSight(GameObject target)
     {
-        int groundLayerMask = LayerMask.GetMask("Ground");
+        int groundLayerMask = LayerMask.GetMask("Ground", "Platform");
         Vector2 distanceVector = target.transform.position - transform.position;
         var hit = Physics2D.Raycast(transform.position, distanceVector, distanceVector.magnitude, groundLayerMask);
 

@@ -7,8 +7,8 @@ public class Bullet : MonoBehaviour {
 
     public Collider2D IgnoreCollider;
     Rigidbody2D _RigidBody;
-    private float _Force = 10;
-    private float _Time = 0.1f;
+    private float _Force = 16;
+    private float _Time = 0.2f;
 
     void Awake()
     {
@@ -21,7 +21,7 @@ public class Bullet : MonoBehaviour {
         if (target != null)
         {
             HitInfo hit = new HitInfo();
-            hit.StunDirection = _RigidBody.velocity;
+            hit.StunDirection = _RigidBody.velocity.normalized;
             hit.StunForce = _Force;
             hit.StunTime = _Time;
             if(target.ApplyHit(hit))

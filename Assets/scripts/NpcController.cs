@@ -6,6 +6,8 @@ using UnityEngine;
 public class NpcController : MonoBehaviour {
     private Character _Character;
     private Character _PlayerCharacter;
+    public bool UseY = false;
+    public bool UseJump = true;
     public void Awake()
     {
         PlayerInput pi = FindObjectOfType<PlayerInput>();
@@ -16,13 +18,20 @@ public class NpcController : MonoBehaviour {
     public void Update()
     {
         _Character.InputWalkDirection.x = Mathf.Sign(_PlayerCharacter.transform.position.x - _Character.transform.position.x);
-        if(_PlayerCharacter.transform.position.y > transform.position.y)
+        if(UseY)
         {
-            _Character.InputIsJumping = true;
+            _Character.InputWalkDirection.y = Mathf.Sign(_PlayerCharacter.transform.position.y - _Character.transform.position.y);
         }
-        else
+        if(UseJump)
         {
-            _Character.InputIsJumping = false;
+            if (_PlayerCharacter.transform.position.y > transform.position.y)
+            {
+                _Character.InputIsJumping = true;
+            }
+            else
+            {
+                _Character.InputIsJumping = false;
+            }
         }
     }
 }

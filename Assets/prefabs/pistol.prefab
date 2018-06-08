@@ -56,12 +56,12 @@ MonoBehaviour:
   Name: Pistol
   ShotPrefab: {fileID: 1912672064594474, guid: 0cd9d51641d37e4408a48fcfb9f6eb49, type: 2}
   Range: 5.79
-  Cooldown: 0.52
+  Cooldown: 0.25
   Spread: 0
   Shots: 1
   ShotSpeed: 10
-  MaxAmmo: 10
-  Ammo: 10
+  MaxAmmo: 25
+  Ammo: 25
   Shooting: 1
   InfiniteAmmo: 0
   Holder: {fileID: 0}
