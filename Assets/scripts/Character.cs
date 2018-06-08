@@ -42,7 +42,7 @@ public class Character : MonoBehaviour, IWeaponTarget {
 
     FiniteStateMachine<Character> _StateMachine;
     CharacterJumping _JumpingState = new CharacterJumping();
-    CharacterGrounded _GroundedState = new CharacterGrounded();
+    CharacterIdle _IdleState = new CharacterIdle();
     CharacterStunned _StunnedState = new CharacterStunned();
     CharacterDeadState _DeadState = new CharacterDeadState();
 
@@ -60,16 +60,16 @@ public class Character : MonoBehaviour, IWeaponTarget {
 
         _Collider = GetComponent<Collider2D>();
 
-        _GroundedState.AddCondition(CheckIsDead, _DeadState);
-        _GroundedState.AddCondition(() => InputIsJumping, _JumpingState);
-        _GroundedState.AddTrigger((int)EventTriggers.Stunned, _StunnedState);
+        _IdleState.AddCondition(CheckIsDead, _DeadState);
+        _IdleState.AddCondition(() => InputIsJumping, _JumpingState);
+        _IdleState.AddTrigger((int)EventTriggers.Stunned, _StunnedState);
 
         _JumpingState.AddCondition(CheckIsDead, _DeadState);
-        _JumpingState.AddCondition(CheckIsGrounded, _GroundedState);
+        _JumpingState.AddCondition(CheckIsGrounded, _IdleState);
         _JumpingState.AddTrigger((int)EventTriggers.Stunned, _StunnedState);
         
 
-        _StunnedState.AddTrigger((int)EventTriggers.EndState, _GroundedState);
+        _StunnedState.AddTrigger((int)EventTriggers.EndState, _IdleState);
         _StunnedState.AddTransition((int)EventTriggers.EndState, CheckIsDead, _DeadState);
         _StunnedState.AddTrigger((int)EventTriggers.Stunned, _StunnedState);
        
@@ -77,7 +77,7 @@ public class Character : MonoBehaviour, IWeaponTarget {
         
 
         _StateMachine = new FiniteStateMachine<Character>(this);
-        _StateMachine.SetState(_GroundedState);
+        _StateMachine.SetState(_IdleState);
     }
     
     void Start()
