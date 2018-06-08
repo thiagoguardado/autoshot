@@ -12,8 +12,9 @@ public class FollowPlayer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        
         Vector3 pos = transform.position;
-        pos = Vector2.Lerp(transform.position, Player.transform.position, 0.95f * Time.deltaTime);
+        pos = Vector2.MoveTowards(transform.position, Player.transform.position, Speed * Time.deltaTime);
         pos.z = transform.position.z;
         transform.position = pos;
 	}

@@ -6,6 +6,7 @@ using System;
 public class Character : MonoBehaviour, IWeaponTarget {
 
     public Animator Animator;
+    public SpriteRenderer SpriteRenderer;
     public float WalkingMaxSpeed = 3;
     public float WalkingAcceleration = 3;
     public float ReactivityPercent = 0.5f;
@@ -115,6 +116,14 @@ public class Character : MonoBehaviour, IWeaponTarget {
         else
         {
             transform.parent = null;
+        }
+        if(velocity.x > 0)
+        {
+            SpriteRenderer.flipX = false;
+        }
+        else if(velocity.x < 0)
+        {
+            SpriteRenderer.flipX = true;
         }
     }
     
