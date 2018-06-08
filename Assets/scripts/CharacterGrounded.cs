@@ -7,6 +7,7 @@ public class CharacterGrounded :  State<Character>
     public override void Enter()
     {
         base.Enter();
+        Agent.velocity.y = 0;
         Debug.Log("here");
     }
     public override void Update()

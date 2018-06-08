@@ -11,7 +11,7 @@ public class CharacterStunned : State<Character>
         base.Enter();
         HitInfo hit = Agent.HitInfo;
         Timeout = hit.StunTime;
-        Agent.Rigidbody.velocity += hit.StunDirection.normalized * hit.StunForce;
+        Agent.velocity += hit.StunDirection.normalized * hit.StunForce;
         Agent.Animator.Play("stun");
     }
 

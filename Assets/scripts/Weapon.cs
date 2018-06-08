@@ -107,9 +107,18 @@ public class Weapon : MonoBehaviour
             }
         }
     }
-    bool CheckIsTarget(GameObject target)
+    bool CheckIsTarget(GameObject targetObject)
     {
-        return target.GetComponent<IWeaponTarget>() != null;
+        var target = targetObject.GetComponent<IWeaponTarget>();
+        if(target != null)
+        {
+            if(target.IsActive())
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     void FindTargets()

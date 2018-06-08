@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerInput))]
+[RequireComponent(typeof(Character))]
 public class PlayerInput : MonoBehaviour {
     private Character _Character;
     bool _TouchInputJump = false;

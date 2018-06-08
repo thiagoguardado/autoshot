@@ -143,7 +143,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 1
   m_SleepingMode: 1
@@ -245,10 +245,17 @@ MonoBehaviour:
   ReactivityPercent: 0.5
   JumpForceMax: 8
   JumpForceMin: 4
+  _Ground: {fileID: 0}
+  _RightWall: {fileID: 0}
+  _LeftWall: {fileID: 0}
+  _TopWall: {fileID: 0}
+  HealthPoints: 10
   _MovementDirection: {x: 0, y: 0}
+  IgnoreBullets: 0
   InputWalkDirection: {x: 0, y: 0}
   InputIsJumping: 0
   Rigidbody: {fileID: 0}
+  velocity: {x: 0, y: 0}
 --- !u!114 &114432899673429366
 MonoBehaviour:
   m_ObjectHideFlags: 1

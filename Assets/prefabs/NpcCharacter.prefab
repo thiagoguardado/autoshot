@@ -108,7 +108,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1545738726618348}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.22, y: -1.45, z: -0.20191747}
+  m_LocalPosition: {x: -5.36, y: -0.41, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4686843796201334}
@@ -124,7 +124,7 @@ Transform:
   m_GameObject: {fileID: 1316319082111322}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.021, y: 0.046, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 0.20000002, y: 0.2, z: 0.2}
   m_Children: []
   m_Father: {fileID: 4039145767822892}
   m_RootOrder: 0
@@ -143,7 +143,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 1
   m_SleepingMode: 1
@@ -300,15 +300,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Animator: {fileID: 95160355179141054}
-  WalkingMaxSpeed: 6
+  WalkingMaxSpeed: 4
   WalkingAcceleration: 240
   ReactivityPercent: 0.5
   JumpForceMax: 8
   JumpForceMin: 4
+  _Ground: {fileID: 0}
+  _RightWall: {fileID: 0}
+  _LeftWall: {fileID: 0}
+  _TopWall: {fileID: 0}
+  HealthPoints: 10
   _MovementDirection: {x: 0, y: 0}
+  IgnoreBullets: 0
   InputWalkDirection: {x: 0, y: 0}
   InputIsJumping: 0
   Rigidbody: {fileID: 0}
+  velocity: {x: 0, y: 0}
 --- !u!114 &114828689439995890
 MonoBehaviour:
   m_ObjectHideFlags: 1

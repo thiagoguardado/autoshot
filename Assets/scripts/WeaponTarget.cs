@@ -5,7 +5,13 @@ using UnityEngine;
 
 public class WeaponTarget : MonoBehaviour, IWeaponTarget
 {
-    void IWeaponTarget.ApplyHit(HitInfo hitInfo)
+    bool IWeaponTarget.ApplyHit(HitInfo hitInfo)
     {
+        return true;
+    }
+
+    bool IWeaponTarget.IsActive()
+    {
+        return true;
     }
 }

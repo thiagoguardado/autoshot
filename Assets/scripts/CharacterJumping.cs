@@ -11,9 +11,9 @@ public class CharacterJumping : State<Character>
     {
         base.Enter();
         
-        Vector2 velocity = Agent.Rigidbody.velocity;
+        Vector2 velocity = Agent.velocity;
         velocity.y += Agent.JumpForceMax;
-        Agent.Rigidbody.velocity = velocity;
+        Agent.velocity = velocity;
         _StoppedJumping = false;
     }
 
@@ -24,16 +24,16 @@ public class CharacterJumping : State<Character>
         {
             if(!Agent.InputIsJumping)
             {
-                Vector2 velocity = Agent.Rigidbody.velocity;
+                Vector2 velocity = Agent.velocity;
                 velocity.y = Mathf.Min(Agent.JumpForceMin, velocity.y);
-                Agent.Rigidbody.velocity = velocity;
+                Agent.velocity = velocity;
                 _StoppedJumping = true;
             }
         }
         
         Agent.Move();
 
-        if(Agent.Rigidbody.velocity.y > 0)
+        if(Agent.velocity.y > 0)
         {
             Agent.Animator.Play(_JumpingAnimation);
         }
