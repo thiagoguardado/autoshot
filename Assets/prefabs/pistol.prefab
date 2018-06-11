@@ -19,9 +19,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4520435746501370}
-  - component: {fileID: 114743582525289818}
+  - component: {fileID: 114158152970916756}
   m_Layer: 0
-  m_Name: pistol
+  m_Name: Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -40,7 +40,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114743582525289818
+--- !u!114 &114158152970916756
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -48,20 +48,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 1192021311017698}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0d5628b980beed42a84650a94a7d052, type: 3}
+  m_Script: {fileID: 11500000, guid: 4732a112d8628bf40b20c32158972b5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   IgnoreCollider: {fileID: 0}
   IgnoreTarget: {fileID: 0}
   Name: Pistol
-  ShotPrefab: {fileID: 1912672064594474, guid: 0cd9d51641d37e4408a48fcfb9f6eb49, type: 2}
-  Range: 5.79
-  Cooldown: 0.15
-  Spread: 0
-  Shots: 1
-  ShotSpeed: 8
-  MaxAmmo: 25
-  Ammo: 25
-  Shooting: 1
+  Cooldown: 0.5
+  Range: 4.03
+  Ammo: 10
   InfiniteAmmo: 0
+  Shooting: 1
   Holder: {fileID: 0}
+  ShotPrefab: {fileID: 1912672064594474, guid: 0cd9d51641d37e4408a48fcfb9f6eb49, type: 2}
+  Spread: 1
+  Shots: 1
+  ShotSpeed: 10
+  MaxAmmo: 10

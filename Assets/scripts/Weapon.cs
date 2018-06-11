@@ -7,11 +7,11 @@ public abstract class Weapon : MonoBehaviour
    
     // holder collider and target
     [HideInInspector] public Collider2D IgnoreCollider = null;
-    [HideInInspector] public WeaponTarget IgnoreTarget = null;
+    [HideInInspector] public GameObject IgnoreTarget = null;
 
     // holder enemies targets
-    private List<WeaponTarget> _Targets = new List<WeaponTarget>();
-    protected WeaponTarget _ClosestTarget = null;
+    private List<GameObject> _Targets = new List<GameObject>();
+    protected GameObject _ClosestTarget = null;
     
     [Header("Configuration")]
     public string Name = "No Name";
@@ -43,7 +43,7 @@ public abstract class Weapon : MonoBehaviour
 
 
 
-    public void NewHolder(Character holder, Vector3 holderPosition, Collider2D holderCollider, WeaponTarget holderTarget)
+    public void NewHolder(Character holder, Vector3 holderPosition, Collider2D holderCollider, GameObject holderTarget)
     {
         Holder = holder;
         IgnoreCollider = holderCollider;

@@ -100,11 +100,7 @@ public class Character : MonoBehaviour, IWeaponTarget {
         }
         var currentWeaponObject = Instantiate(prefab);
         CurrentWeapon = currentWeaponObject.GetComponent<Weapon>();
-        
-        CurrentWeapon.transform.position = transform.position;
-        CurrentWeapon.IgnoreCollider = _Collider;
-        CurrentWeapon.IgnoreTarget = gameObject;
-        CurrentWeapon.Holder = this;
+        CurrentWeapon.NewHolder(this, transform.position, _Collider, gameObject);
     }
 
     void Update()
