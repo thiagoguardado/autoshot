@@ -24,6 +24,11 @@ public class Weapon_Melee : Weapon
 
         // make animation
         StartCoroutine(LineAnimation(animationDuration));
+
+        if (!InfiniteAmmo)
+        {
+            Ammo--;
+        }
     }
 
     private void HitTargets()
@@ -60,7 +65,7 @@ public class Weapon_Melee : Weapon
 
         while (timer<=duration)
         {
-            lineRenderer.transform.rotation = Quaternion.Lerp(startRotation, finalRotation, timer / duration);
+            lineRenderer.transform.rotation = Quaternion.Slerp(startRotation, finalRotation, timer / duration);
             timer += Time.deltaTime;
             yield return null;
 

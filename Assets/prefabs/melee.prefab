@@ -23,7 +23,7 @@ GameObject:
   m_Layer: 0
   m_Name: melee
   m_TagString: Untagged
-  m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -86,13 +86,13 @@ MonoBehaviour:
   Name: Melee
   Cooldown: 0.5
   Range: 1.2
-  Ammo: 0
+  Ammo: 5
   InfiniteAmmo: 1
   Shooting: 1
   Holder: {fileID: 0}
   areaAngle: 60
   lineRenderer: {fileID: 120199390175511856}
-  animationDuration: 0.1
+  animationDuration: 0.075
   hitInfo:
     StunDirection: {x: 0, y: 0}
     StunForce: 0.5
@@ -103,7 +103,7 @@ LineRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1911124073504404}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
