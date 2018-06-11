@@ -20,10 +20,7 @@ public class Bullet : MonoBehaviour {
         var target = hitTarget.GetComponent<IWeaponTarget>();
         if (target != null)
         {
-            HitInfo hit = new HitInfo();
-            hit.StunDirection = _RigidBody.velocity.normalized;
-            hit.StunForce = _Force;
-            hit.StunTime = _Time;
+            HitInfo hit = new HitInfo(_RigidBody.velocity.normalized, _Force,_Time);
             if(target.ApplyHit(hit))
             {
                 Destroy(gameObject);

@@ -10,7 +10,7 @@ public abstract class Weapon : MonoBehaviour
     [HideInInspector] public GameObject IgnoreTarget = null;
 
     // holder enemies targets
-    private List<GameObject> _Targets = new List<GameObject>();
+    protected List<GameObject> _Targets = new List<GameObject>();
     protected GameObject _ClosestTarget = null;
     
     [Header("Configuration")]
