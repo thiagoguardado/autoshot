@@ -93,10 +93,7 @@ public class Character : MonoBehaviour {
         var currentWeaponObject = Instantiate(prefab);
         currentWeapon = currentWeaponObject.GetComponent<Weapon>();
 
-        currentWeapon.transform.position = transform.position;
-        currentWeapon.IgnoreCollider = _collider;
-        currentWeapon.IgnoreTarget = WeaponTarget;
-        currentWeapon.Holder = this;
+        currentWeapon.NewHolder(this, transform.position, _collider, WeaponTarget);
 
     }
     void Update()
@@ -115,7 +112,12 @@ public class Character : MonoBehaviour {
         else
         {
             WeaponNameGui.text = currentWeapon.Name;
-            WeaponAmmoGui.text = currentWeapon.Ammo.ToString() + "/" + currentWeapon.MaxAmmo.ToString();
+
+            if (currentWeapon is Weapon_Gun)
+            {
+                WeaponAmmoGui.text = currentWeapon.Ammo.ToString() + "/" + ((Weapon_Gun)currentWeapon).MaxAmmo.ToString();
+            }
+            
         }
     }
 

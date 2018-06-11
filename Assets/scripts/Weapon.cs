@@ -2,66 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon : MonoBehaviour
+public abstract class Weapon : MonoBehaviour
 {
    
+    // holder collider and target
+    [HideInInspector] public Collider2D IgnoreCollider = null;
+    [HideInInspector] public WeaponTarget IgnoreTarget = null;
 
-    [HideInInspector]
-    public Collider2D IgnoreCollider = null;
-
-    [HideInInspector]
-    public WeaponTarget IgnoreTarget = null;
-
+    // holder enemies targets
     private List<WeaponTarget> _Targets = new List<WeaponTarget>();
-    private WeaponTarget _ClosestTarget = null;
+    protected WeaponTarget _ClosestTarget = null;
     
     [Header("Configuration")]
     public string Name = "No Name";
-    public GameObject ShotPrefab = null;
-    public float Range = 1.0f;
     public float Cooldown = 1.0f;
-    public float Spread = 1.0f;
-    public int Shots = 1;
-    public float ShotSpeed = 1.0f;
-    public int MaxAmmo = 10;
-
-    [Header("Debug")]
+    public float Range = 1.0f;
     public int Ammo = 10;
-    public bool Shooting = true;
     public bool InfiniteAmmo = false;
+    public bool Shooting = true;
+    public Character Holder = null;
 
     private float _CurrentCooldown = 0;
     private Color _RangeGizmosColor = new Color(1, 1, 1, 0.4f);
     private Color _TargetGizmosColor = new Color(1, 0, 0, 0.4f);
     private Color _ClosestTargetGizmosColor = new Color(0, 1, 0, 0.4f);
-    public Character Holder = null;
-
-    public virtual void Shot()
-    {
-        Vector2 shotDirection = _ClosestTarget.transform.position - transform.position;
-        float spreadAngle = Random.Range(-Spread, Spread);
-        float sin = Mathf.Sin(spreadAngle * Mathf.Deg2Rad);
-        float cos = Mathf.Cos(spreadAngle * Mathf.Deg2Rad);
-
-        Vector2 spreadedDirection = new Vector2();
-        spreadedDirection.x = (cos * shotDirection.x) - (sin * shotDirection.y);
-        spreadedDirection.y = (sin * shotDirection.x) + (cos * shotDirection.y);
-
-        if (ShotPrefab != null)
-        {
-            GameObject bulletObject = Instantiate(ShotPrefab);
-            var bullet = bulletObject.GetComponent<Bullet>();
-
-            Physics2D.IgnoreCollision(bullet.GetComponent<Collider2D>(), IgnoreCollider);
-            bullet.IgnoreCollider = IgnoreCollider;
 
 
-            bulletObject.transform.position = transform.position;
-            var rigidBody = bulletObject.GetComponent<Rigidbody2D>();
-            rigidBody.velocity = spreadedDirection * ShotSpeed;
-        }
-
-    }
+   
 
     // Update is called once per frame
     void Update()
@@ -74,6 +41,17 @@ public class Weapon : MonoBehaviour
         ShootingRoutine();
     }
 
+
+
+    public void NewHolder(Character holder, Vector3 holderPosition, Collider2D holderCollider, WeaponTarget holderTarget)
+    {
+        Holder = holder;
+        IgnoreCollider = holderCollider;
+        IgnoreTarget = holderTarget;
+        transform.position = holderPosition;
+    }
+
+
     void ShootingRoutine()
     {
         if (_CurrentCooldown >= 0)
@@ -84,15 +62,13 @@ public class Weapon : MonoBehaviour
         {
             if (_ClosestTarget != null)
             {
-                for (int i = 0; i < Shots; i++)
-                {
-                    Shot();
-                    _CurrentCooldown = Cooldown;
-                    Ammo--;
-                }
+                Shot();
+                _CurrentCooldown = Cooldown;
             }
         }
     }
+
+    public abstract void Shot();
 
     void FindClosestTarget()
     {
