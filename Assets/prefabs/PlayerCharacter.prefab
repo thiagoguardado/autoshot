@@ -244,8 +244,11 @@ MonoBehaviour:
   WalkingMaxSpeed: 8
   WalkingAcceleration: 240
   ReactivityPercent: 0.5
-  JumpForceMax: 8
+  JumpForceMax: 12
   JumpForceMin: 4
+  UseGravity: 1
+  LockYMovement: 1
+  ShouldCheckCollisions: 1
   _Ground: {fileID: 0}
   _RightWall: {fileID: 0}
   _LeftWall: {fileID: 0}

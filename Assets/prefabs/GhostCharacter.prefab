@@ -206,7 +206,7 @@ MonoBehaviour:
   _RightWall: {fileID: 0}
   _LeftWall: {fileID: 0}
   _TopWall: {fileID: 0}
-  HealthPoints: 10
+  HealthPoints: 3
   _MovementDirection: {x: 0, y: 0}
   IgnoreBullets: 0
   InputWalkDirection: {x: 0, y: 0}
