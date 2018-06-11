@@ -4,43 +4,55 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Bullet : MonoBehaviour {
-    [HideInInspector]
+
     public Collider2D IgnoreCollider;
     Rigidbody2D _RigidBody;
-    private float _Force = 10;
-    private float _Time = 0.1f;
+    private float _Force = 16;
+    private float _Time = 0.2f;
+
     void Awake()
     {
         _RigidBody = GetComponent<Rigidbody2D>();
     }
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
+   
+    void OnHit(GameObject hitTarget)
+    {
+        var target = hitTarget.GetComponent<IWeaponTarget>();
+        if (target != null)
+        {
+            HitInfo hit = new HitInfo();
+            hit.StunDirection = _RigidBody.velocity.normalized;
+            hit.StunForce = _Force;
+            hit.StunTime = _Time;
+            if(target.ApplyHit(hit))
+            {
+                Destroy(gameObject);
+            }
+        }
+        else
+        {
+            Debug.Log("hitting " + hitTarget.name);
+            Destroy(gameObject);
+        }
+    }
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        
-        if(col.collider == IgnoreCollider)
+        if (col.collider == IgnoreCollider)
         {
             return;
         }
 
-        if(col.collider.tag == "Character")
+        OnHit(col.collider.gameObject);
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col == IgnoreCollider)
         {
-            var character = col.collider.GetComponent<Character>();
-            if(character != null)
-            {
-                character.Stun(_RigidBody.velocity.normalized, _Force, _Time);
-            }
+            return;
         }
 
-        Destroy(gameObject);
+        OnHit(col.gameObject);
     }
 }

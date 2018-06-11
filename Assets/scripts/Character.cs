@@ -1,205 +1,299 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using FiniteStateMachines;
-using UnityEngine.UI;
 using System;
 
-[RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Collider2D))]
-public class Character : MonoBehaviour {
-    public Animator Animator;
-    public Character target;
-    public Weapon currentWeapon;
-    private Vector2 previousWalkDirection = Vector2.zero;
-    public Vector2 walkDirection;
-    public float speed = 3;
-    public bool input_jumping = false;
-    public bool canWallJump = false;
-    public float testWallRaycastDistance = 1f;
-    public Vector2 wallJumpForce = new Vector2(2,10);
-    public float StunTime = 1.0f;
-    public Vector2 StunDirection = new Vector2(1, 0);
-    public float StunForce = 3.0f;
-    public Rigidbody2D Rigidbody;
-    private Collider2D _collider;
-    public Text WeaponNameGui;
-    public Text WeaponAmmoGui;
-    public WeaponTarget WeaponTarget;
+public class Character : MonoBehaviour, IWeaponTarget {
 
-    FiniteStateMachine<Character> _stateMachine;
-    CharacterJumping _JumpingState;
-    CharacterGrounded _GroundedState;
-    CharacterStunned _StunnedState;
+    public Animator Animator;
+    public SpriteRenderer SpriteRenderer;
+    public float WalkingMaxSpeed = 3;
+    public float WalkingAcceleration = 3;
+    public float ReactivityPercent = 0.5f;
+    public float JumpForceMax = 6;
+    public float JumpForceMin = 4;
+    public bool UseGravity = true;
+    public bool LockYMovement = true;
+    public bool ShouldCheckCollisions = true;
+
+    public GameObject _Ground = null;
+    public GameObject _RightWall = null;
+    public GameObject _LeftWall = null;
+    public GameObject _TopWall = null;
+
+    public int HealthPoints = 10;
+    public Vector2 _MovementDirection;
+
+    public bool IgnoreBullets = false;
+    int _GroundLayerMask;
+    int _PlatformLayerMask;
+    bool _Moving = false;
+
+    [HideInInspector]
+    public Weapon CurrentWeapon { get; private set; }
+
+    [HideInInspector]
+    public Vector2 InputWalkDirection;
+
+    [HideInInspector]
+    public bool InputIsJumping;
+
+    [HideInInspector]
+    public HitInfo HitInfo { get; private set; }
+
+    
+    private Collider2D _Collider;
+
+    FiniteStateMachine<Character> _StateMachine;
+    CharacterJumping _JumpingState = new CharacterJumping();
+    CharacterIdle _IdleState = new CharacterIdle();
+    CharacterStunned _StunnedState = new CharacterStunned();
+    CharacterDeadState _DeadState = new CharacterDeadState();
 
     public enum EventTriggers
     {
         EndState,
-        Stunned,
-        Springed
+        Stunned
     }
-
-
-    public float JumpForce = 1.0f;
-
-
+    
     void Awake()
     {
-        Rigidbody = GetComponent<Rigidbody2D>();
-        _collider = GetComponent<Collider2D>();
 
-        _JumpingState = new CharacterJumping(canWallJump);
-        _GroundedState = new CharacterGrounded();
-        _StunnedState = new CharacterStunned();
+        _GroundLayerMask = LayerMask.GetMask("Ground");
+        _PlatformLayerMask = LayerMask.GetMask("Platform", "Ground");
 
-        _GroundedState.AddCondition(() => input_jumping, _JumpingState);
-        _GroundedState.AddTrigger((int)EventTriggers.Stunned, _StunnedState);
-        _GroundedState.AddTrigger((int)EventTriggers.Springed, _JumpingState);
+        _Collider = GetComponent<Collider2D>();
 
-        _JumpingState.AddCondition(CheckIsGrounded, _GroundedState);
+        _IdleState.AddCondition(CheckIsDead, _DeadState);
+        _IdleState.AddCondition(() => InputIsJumping, _JumpingState);
+        _IdleState.AddTrigger((int)EventTriggers.Stunned, _StunnedState);
+
+        _JumpingState.AddCondition(CheckIsDead, _DeadState);
+        _JumpingState.AddCondition(CheckIsGrounded, _IdleState);
         _JumpingState.AddTrigger((int)EventTriggers.Stunned, _StunnedState);
-        _JumpingState.AddTrigger((int)EventTriggers.Springed, _JumpingState);
+        
 
-
-        _StunnedState.AddTrigger((int)EventTriggers.EndState, _GroundedState);
+        _StunnedState.AddTrigger((int)EventTriggers.EndState, _IdleState);
+        _StunnedState.AddTransition((int)EventTriggers.EndState, CheckIsDead, _DeadState);
         _StunnedState.AddTrigger((int)EventTriggers.Stunned, _StunnedState);
+       
 
-        _stateMachine = new FiniteStateMachine<Character>(this);
-        _stateMachine.SetState(_GroundedState);
+        _StateMachine = new FiniteStateMachine<Character>(this);
+        _StateMachine.SetState(_IdleState);
     }
-
-
-
-    public void Stun(Vector2 direction, float force, float time)
+    
+    void Start()
     {
-        StunDirection = direction;
-        StunForce = force;
-        StunTime = time;
-        _stateMachine.TriggerEvent((int)EventTriggers.Stunned);
+        
 
     }
     public void StateEnded()
     {
-        _stateMachine.TriggerEvent((int)EventTriggers.EndState);
-
+        _StateMachine.TriggerEvent((int)EventTriggers.EndState);
     }
 
     void PickupWeapon(GameObject prefab)
     {
-        if (currentWeapon != null)
+        if(CurrentWeapon != null)
         {
-            currentWeapon.DestroyWeapon();
+            CurrentWeapon.DestroyWeapon();
         }
         var currentWeaponObject = Instantiate(prefab);
-        currentWeapon = currentWeaponObject.GetComponent<Weapon>();
-
-        currentWeapon.NewHolder(this, transform.position, _collider, WeaponTarget);
-
+        CurrentWeapon = currentWeaponObject.GetComponent<Weapon>();
+        
+        CurrentWeapon.transform.position = transform.position;
+        CurrentWeapon.IgnoreCollider = _Collider;
+        CurrentWeapon.IgnoreTarget = gameObject;
+        CurrentWeapon.Holder = this;
     }
+
     void Update()
     {
-        _stateMachine.Update();
-        UpdateWeaponGui();
-    }
-
-    void UpdateWeaponGui()
-    {
-        if (currentWeapon == null)
+        _Moving = false;
+        _MovementDirection = Vector2.zero;
+        _StateMachine.Update();
+        if(CheckIsGrounded())
         {
-            WeaponNameGui.text = "";
-            WeaponAmmoGui.text = "";
+            transform.parent = _Ground.transform;
         }
         else
         {
-            WeaponNameGui.text = currentWeapon.Name;
-
-            if (currentWeapon is Weapon_Gun)
-            {
-                WeaponAmmoGui.text = currentWeapon.Ammo.ToString() + "/" + ((Weapon_Gun)currentWeapon).MaxAmmo.ToString();
-            }
-            
+            transform.parent = null;
+        }
+        if(velocity.x > 0)
+        {
+            SpriteRenderer.flipX = false;
+        }
+        else if(velocity.x < 0)
+        {
+            SpriteRenderer.flipX = true;
         }
     }
-
-
-    public void StopMoving() {
-
-        Rigidbody.velocity -= previousWalkDirection;
-        previousWalkDirection = Vector2.zero;
-
-    }
-
+    
     public void Move()
     {
+        _Moving = true;
+        _MovementDirection = InputWalkDirection;
+    }
 
-        //  Rigidbody.AddForce(walkDirection * speed, ForceMode2D.Force);
-        Rigidbody.velocity = new Vector2(walkDirection.x * speed, Rigidbody.velocity.y);
-        // Rigidbody.MovePosition(Rigidbody.position + new Vector2(walkDirection.x * speed * Time.deltaTime, 0));
+    public Vector2 velocity = new Vector2();
 
+    float GetSmoothMovementAxis(float currentVelocity, float inputVelocity, float acceleration, float maxVelocity)
+    {
+        float newVelocity = currentVelocity;
+        bool movingInSameDirection =
+            (inputVelocity > 0 && currentVelocity > 0) ||
+            (inputVelocity < 0 && currentVelocity < 0);
+
+        if (movingInSameDirection)
+        {
+            if (Mathf.Abs(currentVelocity) > maxVelocity)
+            {
+                return currentVelocity;
+            }
+        }
         
-        //Rigidbody.velocity -= previousWalkDirection;
-        //Vector2 walkingVelocity = new Vector2(walkDirection.x * speed, 0);
-        //Rigidbody.velocity += walkingVelocity;
-        //previousWalkDirection = walkingVelocity;
+        bool movingInOppositeDirection =
+            (inputVelocity > 0 && currentVelocity < 0) ||
+            (inputVelocity < 0 && currentVelocity > 0);
+
+        //if is moveing in opposite direction, Add reaction to acceleration
+        if (movingInOppositeDirection)
+        {
+            acceleration += acceleration * ReactivityPercent;
+        }
+
+        newVelocity = Mathf.MoveTowards(currentVelocity, inputVelocity * maxVelocity, acceleration * Time.fixedDeltaTime);
+
+        newVelocity = Mathf.Sign(newVelocity) * Mathf.Min(Mathf.Abs(newVelocity), WalkingMaxSpeed);
+        return newVelocity;
+
+    }
+    void ApplySmoothMovement()
+    {
+        Vector2 v = velocity;
+        v.x = GetSmoothMovementAxis(v.x, _MovementDirection.x, WalkingAcceleration, WalkingMaxSpeed);
+        if(!LockYMovement)
+        {
+            v.y = GetSmoothMovementAxis(v.y, _MovementDirection.y, WalkingAcceleration, WalkingMaxSpeed);
+        }
+
+        velocity = v;
+        // Rigidbody.velocity = v;
+    }
+
+
+    public void ApplyGravity()
+    {
+        velocity += Physics2D.gravity * Time.deltaTime;
+    }
+
+    public void CheckCollisions()
+    {
+        _Ground = CheckWallCollision(Vector2.down, _PlatformLayerMask);
+        _LeftWall = CheckWallCollision(Vector2.left, _GroundLayerMask);
+        _RightWall = CheckWallCollision(Vector2.right, _GroundLayerMask);
+        _TopWall = CheckWallCollision(Vector2.up, _GroundLayerMask);
+
+        if(_Ground)
+        {
+            velocity.y = Mathf.Max(0, velocity.y);
+        }
+
+        if (_TopWall)
+        {
+            velocity.y = Mathf.Min(0, velocity.y);
+        }
+
+        if (_LeftWall)
+        {
+            velocity.x = Mathf.Max(0, velocity.x);
+        }
+
+        if (_RightWall)
+        {
+            velocity.x = Mathf.Min(0, velocity.x);
+        }
         
     }
 
-    public void Spring(Vector2 force)
+    public void FixedUpdate()
     {
-
-        // remove velocity component in force direction and add force
-        Vector2 vel = Rigidbody.velocity;
-        Vector2 reducingComponent = Vector2.Dot(force.normalized, vel) * force.normalized;
-        vel -= reducingComponent;
-        Rigidbody.velocity = vel;
-        Rigidbody.AddForce(force, ForceMode2D.Impulse);
-
-        _stateMachine.TriggerEvent((int)EventTriggers.Springed);
+        if(_Moving)
+        {
+            ApplySmoothMovement();
+        }
+        if(UseGravity)
+        {
+            ApplyGravity();
+        }
+        if(ShouldCheckCollisions)
+        {
+            CheckCollisions();
+        }
+        
+        transform.position += (Vector3) velocity * Time.fixedDeltaTime;
     }
 
-    public void WallJump(float directionx)
+    GameObject CheckWallCollision(Vector2 direction, int layerMask)
     {
+        float rayDistance = 0.1f;
+        Vector2 origin = transform.position + ((Vector3) direction * _Collider.bounds.extents.y);
 
-        Rigidbody.AddForce(Vector2.Scale(new Vector2(directionx,1), wallJumpForce), ForceMode2D.Impulse);
-
+        Debug.DrawLine(origin, origin + (direction * rayDistance));
+        var hit = Physics2D.Raycast(origin, direction, rayDistance, layerMask);
+        if (hit.collider != null)
+        {
+            return hit.collider.gameObject;
+        }
+        else
+        {
+            return null;
+        }
     }
 
     bool CheckIsGrounded()
     {
-		if(Rigidbody.velocity.y > 0)
+		if(velocity.y > 0)
 		{
 			return false;
 		}
-        int groundCollisionMask = LayerMask.GetMask("Ground");
-        float maxGroundDistance = 0.1f;
-        float rayDistance = _collider.bounds.extents.y + maxGroundDistance;
-        float[] xOrigins = new float[]{
-            -_collider.bounds.extents.x + 0.1f,
-            0,
-            _collider.bounds.extents.x - 0.1f
-        };
 
-        Vector2 pos = transform.position;
-        foreach (float xOrigin in xOrigins)
-        {
-            Vector2 origin = new Vector2(pos.x + xOrigin, pos.y);
-            var hit = Physics2D.Raycast(origin, Vector2.down, rayDistance, groundCollisionMask);
-            if(hit.collider != null)
-            {
-                return true;
-            }
-        }
-
-        return false;
+        return _Ground != null;
     }
+
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.tag == "Box")
+        WeaponBox box = other.GetComponent<WeaponBox>();
+        if(box != null)
         {
             var weaponBox = other.GetComponent<WeaponBox>();
             PickupWeapon(weaponBox.WeaponPrefab);
             weaponBox.DestroyBox();
         }
+    }
+
+    public bool CheckIsDead()
+    {
+        return HealthPoints <= 0;
+    }
+
+    bool IWeaponTarget.ApplyHit(HitInfo hitInfo)
+    {
+        if(IgnoreBullets)
+        {
+            return false;
+        }
+
+        HitInfo = hitInfo;
+        HealthPoints -= 1;
+        _StateMachine.TriggerEvent((int)EventTriggers.Stunned);
+        return true;
+    }
+
+    bool IWeaponTarget.IsActive()
+    {
+        return !CheckIsDead();
     }
 }

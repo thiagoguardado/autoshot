@@ -34,7 +34,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1819739820510172}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -15.04, y: 1.18, z: 0}
+  m_LocalPosition: {x: -6.9, y: 1.98, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -55,13 +55,13 @@ MonoBehaviour:
   IgnoreTarget: {fileID: 0}
   Name: Shotgun
   ShotPrefab: {fileID: 1912672064594474, guid: 0cd9d51641d37e4408a48fcfb9f6eb49, type: 2}
-  Range: 5.47
-  Cooldown: 0.1
-  Spread: 15
-  Shots: 6
+  Range: 6.37
+  Cooldown: 1
+  Spread: 21.47
+  Shots: 4
   ShotSpeed: 10
   MaxAmmo: 10
-  Ammo: 10
+  Ammo: 5
   Shooting: 1
   InfiniteAmmo: 0
   Holder: {fileID: 0}

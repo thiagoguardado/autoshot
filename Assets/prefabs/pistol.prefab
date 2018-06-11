@@ -34,7 +34,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1192021311017698}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -15.17, y: 2.34, z: -10.965588}
+  m_LocalPosition: {x: -6.64, y: 2.34, z: -10.965588}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -55,13 +55,13 @@ MonoBehaviour:
   IgnoreTarget: {fileID: 0}
   Name: Pistol
   ShotPrefab: {fileID: 1912672064594474, guid: 0cd9d51641d37e4408a48fcfb9f6eb49, type: 2}
-  Range: 4.03
-  Cooldown: 0.1
-  Spread: 1
+  Range: 5.79
+  Cooldown: 0.15
+  Spread: 0
   Shots: 1
-  ShotSpeed: 10
-  MaxAmmo: 10
-  Ammo: 10
+  ShotSpeed: 8
+  MaxAmmo: 25
+  Ammo: 25
   Shooting: 1
   InfiniteAmmo: 0
   Holder: {fileID: 0}

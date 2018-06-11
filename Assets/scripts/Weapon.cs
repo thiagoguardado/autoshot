@@ -85,6 +85,20 @@ public abstract class Weapon : MonoBehaviour
             }
         }
     }
+    bool CheckIsTarget(GameObject targetObject)
+    {
+        var target = targetObject.GetComponent<IWeaponTarget>();
+        if(target != null)
+        {
+            if(target.IsActive())
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     void FindTargets()
     {
         _Targets.Clear();
@@ -94,9 +108,9 @@ public abstract class Weapon : MonoBehaviour
 
         foreach (Collider2D collider in colliders)
         {
+            var target = collider.gameObject;
 
-            WeaponTarget target = collider.GetComponent<WeaponTarget>();
-            if (target == null)
+            if (!CheckIsTarget(target))
             {
                 continue;
             }
@@ -114,9 +128,9 @@ public abstract class Weapon : MonoBehaviour
         }
     }
 
-    bool CheckOnSight(WeaponTarget target)
+    bool CheckOnSight(GameObject target)
     {
-        int groundLayerMask = LayerMask.GetMask("Ground");
+        int groundLayerMask = LayerMask.GetMask("Ground", "Platform");
         Vector2 distanceVector = target.transform.position - transform.position;
         var hit = Physics2D.Raycast(transform.position, distanceVector, distanceVector.magnitude, groundLayerMask);
 

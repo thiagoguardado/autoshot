@@ -101,9 +101,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WeaponPrefabs:
   - {fileID: 1192021311017698, guid: e917ab53716eae2459dba5e5b6681e86, type: 2}
-  - {fileID: 1819739820510172, guid: 5c8d70bd9f430b843946acd7287b78bf, type: 2}
-  - {fileID: 1292271475143816, guid: 960b2f5820e6c754793c8dab0082e4f4, type: 2}
-  - {fileID: 1209490324059684, guid: 9eb0f3262eefe074992848cce052a45f, type: 2}
   WeaponPrefab: {fileID: 1819739820510172, guid: 5c8d70bd9f430b843946acd7287b78bf,
     type: 2}
 --- !u!212 &212233335977513588
@@ -119,7 +116,6 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:

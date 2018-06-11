@@ -2,24 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Character))]
 public class NpcController : MonoBehaviour {
-    public Character Character;
-    Character PlayerCharacter;
+    private Character _Character;
+    private Character _PlayerCharacter;
+    public bool UseY = false;
+    public bool UseJump = true;
     public void Awake()
     {
         PlayerInput pi = FindObjectOfType<PlayerInput>();
-        PlayerCharacter = pi.Character;
+        _PlayerCharacter = pi.GetComponent<Character>();
+        _Character = GetComponent<Character>();
     }
+
     public void Update()
     {
-        Character.walkDirection.x = Mathf.Sign(PlayerCharacter.transform.position.x - Character.transform.position.x);
-        if(PlayerCharacter.transform.position.y > transform.position.y)
+        _Character.InputWalkDirection.x = Mathf.Sign(_PlayerCharacter.transform.position.x - _Character.transform.position.x);
+        if(UseY)
         {
-            Character.input_jumping = true;
+            _Character.InputWalkDirection.y = Mathf.Sign(_PlayerCharacter.transform.position.y - _Character.transform.position.y);
         }
-        else
+        if(UseJump)
         {
-            Character.input_jumping = false;
+            if (_PlayerCharacter.transform.position.y > transform.position.y)
+            {
+                _Character.InputIsJumping = true;
+            }
+            else
+            {
+                _Character.InputIsJumping = false;
+            }
         }
     }
 }
