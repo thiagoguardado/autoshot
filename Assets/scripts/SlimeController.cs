@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Character))]
-public class GhostController : MonoBehaviour {
+public class SlimeController : MonoBehaviour {
     private Character _Character;
     public VisionSensor FrontalGroundSensor = new VisionSensor();
     public VisionSensor FrontalWallSensor = new VisionSensor();
