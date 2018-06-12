@@ -27,6 +27,10 @@ public class WeaponCanvas : MonoBehaviour {
             {
                 WeaponAmmoGui.text = Character.CurrentWeapon.Ammo.ToString() + "/" + ((Weapon_Gun)Character.CurrentWeapon).MaxAmmo.ToString();
             }
+            else
+            {
+                WeaponAmmoGui.text = "";
+            }
             
         }
     }

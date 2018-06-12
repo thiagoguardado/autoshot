@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class WeaponTarget : MonoBehaviour, IWeaponTarget
 {
+    public CharacterFaction GetCharacaterFaction()
+    {
+        return CharacterFaction.Player;
+    }
+
     bool IWeaponTarget.ApplyHit(HitInfo hitInfo)
     {
         return true;

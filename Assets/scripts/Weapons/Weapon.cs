@@ -12,6 +12,7 @@ public abstract class Weapon : MonoBehaviour
     // holder enemies targets
     protected List<GameObject> _Targets = new List<GameObject>();
     protected GameObject _ClosestTarget = null;
+    private List<CharacterFaction> friendFactions = new List<CharacterFaction>();
     
     [Header("Configuration")]
     public string Name = "No Name";
@@ -26,7 +27,6 @@ public abstract class Weapon : MonoBehaviour
     private Color _RangeGizmosColor = new Color(1, 1, 1, 0.4f);
     private Color _TargetGizmosColor = new Color(1, 0, 0, 0.4f);
     private Color _ClosestTargetGizmosColor = new Color(0, 1, 0, 0.4f);
-
 
    
 
@@ -43,12 +43,15 @@ public abstract class Weapon : MonoBehaviour
 
 
 
-    public void NewHolder(Character holder, Vector3 holderPosition, Collider2D holderCollider, GameObject holderTarget)
+    public void NewHolder(Character holder, Vector3 holderPosition, Collider2D holderCollider, GameObject holderTarget, List<CharacterFaction> holderFriendFactions)
     {
         Holder = holder;
         IgnoreCollider = holderCollider;
         IgnoreTarget = holderTarget;
         transform.position = holderPosition;
+        friendFactions.Clear();
+        friendFactions = holderFriendFactions;
+
     }
 
 
@@ -119,6 +122,13 @@ public abstract class Weapon : MonoBehaviour
             {
                 continue;
             }
+
+
+            if (friendFactions.Contains(target.GetComponent<IWeaponTarget>().GetCharacaterFaction()))
+            {
+                continue;
+            }
+            
 
             if (CheckOnSight(target))
             {

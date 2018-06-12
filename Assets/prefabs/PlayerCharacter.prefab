@@ -240,10 +240,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc053d82c41d0b84eaa734ade3393820, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterFaction: 0
+  friendFactions: 00000000
   Animator: {fileID: 95211060672920936}
   SpriteRenderer: {fileID: 212619481633951962}
   WalkingMaxSpeed: 8
   WalkingAcceleration: 240
+  SpringedAcceleration: 3
   ReactivityPercent: 0.5
   JumpForceMax: 12
   JumpForceMin: 4

@@ -1,14 +1,25 @@
 ﻿using UnityEngine;
 using FiniteStateMachines;
 using System;
+using System.Collections.Generic;
+
+public enum CharacterFaction
+{
+    Player,
+    Enemies
+}
 
 [RequireComponent(typeof(Collider2D))]
-public class Character : MonoBehaviour, IWeaponTarget {
+public class Character : MonoBehaviour, IWeaponTarget
+{
 
+    [SerializeField] private CharacterFaction characterFaction;
+    public List<CharacterFaction> friendFactions;
     public Animator Animator;
     public SpriteRenderer SpriteRenderer;
     public float WalkingMaxSpeed = 3;
     public float WalkingAcceleration = 3;
+    public float SpringedAcceleration = 3;
     public float ReactivityPercent = 0.5f;
     public float JumpForceMax = 6;
     public float JumpForceMin = 4;
@@ -41,7 +52,7 @@ public class Character : MonoBehaviour, IWeaponTarget {
     [HideInInspector]
     public HitInfo HitInfo { get; private set; }
 
-    
+
     private Collider2D _Collider;
 
     FiniteStateMachine<Character> _StateMachine;
@@ -49,13 +60,16 @@ public class Character : MonoBehaviour, IWeaponTarget {
     CharacterIdle _IdleState = new CharacterIdle();
     CharacterStunned _StunnedState = new CharacterStunned();
     CharacterDeadState _DeadState = new CharacterDeadState();
+    CharacterSpringed _SpringedState = new CharacterSpringed();
 
     public enum EventTriggers
     {
         EndState,
-        Stunned
+        Stunned,
+        Springed
     }
-    
+
+
     void Awake()
     {
 
@@ -67,24 +81,30 @@ public class Character : MonoBehaviour, IWeaponTarget {
         _IdleState.AddCondition(CheckIsDead, _DeadState);
         _IdleState.AddCondition(() => InputIsJumping, _JumpingState);
         _IdleState.AddTrigger((int)EventTriggers.Stunned, _StunnedState);
+        _IdleState.AddTrigger((int)EventTriggers.Springed, _SpringedState);
 
         _JumpingState.AddCondition(CheckIsDead, _DeadState);
         _JumpingState.AddCondition(CheckIsGrounded, _IdleState);
         _JumpingState.AddTrigger((int)EventTriggers.Stunned, _StunnedState);
-        
+        _JumpingState.AddTrigger((int)EventTriggers.Springed, _SpringedState);
+
+        _SpringedState.AddCondition(CheckIsDead, _DeadState);
+        _SpringedState.AddCondition(CheckIsGrounded, _IdleState);
+        _SpringedState.AddTrigger((int)EventTriggers.Stunned, _StunnedState);
+        _SpringedState.AddTrigger((int)EventTriggers.Springed, _SpringedState);
 
         _StunnedState.AddTrigger((int)EventTriggers.EndState, _IdleState);
         _StunnedState.AddTransition((int)EventTriggers.EndState, CheckIsDead, _DeadState);
         _StunnedState.AddTrigger((int)EventTriggers.Stunned, _StunnedState);
-       
+
 
         _StateMachine = new FiniteStateMachine<Character>(this);
         _StateMachine.SetState(_IdleState);
     }
-    
+
     void Start()
     {
-        
+
 
     }
     public void StateEnded()
@@ -94,13 +114,13 @@ public class Character : MonoBehaviour, IWeaponTarget {
 
     void PickupWeapon(GameObject prefab)
     {
-        if(CurrentWeapon != null)
+        if (CurrentWeapon != null)
         {
             CurrentWeapon.DestroyWeapon();
         }
         var currentWeaponObject = Instantiate(prefab);
         CurrentWeapon = currentWeaponObject.GetComponent<Weapon>();
-        CurrentWeapon.NewHolder(this, transform.position, _Collider, gameObject);
+        CurrentWeapon.NewHolder(this, transform.position, _Collider, gameObject, friendFactions);
     }
 
     void Update()
@@ -108,7 +128,7 @@ public class Character : MonoBehaviour, IWeaponTarget {
         _Moving = false;
         _MovementDirection = Vector2.zero;
         _StateMachine.Update();
-        if(CheckIsGrounded())
+        if (CheckIsGrounded())
         {
             transform.parent = _Ground.transform;
         }
@@ -116,22 +136,26 @@ public class Character : MonoBehaviour, IWeaponTarget {
         {
             transform.parent = null;
         }
-        if(velocity.x > 0)
+        if (velocity.x > 0)
         {
             SpriteRenderer.flipX = false;
         }
-        else if(velocity.x < 0)
+        else if (velocity.x < 0)
         {
             SpriteRenderer.flipX = true;
         }
     }
-    
+
     public void Move()
     {
         _Moving = true;
         _MovementDirection = InputWalkDirection;
     }
-
+    public void Move2()
+    {
+        _Moving = true;
+        _MovementDirection = velocity.normalized + InputWalkDirection;
+    }
     public Vector2 velocity = new Vector2();
 
     float GetSmoothMovementAxis(float currentVelocity, float inputVelocity, float acceleration, float maxVelocity)
@@ -148,7 +172,7 @@ public class Character : MonoBehaviour, IWeaponTarget {
                 return currentVelocity;
             }
         }
-        
+
         bool movingInOppositeDirection =
             (inputVelocity > 0 && currentVelocity < 0) ||
             (inputVelocity < 0 && currentVelocity > 0);
@@ -169,7 +193,7 @@ public class Character : MonoBehaviour, IWeaponTarget {
     {
         Vector2 v = velocity;
         v.x = GetSmoothMovementAxis(v.x, _MovementDirection.x, WalkingAcceleration, WalkingMaxSpeed);
-        if(!LockYMovement)
+        if (!LockYMovement)
         {
             v.y = GetSmoothMovementAxis(v.y, _MovementDirection.y, WalkingAcceleration, WalkingMaxSpeed);
         }
@@ -191,7 +215,7 @@ public class Character : MonoBehaviour, IWeaponTarget {
         _RightWall = CheckWallCollision(Vector2.right, _GroundLayerMask);
         _TopWall = CheckWallCollision(Vector2.up, _GroundLayerMask);
 
-        if(_Ground)
+        if (_Ground)
         {
             velocity.y = Mathf.Max(0, velocity.y);
         }
@@ -210,31 +234,31 @@ public class Character : MonoBehaviour, IWeaponTarget {
         {
             velocity.x = Mathf.Min(0, velocity.x);
         }
-        
+
     }
 
     public void FixedUpdate()
     {
-        if(_Moving)
+        if (_Moving)
         {
             ApplySmoothMovement();
         }
-        if(UseGravity)
+        if (UseGravity)
         {
             ApplyGravity();
         }
-        if(ShouldCheckCollisions)
+        if (ShouldCheckCollisions)
         {
             CheckCollisions();
         }
-        
-        transform.position += (Vector3) velocity * Time.fixedDeltaTime;
+
+        transform.position += (Vector3)velocity * Time.fixedDeltaTime;
     }
 
     GameObject CheckWallCollision(Vector2 direction, int layerMask)
     {
         float rayDistance = 0.1f;
-        Vector2 origin = transform.position + ((Vector3) direction * _Collider.bounds.extents.y);
+        Vector2 origin = transform.position + ((Vector3)direction * _Collider.bounds.extents.y);
 
         Debug.DrawLine(origin, origin + (direction * rayDistance));
         var hit = Physics2D.Raycast(origin, direction, rayDistance, layerMask);
@@ -250,10 +274,10 @@ public class Character : MonoBehaviour, IWeaponTarget {
 
     bool CheckIsGrounded()
     {
-		if(velocity.y > 0)
-		{
-			return false;
-		}
+        if (velocity.y > 0)
+        {
+            return false;
+        }
 
         return _Ground != null;
     }
@@ -262,7 +286,7 @@ public class Character : MonoBehaviour, IWeaponTarget {
     void OnTriggerEnter2D(Collider2D other)
     {
         WeaponBox box = other.GetComponent<WeaponBox>();
-        if(box != null)
+        if (box != null)
         {
             var weaponBox = other.GetComponent<WeaponBox>();
             PickupWeapon(weaponBox.WeaponPrefab);
@@ -277,7 +301,7 @@ public class Character : MonoBehaviour, IWeaponTarget {
 
     bool IWeaponTarget.ApplyHit(HitInfo hitInfo)
     {
-        if(IgnoreBullets)
+        if (IgnoreBullets)
         {
             return false;
         }
@@ -292,4 +316,20 @@ public class Character : MonoBehaviour, IWeaponTarget {
     {
         return !CheckIsDead();
     }
+
+    CharacterFaction IWeaponTarget.GetCharacaterFaction()
+    {
+        return characterFaction;
+    }
+
+    public void Spring(Vector2 force)
+    {
+
+        // remove velocity component in force direction and add force
+        Vector2 reducingComponent = Vector2.Dot(force.normalized, velocity) * force.normalized;
+        velocity -= reducingComponent;
+        velocity += force;
+        _StateMachine.TriggerEvent((int)EventTriggers.Springed);
+    }
+
 }

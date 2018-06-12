@@ -38,10 +38,8 @@ public class Spring : MonoBehaviour {
         }
 
         // if not in cooldown
-        /**
         character.Spring(springDirection.normalized * springForce);
         cooldownCharacters.Add(new CharacterCooldown(character, characterCooldown));
-        **/
 
     }
 

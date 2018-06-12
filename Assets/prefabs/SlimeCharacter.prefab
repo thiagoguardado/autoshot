@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 50460068074331568}
   - component: {fileID: 114067202546252792}
   - component: {fileID: 58916973137908612}
-  - component: {fileID: 114020542569774384}
+  - component: {fileID: 114953953678473038}
   m_Layer: 9
   m_Name: SlimeCharacter
   m_TagString: Character
@@ -181,17 +181,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114020542569774384
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1244056567529540}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3636f8765e54a86478e7507610718be5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114067202546252792
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -203,10 +192,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc053d82c41d0b84eaa734ade3393820, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterFaction: 1
+  friendFactions: 01000000
   Animator: {fileID: 95009382642982174}
   SpriteRenderer: {fileID: 212858651705116900}
   WalkingMaxSpeed: 3
   WalkingAcceleration: 240
+  SpringedAcceleration: 3
   ReactivityPercent: 0.5
   JumpForceMax: 1
   JumpForceMin: 1
@@ -354,6 +346,19 @@ MonoBehaviour:
   Character: {fileID: 114067202546252792}
   WeaponNameGui: {fileID: 114223444287777962}
   WeaponAmmoGui: {fileID: 114515421656070648}
+--- !u!114 &114953953678473038
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1244056567529540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7e90fb360f8d0949a02311eb760dd0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UseY: 0
+  UseJump: 0
 --- !u!212 &212858651705116900
 SpriteRenderer:
   m_ObjectHideFlags: 1
