@@ -55,7 +55,7 @@ MonoBehaviour:
   IgnoreTarget: {fileID: 0}
   Name: Pistol
   Cooldown: 0.5
-  Range: 4.03
+  Range: 8
   Ammo: 10
   InfiniteAmmo: 0
   Shooting: 1

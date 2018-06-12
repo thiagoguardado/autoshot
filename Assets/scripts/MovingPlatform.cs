@@ -8,6 +8,7 @@ public class MovingPlatform : MonoBehaviour {
     public float Interval = 1;
     private float _Timeout;
     private Rigidbody2D _Rigidbody2D;
+
     void Awake()
     {
         _Rigidbody2D = GetComponent<Rigidbody2D>();

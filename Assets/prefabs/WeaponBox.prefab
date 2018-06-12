@@ -101,6 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WeaponPrefabs:
   - {fileID: 1192021311017698, guid: eb4549a0eb761e649bc72d698a3f0e55, type: 2}
+  - {fileID: 1192021311017698, guid: e917ab53716eae2459dba5e5b6681e86, type: 2}
   WeaponPrefab: {fileID: 1819739820510172, guid: 5c8d70bd9f430b843946acd7287b78bf,
     type: 2}
 --- !u!212 &212233335977513588

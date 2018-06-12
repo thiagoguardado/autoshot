@@ -95,7 +95,7 @@ MonoBehaviour:
   animationDuration: 0.075
   hitInfo:
     StunDirection: {x: 0, y: 0}
-    StunForce: 0.5
+    StunForce: 10
     StunTime: 0.2
 --- !u!120 &120199390175511856
 LineRenderer:
