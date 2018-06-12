@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Character))]
-public class SlimeController : MonoBehaviour {
+public class GhostController : MonoBehaviour {
     private Character _Character;
     public VisionSensor FrontalGroundSensor = new VisionSensor();
     public VisionSensor FrontalWallSensor = new VisionSensor();
     public VisionSensor GrundedSensor = new VisionSensor();
 
 
-    private float _CurrentDirection = 1;
+    private int _CurrentDirection = 1;
 
 
     public void Awake()
@@ -28,6 +28,7 @@ public class SlimeController : MonoBehaviour {
     {
         FrontalGroundSensor.Origin.x = Mathf.Abs(FrontalGroundSensor.Origin.x) * _CurrentDirection;
         FrontalWallSensor.Origin.x = Mathf.Abs(FrontalGroundSensor.Origin.x) * _CurrentDirection;
+        FrontalWallSensor.Angle = _CurrentDirection > 0 ? 0.0f : 180.0f;
     }
 
     public void Update()
@@ -47,5 +48,6 @@ public class SlimeController : MonoBehaviour {
         
         _Character.InputWalkDirection = Vector2.right * _CurrentDirection;
         FrontalGroundSensor.DebugDraw();
+        FrontalWallSensor.DebugDraw();
     }
 }
