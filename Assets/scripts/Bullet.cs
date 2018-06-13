@@ -4,12 +4,15 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Bullet : MonoBehaviour {
-
+    [HideInInspector]
     public Collider2D IgnoreCollider;
-    Rigidbody2D _RigidBody;
-    private float _Force = 16;
-    private float _Time = 0.2f;
+    [HideInInspector]
+    public HitInfo HitInfo;
+    [HideInInspector]
+    public List<CharacterFaction> FriendFactions = new List<CharacterFaction>();
 
+    Rigidbody2D _RigidBody;
+   
     void Awake()
     {
         _RigidBody = GetComponent<Rigidbody2D>();
@@ -20,15 +23,19 @@ public class Bullet : MonoBehaviour {
         var target = hitTarget.GetComponent<IWeaponTarget>();
         if (target != null)
         {
-            HitInfo hit = new HitInfo(_RigidBody.velocity.normalized, _Force,_Time);
-            if(target.ApplyHit(hit))
+            if(!FriendFactions.Contains(target.GetCharacaterFaction()))
             {
-                Destroy(gameObject);
+                HitInfo.StunDirection = _RigidBody.velocity.normalized;
+                bool hitSuccessful = target.ApplyHit(HitInfo);
+                if (hitSuccessful)
+                {
+                    Destroy(gameObject);
+                }
             }
+            
         }
         else
         {
-            Debug.Log("hitting " + hitTarget.name);
             Destroy(gameObject);
         }
     }

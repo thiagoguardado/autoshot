@@ -11,6 +11,7 @@ public class Weapon_Gun : Weapon
     public float ShotSpeed = 1.0f;
     public int MaxAmmo = 10;
 
+    public HitInfo HitInfo;
 
 
     public override void Shot()
@@ -27,6 +28,8 @@ public class Weapon_Gun : Weapon
     private void ShootProjectile()
     {
         Vector2 shotDirection = _ClosestTarget.transform.position - transform.position;
+        shotDirection.Normalize();
+
         float spreadAngle = Random.Range(-Spread, Spread);
         float sin = Mathf.Sin(spreadAngle * Mathf.Deg2Rad);
         float cos = Mathf.Cos(spreadAngle * Mathf.Deg2Rad);
@@ -39,7 +42,8 @@ public class Weapon_Gun : Weapon
         {
             GameObject bulletObject = Instantiate(ShotPrefab, transform.position, Quaternion.identity);
             var bullet = bulletObject.GetComponent<Bullet>();
-
+            bullet.FriendFactions = friendFactions;
+            bullet.HitInfo = HitInfo;
             Physics2D.IgnoreCollision(bullet.GetComponent<Collider2D>(), IgnoreCollider);
             bullet.IgnoreCollider = IgnoreCollider;
 

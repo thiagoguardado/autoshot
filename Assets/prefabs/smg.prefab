@@ -53,15 +53,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IgnoreCollider: {fileID: 0}
   IgnoreTarget: {fileID: 0}
-  Name: Pistol
+  Name: SMG
   Cooldown: 0.2
   Range: 8
-  Ammo: 10
+  Ammo: 20
   InfiniteAmmo: 0
   Shooting: 1
   Holder: {fileID: 0}
   ShotPrefab: {fileID: 1912672064594474, guid: 0cd9d51641d37e4408a48fcfb9f6eb49, type: 2}
-  Spread: 10
+  Spread: 0
   Shots: 1
-  ShotSpeed: 3
-  MaxAmmo: 60
+  ShotSpeed: 24
+  MaxAmmo: 20
+  HitInfo:
+    StunDirection: {x: 0, y: 0}
+    StunForce: 2
+    StunTime: 0.05

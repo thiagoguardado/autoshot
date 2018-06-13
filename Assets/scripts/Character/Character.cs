@@ -29,6 +29,7 @@ public class Character : MonoBehaviour, IWeaponTarget
     public bool UseGravity = true;
     public bool LockYMovement = true;
     public bool ShouldCheckCollisions = true;
+    public bool CanPickupWeapon = true;
 
     public GameObject _Ground = null;
     public GameObject _RightWall = null;
@@ -54,8 +55,6 @@ public class Character : MonoBehaviour, IWeaponTarget
 
     [HideInInspector]
     public HitInfo HitInfo { get; private set; }
-
-
     private Collider2D _Collider;
 
     FiniteStateMachine<Character> _StateMachine;
@@ -117,13 +116,20 @@ public class Character : MonoBehaviour, IWeaponTarget
 
     void PickupWeapon(GameObject prefab)
     {
+        if (!CanPickupWeapon)
+        {
+            return;
+        }
+
         if (CurrentWeapon != null)
         {
             CurrentWeapon.DestroyWeapon();
         }
+
         var currentWeaponObject = Instantiate(prefab);
         CurrentWeapon = currentWeaponObject.GetComponent<Weapon>();
         CurrentWeapon.NewHolder(this, transform.position, _Collider, gameObject, friendFactions);
+
     }
 
     void Update()
@@ -291,9 +297,13 @@ public class Character : MonoBehaviour, IWeaponTarget
         WeaponBox box = other.GetComponent<WeaponBox>();
         if (box != null)
         {
-            var weaponBox = other.GetComponent<WeaponBox>();
-            PickupWeapon(weaponBox.WeaponPrefab);
-            weaponBox.DestroyBox();
+            if(CanPickupWeapon)
+            {
+                var weaponBox = other.GetComponent<WeaponBox>();
+                PickupWeapon(weaponBox.WeaponPrefab);
+                weaponBox.DestroyBox();
+            }
+            
         }
     }
 

@@ -12,10 +12,7 @@ public class CharacterDeadState : State<Character>
         Agent.Animator.Play("dead");
         Agent.IgnoreBullets = true;
         Agent._MovementDirection = Vector2.zero;
-        if(Agent.CurrentWeapon != null)
-        {
-            Agent.CurrentWeapon.Shooting = false;
-        }
+        Agent.CanPickupWeapon = false;
         SetChildrenActive(false);
     }
 
@@ -29,6 +26,7 @@ public class CharacterDeadState : State<Character>
         SetChildrenActive(true);
 
         Agent.IgnoreBullets = false;
+        Agent.CanPickupWeapon = true;
         if (Agent.CurrentWeapon != null)
         {
             Agent.CurrentWeapon.Shooting = true;

@@ -84,7 +84,7 @@ MonoBehaviour:
   IgnoreCollider: {fileID: 0}
   IgnoreTarget: {fileID: 0}
   Name: Melee
-  Cooldown: 0.5
+  Cooldown: 0.2
   Range: 1.2
   Ammo: 5
   InfiniteAmmo: 1
