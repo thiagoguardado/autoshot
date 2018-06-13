@@ -12,8 +12,14 @@ public class CharacterDeadState : State<Character>
         Agent.Animator.Play("dead");
         Agent.IgnoreBullets = true;
         Agent._MovementDirection = Vector2.zero;
+
         Agent.CanPickupWeapon = false;
         SetChildrenActive(false);
+
+        if(Agent.CurrentWeaponSelector != null)
+        {
+            Agent.DropWeapon();
+        }
     }
 
    
@@ -22,14 +28,16 @@ public class CharacterDeadState : State<Character>
     {
        
         base.Exit();
-
+        
         SetChildrenActive(true);
 
         Agent.IgnoreBullets = false;
+
         Agent.CanPickupWeapon = true;
-        if (Agent.CurrentWeapon != null)
+
+        if (Agent.CurrentWeaponSelector != null)
         {
-            Agent.CurrentWeapon.Shooting = true;
+            Agent.DropWeapon();
         }
     }
 
@@ -43,10 +51,9 @@ public class CharacterDeadState : State<Character>
         {
             Agent.HurtTrigger.gameObject.SetActive(active);
         }
-        if (Agent.CurrentWeapon != null)
+        if(Agent.CurrentWeaponSelector!= null)
         {
-            Agent.CurrentWeapon.Shooting = active;
-            Agent.CurrentWeapon.gameObject.SetActive(active);
+            Agent.CurrentWeaponSelector.currentInstantiatedWeapon.Shooting = active;
         }
     }
 }

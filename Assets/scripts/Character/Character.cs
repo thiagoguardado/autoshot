@@ -25,6 +25,9 @@ public class Character : MonoBehaviour, IWeaponTarget
     public WeaponCanvas WeaponCanvas;
 
     public float WalkingMaxSpeed = 3;
+
+
+
     public float WalkingAcceleration = 3;
     public float SpringedAcceleration = 3;
     public float ReactivityPercent = 0.5f;
@@ -48,8 +51,7 @@ public class Character : MonoBehaviour, IWeaponTarget
     int _PlatformLayerMask;
     bool _Moving = false;
 
-    [HideInInspector]
-    public Weapon CurrentWeapon { get; private set; }
+    [HideInInspector] public WeaponFactionSelector CurrentWeaponSelector { get; private set; }
 
     [HideInInspector]
     public Vector2 InputWalkDirection;
@@ -59,7 +61,9 @@ public class Character : MonoBehaviour, IWeaponTarget
 
     [HideInInspector]
     public HitInfo HitInfo { get; private set; }
-    private Collider2D _Collider;
+
+
+    public Collider2D _Collider { get; private set; }
 
     FiniteStateMachine<Character> _StateMachine;
     CharacterJumping _JumpingState = new CharacterJumping();
@@ -121,36 +125,48 @@ public class Character : MonoBehaviour, IWeaponTarget
         _StateMachine.TriggerEvent((int)EventTriggers.EndState);
     }
 
-    void DropCurrentWeapon()
+    void PickupWeapon(WeaponFactionSelector _weaponSelector)
     {
-        if (CurrentWeapon != null)
-        {
-            CurrentWeapon.DestroyWeapon();
-        }
-    }
-
-    void DestroyCurrentWeapon()
-    {
-        if (CurrentWeapon != null)
-        {
-            CurrentWeapon.DestroyWeapon();
-        }
-    }
-
-    void PickupWeapon(GameObject prefab)
-    {
-        if (!CanPickupWeapon)
+        if(!CanPickupWeapon)
         {
             return;
         }
+        Weapon weaponToInstantiate = null;
 
-        DropCurrentWeapon();
+        for (int i = 0; i < _weaponSelector.weapons.Count; i++)
+        {
+            if (_weaponSelector.weapons[i].faction == characterFaction)
+            {
+                weaponToInstantiate = _weaponSelector.weapons[i].weaponPrefab;
+                break;
+            }
+        }
 
-        var currentWeaponObject = Instantiate(prefab);
-        CurrentWeapon = currentWeaponObject.GetComponent<Weapon>();
-        CurrentWeapon.NewHolder(this, transform.position, _Collider, gameObject, friendFactions);
+        if (weaponToInstantiate != null)
+        {
 
+            // drop current selector and pick new
+            if (CurrentWeaponSelector != null)
+            {
+                //force destroy
+                CurrentWeaponSelector.currentInstantiatedWeapon.Ammo = 0;
+                CurrentWeaponSelector.CharacterDropSelector(transform.position);
+            }
+            CurrentWeaponSelector = _weaponSelector;
+            CurrentWeaponSelector.CharacterPickSelector(this, weaponToInstantiate);           
+        }
     }
+
+    public void DropWeapon()
+
+    {
+        if (CurrentWeaponSelector != null)
+        {
+            CurrentWeaponSelector.CharacterDropSelector(transform.position);
+
+        }
+    }
+
 
     void Update()
     {
@@ -314,16 +330,14 @@ public class Character : MonoBehaviour, IWeaponTarget
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        WeaponBox box = other.GetComponent<WeaponBox>();
+        WeaponFactionSelector box = other.GetComponentInParent<WeaponFactionSelector>();
         if (box != null)
         {
+
             if(CanPickupWeapon)
             {
-                var weaponBox = other.GetComponent<WeaponBox>();
-                PickupWeapon(weaponBox.WeaponPrefab);
-                weaponBox.DestroyBox();
+                PickupWeapon(box);
             }
-            
         }
     }
 

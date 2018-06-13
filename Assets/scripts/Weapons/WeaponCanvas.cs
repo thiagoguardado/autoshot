@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 public class WeaponCanvas : MonoBehaviour {
-    Character _Character;
+    private Character _Character;
 
     public Image WeaponIconGui;
     public Text WeaponAmmoGui;
     public Image Background;
-
     
+  
     void Awake()
     {
         _Character = transform.parent.GetComponent<Character>();
+
+
     }
 	void Update () {
         UpdateWeaponGui();
@@ -20,23 +22,16 @@ public class WeaponCanvas : MonoBehaviour {
 
     void UpdateWeaponGui()
     {
-        if (_Character.CurrentWeapon == null)
+
+        if (_Character.CurrentWeaponSelector == null)
         {
             Background.gameObject.SetActive(false);
         }
         else
         {
             Background.gameObject.SetActive(true);
-            WeaponIconGui.sprite = _Character.CurrentWeapon.IconSprite;
-            //if (_Character.CurrentWeapon is Weapon_Gun)
-         //   {
-                WeaponAmmoGui.text = _Character.CurrentWeapon.Ammo.ToString();
-          //  }
-           // else
-           // {
-            //    WeaponAmmoGui.text = "";
-           // }
-            
+            WeaponIconGui.sprite = _Character.CurrentWeaponSelector.currentInstantiatedWeapon.IconSprite;
+            WeaponAmmoGui.text = _Character.CurrentWeaponSelector.currentInstantiatedWeapon.Ammo.ToString();
         }
     }
 }
