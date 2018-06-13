@@ -54,9 +54,9 @@ public class Weapon_Melee : Weapon
     private IEnumerator LineAnimation(float duration)
     {
 
-        
-        Quaternion startRotation = Quaternion.Euler(0, 0, -Vector3.Angle(targetDirection, Vector3.right) + areaAngle / 2);
-        Quaternion finalRotation = Quaternion.Euler(0, 0, -Vector3.Angle(targetDirection, Vector3.right) - areaAngle / 2);
+        float angleToTarget = Vector3.Angle(targetDirection, Vector3.right) * Mathf.Sign(Vector3.Dot(targetDirection, Vector3.right));
+        Quaternion startRotation = Quaternion.Euler(0, 0, angleToTarget + areaAngle / 2);
+        Quaternion finalRotation = Quaternion.Euler(0, 0, angleToTarget - areaAngle / 2);
 
         lineRenderer.transform.localScale = new Vector3(Range, 1, 1);
         lineRenderer.enabled = true;

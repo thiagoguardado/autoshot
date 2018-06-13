@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4520435746501370}
   - component: {fileID: 114841279745827074}
   m_Layer: 0
-  m_Name: melee
+  m_Name: MeleeEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -83,9 +83,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IgnoreCollider: {fileID: 0}
   IgnoreTarget: {fileID: 0}
+  weaponClass: 0
   Name: Melee
-  Cooldown: 0.5
-  Range: 1.2
+  Cooldown: 0.75
+  Range: 1
   Ammo: 5
   InfiniteAmmo: 1
   Shooting: 1
@@ -95,8 +96,8 @@ MonoBehaviour:
   animationDuration: 0.075
   hitInfo:
     StunDirection: {x: 0, y: 0}
-    StunForce: 10
-    StunTime: 0.2
+    StunForce: 5
+    StunTime: 0.1
 --- !u!120 &120199390175511856
 LineRenderer:
   m_ObjectHideFlags: 1

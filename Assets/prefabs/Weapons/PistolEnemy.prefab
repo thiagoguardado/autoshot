@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4520435746501370}
   - component: {fileID: 114158152970916756}
   m_Layer: 0
-  m_Name: pistol
+  m_Name: PistolEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -53,6 +53,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IgnoreCollider: {fileID: 0}
   IgnoreTarget: {fileID: 0}
+  weaponClass: 0
   Name: Pistol
   Cooldown: 0.5
   Range: 8

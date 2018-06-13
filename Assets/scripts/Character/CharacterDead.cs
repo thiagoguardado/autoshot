@@ -10,9 +10,9 @@ public class CharacterDeadState : State<Character>
         Agent.Animator.Play("dead");
         Agent.IgnoreBullets = true;
         Agent._MovementDirection = Vector2.zero;
-        if(Agent.CurrentWeapon != null)
+        if(Agent.CurrentWeaponSelector != null)
         {
-            Agent.CurrentWeapon.Shooting = false;
+            Agent.DropWeapon();
         }
     }
 
@@ -21,9 +21,9 @@ public class CharacterDeadState : State<Character>
     {
         base.Exit();
         Agent.IgnoreBullets = false;
-        if (Agent.CurrentWeapon != null)
+        if (Agent.CurrentWeaponSelector != null)
         {
-            Agent.CurrentWeapon.Shooting = true;
+            Agent.DropWeapon();
         }
     }
 }

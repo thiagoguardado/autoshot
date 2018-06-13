@@ -15,17 +15,17 @@ public class WeaponCanvas : MonoBehaviour {
 
     void UpdateWeaponGui()
     {
-        if (Character.CurrentWeapon == null)
+        if (Character.CurrentWeaponSelector == null)
         {
             WeaponNameGui.text = "";
             WeaponAmmoGui.text = "";
         }
         else
         {
-            WeaponNameGui.text = Character.CurrentWeapon.Name;
-            if (Character.CurrentWeapon is Weapon_Gun)
+            WeaponNameGui.text = Character.CurrentWeaponSelector.currentInstantiatedWeapon.Name;
+            if (Character.CurrentWeaponSelector.currentInstantiatedWeapon is Weapon_Gun)
             {
-                WeaponAmmoGui.text = Character.CurrentWeapon.Ammo.ToString() + "/" + ((Weapon_Gun)Character.CurrentWeapon).MaxAmmo.ToString();
+                WeaponAmmoGui.text = Character.CurrentWeaponSelector.currentInstantiatedWeapon.Ammo.ToString() + "/" + ((Weapon_Gun)Character.CurrentWeaponSelector.currentInstantiatedWeapon).MaxAmmo.ToString();
             }
             else
             {

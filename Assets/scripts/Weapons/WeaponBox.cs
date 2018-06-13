@@ -2,18 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponBox : MonoBehaviour {
-    public GameObject[] WeaponPrefabs;
-    [HideInInspector]
-    public GameObject WeaponPrefab;
 
-    public void Awake()
+public class WeaponBox : MonoBehaviour {
+
+
+    [HideInInspector]
+    public WeaponFactionSelector WeaponSelector;
+
+    public List<WeaponFactionSelector> weaponsSelectors;
+
+    public void Start()
     {
-      
-        WeaponPrefab = WeaponPrefabs[Random.Range(0, WeaponPrefabs.Length)];
+
+        WeaponSelector = weaponsSelectors[Random.Range(0, weaponsSelectors.Count)];
+
+        if (WeaponSelector != null)
+        {
+            Instantiate(WeaponSelector, transform.position, Quaternion.identity);
+            Destroy(gameObject);
+            return;
+        }
+
+        Debug.LogError("Weaponbox empty");
+
     }
-    public void DestroyBox()
-    {
-        Destroy(gameObject);
-    }
+
 }
+
+
+

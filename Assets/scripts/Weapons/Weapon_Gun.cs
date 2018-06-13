@@ -39,14 +39,12 @@ public class Weapon_Gun : Weapon
 
         if (ShotPrefab != null)
         {
-            GameObject bulletObject = Instantiate(ShotPrefab);
+            GameObject bulletObject = Instantiate(ShotPrefab, transform.position, Quaternion.identity);
             var bullet = bulletObject.GetComponent<Bullet>();
 
             Physics2D.IgnoreCollision(bullet.GetComponent<Collider2D>(), IgnoreCollider);
             bullet.IgnoreCollider = IgnoreCollider;
 
-
-            bulletObject.transform.position = transform.position;
             var rigidBody = bulletObject.GetComponent<Rigidbody2D>();
             rigidBody.velocity = spreadedDirection * ShotSpeed;
         }

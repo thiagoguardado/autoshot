@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum WeaponClass
+{
+    Melee,
+    Gun
+}
+
+
 public abstract class Weapon : MonoBehaviour
 {
    
@@ -13,8 +20,9 @@ public abstract class Weapon : MonoBehaviour
     protected List<GameObject> _Targets = new List<GameObject>();
     protected GameObject _ClosestTarget = null;
     private List<CharacterFaction> friendFactions = new List<CharacterFaction>();
-    
+
     [Header("Configuration")]
+    public WeaponClass weaponClass;
     public string Name = "No Name";
     public float Cooldown = 1.0f;
     public float Range = 1.0f;
