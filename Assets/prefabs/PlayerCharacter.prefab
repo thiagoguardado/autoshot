@@ -328,7 +328,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9759db175f4a32438d5e54d1c8e5400, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Character: {fileID: 114409963779629636}
   WeaponNameGui: {fileID: 114012934891699678}
   WeaponAmmoGui: {fileID: 114462589951655830}
 --- !u!114 &114609199945812758

@@ -414,17 +414,7 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 4717634169704314, guid: c2cf6b4c75d97f04daa8848f57e51166, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114409963779629636, guid: c2cf6b4c75d97f04daa8848f57e51166,
-        type: 2}
-      propertyPath: SpringedAcceleration
-      value: 240
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 114660997288783848, guid: c2cf6b4c75d97f04daa8848f57e51166, type: 2}
+    m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c2cf6b4c75d97f04daa8848f57e51166, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &324811745
