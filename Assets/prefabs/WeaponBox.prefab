@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 61999991079760042}
   - component: {fileID: 114640691062918396}
   - component: {fileID: 50247248042718328}
+  - component: {fileID: 61931784562099116}
   m_Layer: 0
   m_Name: WeaponBox
   m_TagString: Box
@@ -37,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1797399193265084}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.48, y: -1.58, z: 0}
+  m_LocalPosition: {x: 17.342737, y: 7.461124, z: 0}
   m_LocalScale: {x: 0.2, y: 0.19999999, z: 0.19999999}
   m_Children: []
   m_Father: {fileID: 0}
@@ -50,7 +51,7 @@ Rigidbody2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1797399193265084}
-  m_BodyType: 2
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -63,7 +64,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &61999991079760042
+--- !u!61 &61931784562099116
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -73,6 +74,31 @@ BoxCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.020249367, y: -0.020251393}
+  m_SpriteTilingProperty:
+    border: {x: 0.81, y: 0.81, z: 0.81, w: 0.81}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2.56, y: 2.56}
+    newSize: {x: 2.8089676, y: 2.746604}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 1
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 3.5727215, y: 3.4917}
+  m_EdgeRadius: 0
+--- !u!61 &61999991079760042
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1797399193265084}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -101,7 +127,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WeaponPrefabs:
   - {fileID: 1192021311017698, guid: eb4549a0eb761e649bc72d698a3f0e55, type: 2}
-  - {fileID: 1192021311017698, guid: e917ab53716eae2459dba5e5b6681e86, type: 2}
+  - {fileID: 1192021311017698, guid: 8e418077a906a874a96a9158594f0cd6, type: 2}
   WeaponPrefab: {fileID: 1819739820510172, guid: 5c8d70bd9f430b843946acd7287b78bf,
     type: 2}
 --- !u!212 &212233335977513588

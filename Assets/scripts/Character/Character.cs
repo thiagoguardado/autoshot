@@ -17,6 +17,9 @@ public class Character : MonoBehaviour, IWeaponTarget
     public List<CharacterFaction> friendFactions;
     public Animator Animator;
     public SpriteRenderer SpriteRenderer;
+    public HurtTrigger HurtTrigger;
+    public WeaponCanvas WeaponCanvas;
+
     public float WalkingMaxSpeed = 3;
     public float WalkingAcceleration = 3;
     public float SpringedAcceleration = 3;

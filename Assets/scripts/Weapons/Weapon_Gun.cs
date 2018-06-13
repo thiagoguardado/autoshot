@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Weapon_Gun : Weapon
 {
-
-    
     [Header("Gun Shot Configuration")]
     public GameObject ShotPrefab = null;
     public float Spread = 1.0f;
@@ -39,7 +37,7 @@ public class Weapon_Gun : Weapon
 
         if (ShotPrefab != null)
         {
-            GameObject bulletObject = Instantiate(ShotPrefab);
+            GameObject bulletObject = Instantiate(ShotPrefab, transform.position, Quaternion.identity);
             var bullet = bulletObject.GetComponent<Bullet>();
 
             Physics2D.IgnoreCollision(bullet.GetComponent<Collider2D>(), IgnoreCollider);

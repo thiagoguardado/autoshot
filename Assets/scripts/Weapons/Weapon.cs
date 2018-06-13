@@ -93,9 +93,13 @@ public abstract class Weapon : MonoBehaviour
         var target = targetObject.GetComponent<IWeaponTarget>();
         if(target != null)
         {
-            if(target.IsActive())
+
+            if (!friendFactions.Contains(target.GetCharacaterFaction()))
             {
-                return true;
+                if (target.IsActive())
+                {
+                    return true;
+                }
             }
         }
 
@@ -122,12 +126,8 @@ public abstract class Weapon : MonoBehaviour
             {
                 continue;
             }
-
-
-            if (friendFactions.Contains(target.GetComponent<IWeaponTarget>().GetCharacaterFaction()))
-            {
-                continue;
-            }
+            
+           
             
 
             if (CheckOnSight(target))
