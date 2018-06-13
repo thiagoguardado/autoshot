@@ -83,11 +83,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IgnoreCollider: {fileID: 0}
   IgnoreTarget: {fileID: 0}
+  IconSprite: {fileID: 21300000, guid: 60f361a9ec9948f4f9e6d1bc6f55fea6, type: 3}
   Name: Melee
   Cooldown: 0.2
   Range: 1.2
-  Ammo: 5
-  InfiniteAmmo: 1
+  Ammo: 10
+  InfiniteAmmo: 0
   Shooting: 1
   Holder: {fileID: 0}
   areaAngle: 60

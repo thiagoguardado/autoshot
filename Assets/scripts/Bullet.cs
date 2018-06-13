@@ -59,4 +59,10 @@ public class Bullet : MonoBehaviour {
 
         OnHit(col.gameObject);
     }
+
+    void Update()
+    {
+        
+        transform.right = _RigidBody.velocity;
+    }
 }

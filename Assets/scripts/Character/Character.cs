@@ -17,7 +17,11 @@ public class Character : MonoBehaviour, IWeaponTarget
     public List<CharacterFaction> friendFactions;
     public Animator Animator;
     public SpriteRenderer SpriteRenderer;
+
+    [HideInInspector]
     public HurtTrigger HurtTrigger;
+
+    [HideInInspector]
     public WeaponCanvas WeaponCanvas;
 
     public float WalkingMaxSpeed = 3;
@@ -102,6 +106,9 @@ public class Character : MonoBehaviour, IWeaponTarget
 
         _StateMachine = new FiniteStateMachine<Character>(this);
         _StateMachine.SetState(_IdleState);
+
+        WeaponCanvas = GetComponentInChildren<WeaponCanvas>();
+        HurtTrigger = GetComponentInChildren<HurtTrigger>();
     }
 
     void Start()
@@ -114,6 +121,22 @@ public class Character : MonoBehaviour, IWeaponTarget
         _StateMachine.TriggerEvent((int)EventTriggers.EndState);
     }
 
+    void DropCurrentWeapon()
+    {
+        if (CurrentWeapon != null)
+        {
+            CurrentWeapon.DestroyWeapon();
+        }
+    }
+
+    void DestroyCurrentWeapon()
+    {
+        if (CurrentWeapon != null)
+        {
+            CurrentWeapon.DestroyWeapon();
+        }
+    }
+
     void PickupWeapon(GameObject prefab)
     {
         if (!CanPickupWeapon)
@@ -121,10 +144,7 @@ public class Character : MonoBehaviour, IWeaponTarget
             return;
         }
 
-        if (CurrentWeapon != null)
-        {
-            CurrentWeapon.DestroyWeapon();
-        }
+        DropCurrentWeapon();
 
         var currentWeaponObject = Instantiate(prefab);
         CurrentWeapon = currentWeaponObject.GetComponent<Weapon>();

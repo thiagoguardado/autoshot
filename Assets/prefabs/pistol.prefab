@@ -53,6 +53,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IgnoreCollider: {fileID: 0}
   IgnoreTarget: {fileID: 0}
+  IconSprite: {fileID: 21300000, guid: 32237401c091c954c990fc399d10e75a, type: 3}
   Name: Pistol
   Cooldown: 0.5
   Range: 8
@@ -60,8 +61,15 @@ MonoBehaviour:
   InfiniteAmmo: 0
   Shooting: 1
   Holder: {fileID: 0}
+  GunDistance: 1
+  GunSprite: {fileID: 0}
+  GunShotEffectPrefab: {fileID: 0}
   ShotPrefab: {fileID: 1912672064594474, guid: 0cd9d51641d37e4408a48fcfb9f6eb49, type: 2}
   Spread: 1
   Shots: 1
   ShotSpeed: 10
   MaxAmmo: 10
+  HitInfo:
+    StunDirection: {x: 0, y: 0}
+    StunForce: 10
+    StunTime: 1

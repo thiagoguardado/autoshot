@@ -8,6 +8,7 @@ public abstract class Weapon : MonoBehaviour
     // holder collider and target
     [HideInInspector] public Collider2D IgnoreCollider = null;
     [HideInInspector] public GameObject IgnoreTarget = null;
+    public Sprite IconSprite = null;
 
     // holder enemies targets
     protected List<GameObject> _Targets = new List<GameObject>();
@@ -28,10 +29,13 @@ public abstract class Weapon : MonoBehaviour
     private Color _TargetGizmosColor = new Color(1, 0, 0, 0.4f);
     private Color _ClosestTargetGizmosColor = new Color(0, 1, 0, 0.4f);
 
-   
+    //created for safety. weapon_gun implemented awake
+    protected virtual void Awake()
+    {
 
+    }
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         if(Holder != null)
         {
@@ -67,8 +71,10 @@ public abstract class Weapon : MonoBehaviour
             {
                 Shot();
                 _CurrentCooldown = Cooldown;
+                
             }
         }
+       
     }
 
     public abstract void Shot();
