@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21dde2a81622e654aae8176869bfce4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CanvasPrefab: {fileID: 114404540970799986, guid: 4e355fd1425164044b9c95425b4b12e4,
+  CanvasPrefab: {fileID: 114064481859236454, guid: 4e355fd1425164044b9c95425b4b12e4,
     type: 2}
   CanvasAnchor: {fileID: 4234101688797600}
 --- !u!114 &114409963779629636
