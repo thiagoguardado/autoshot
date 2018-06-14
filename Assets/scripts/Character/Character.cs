@@ -164,6 +164,7 @@ public class Character : MonoBehaviour, IWeaponTarget
         if (CurrentWeaponSelector != null)
         {
             CurrentWeaponSelector.CharacterDropSelector(transform.position);
+            CurrentWeaponSelector = null;
 
         }
     }

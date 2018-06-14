@@ -4,18 +4,14 @@ using UnityEngine;
 
 public class CharacterCanvas : MonoBehaviour {
 
-    public WeaponCanvas CanvasPrefab;
+    public CharacterCanvasView CanvasPrefab;
     public Transform CanvasAnchor;
 
 	// Use this for initialization
 	void Awake() {
 
-        WeaponCanvas wc = Instantiate(CanvasPrefab, CanvasAnchor.position, CanvasPrefab.transform.rotation, CanvasAnchor);
-        wc.Init();
-
-        EnergyCanvas ec = wc.GetComponent<EnergyCanvas>();
-        if (ec != null)
-            ec.Init();
+        CharacterCanvasView ccv = Instantiate(CanvasPrefab, CanvasAnchor.position, CanvasPrefab.transform.rotation, CanvasAnchor);
+        ccv.Init();
 
     }
 
