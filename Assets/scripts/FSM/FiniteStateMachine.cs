@@ -9,7 +9,7 @@ namespace FiniteStateMachines
     {
         public AgentType Agent;
 
-        private State<AgentType> _CurrentState;
+        public State<AgentType> _CurrentState { get; private set; }
         List<int> triggeredEvents = new List<int>();
 
 

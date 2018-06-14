@@ -2,20 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
 public class WeaponCanvas : MonoBehaviour {
+
     private Character _Character;
 
-    public Image WeaponIconGui;
-    public Text WeaponAmmoGui;
-    public Image Background;
+    public Image WeaponBackground;
+    public Image WeaponIconImage;
+    public Slider AmmoSlider;
     
   
-    void Awake()
+    public void Init()
     {
-        _Character = transform.parent.GetComponent<Character>();
-
-
+        _Character = GetComponentInParent<Character>();
     }
+
+
 	void Update () {
         UpdateWeaponGui();
 	}
@@ -25,13 +27,16 @@ public class WeaponCanvas : MonoBehaviour {
 
         if (_Character.CurrentWeaponSelector == null)
         {
-            Background.gameObject.SetActive(false);
+            WeaponBackground.gameObject.SetActive(false);
+            AmmoSlider.gameObject.SetActive(false);
         }
         else
         {
-            Background.gameObject.SetActive(true);
-            WeaponIconGui.sprite = _Character.CurrentWeaponSelector.currentInstantiatedWeapon.IconSprite;
-            WeaponAmmoGui.text = _Character.CurrentWeaponSelector.currentInstantiatedWeapon.Ammo.ToString();
+            WeaponBackground.gameObject.SetActive(true);
+            AmmoSlider.gameObject.SetActive(true);
+            WeaponIconImage.sprite = _Character.CurrentWeaponSelector.currentInstantiatedWeapon.IconSprite;
+            AmmoSlider.maxValue = _Character.CurrentWeaponSelector.currentInstantiatedWeapon.MaxAmmo;
+            AmmoSlider.value = _Character.CurrentWeaponSelector.currentInstantiatedWeapon.Ammo;
         }
     }
 }

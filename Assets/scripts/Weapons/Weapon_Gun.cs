@@ -14,7 +14,6 @@ public class Weapon_Gun : Weapon
     public float Spread = 1.0f;
     public int Shots = 1;
     public float ShotSpeed = 1.0f;
-    public int MaxAmmo = 10;
     public HitInfo HitInfo;
 
     private Vector2 _ShotDirection;
@@ -23,7 +22,11 @@ public class Weapon_Gun : Weapon
 
     protected override void Awake()
     {
+        base.Awake();
+
         _GunAnimator = GunSprite.GetComponent<Animator>();
+
+        checkSight = true;
     }
 
     public override void Shot()

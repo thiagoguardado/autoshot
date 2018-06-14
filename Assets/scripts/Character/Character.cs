@@ -43,7 +43,8 @@ public class Character : MonoBehaviour, IWeaponTarget
     public GameObject _LeftWall = null;
     public GameObject _TopWall = null;
 
-    public int HealthPoints = 10;
+    public int MaxHealthPoints = 10;
+    public int HealthPoints { get; private set; }
     public Vector2 _MovementDirection;
 
     public bool IgnoreBullets = false;
@@ -65,7 +66,7 @@ public class Character : MonoBehaviour, IWeaponTarget
 
     public Collider2D _Collider { get; private set; }
 
-    FiniteStateMachine<Character> _StateMachine;
+    public FiniteStateMachine<Character> _StateMachine { get; private set; }
     CharacterJumping _JumpingState = new CharacterJumping();
     CharacterIdle _IdleState = new CharacterIdle();
     CharacterStunned _StunnedState = new CharacterStunned();
@@ -117,9 +118,9 @@ public class Character : MonoBehaviour, IWeaponTarget
 
     void Start()
     {
-
-
+        HealthPoints = MaxHealthPoints;
     }
+
     public void StateEnded()
     {
         _StateMachine.TriggerEvent((int)EventTriggers.EndState);
@@ -354,7 +355,7 @@ public class Character : MonoBehaviour, IWeaponTarget
         }
 
         HitInfo = hitInfo;
-        HealthPoints -= 1;
+        HealthPoints -= hitInfo.HitDamage;
         _StateMachine.TriggerEvent((int)EventTriggers.Stunned);
         return true;
     }

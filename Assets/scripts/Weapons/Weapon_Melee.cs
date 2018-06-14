@@ -12,7 +12,13 @@ public class Weapon_Melee : Weapon
     public float animationDuration = 0.1f;
     public HitInfo hitInfo;
     private Vector3 targetDirection;
-    
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        checkSight = false;
+    }
 
     public override void Shot()
     {

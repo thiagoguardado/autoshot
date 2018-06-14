@@ -28,9 +28,11 @@ public abstract class Weapon : MonoBehaviour
     public float Cooldown = 1.0f;
     public float Range = 1.0f;
     public int Ammo = 10;
+    public int MaxAmmo { get; private set; }
     public bool InfiniteAmmo = false;
     public bool Shooting = true;
     public Character Holder = null;
+    protected bool checkSight = true;
 
     private float _CurrentCooldown = 0;
     private Color _RangeGizmosColor = new Color(1, 1, 1, 0.4f);
@@ -40,8 +42,9 @@ public abstract class Weapon : MonoBehaviour
     //created for safety. weapon_gun implemented awake
     protected virtual void Awake()
     {
-
+        MaxAmmo = Ammo;
     }
+
     // Update is called once per frame
     protected virtual void Update()
     {
@@ -140,9 +143,15 @@ public abstract class Weapon : MonoBehaviour
             {
                 continue;
             }
-            
 
-            if (CheckOnSight(target))
+            if (checkSight)
+            {
+                if (CheckOnSight(target))
+                {
+                    _Targets.Add(target);
+                }
+            }
+            else
             {
                 _Targets.Add(target);
             }

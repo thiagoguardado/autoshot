@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using FiniteStateMachines;
+
 public class CharacterDeadState : State<Character>
 {
     public override void Enter()

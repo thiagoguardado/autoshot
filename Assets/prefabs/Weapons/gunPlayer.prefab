@@ -95,7 +95,7 @@ Transform:
   m_GameObject: {fileID: 1354936214400846}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.497, y: -0.06, z: 1}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4029057031905258}
   m_Father: {fileID: 4520435746501370}
@@ -147,11 +147,11 @@ MonoBehaviour:
   Spread: 0
   Shots: 1
   ShotSpeed: 24
-  MaxAmmo: 20
   HitInfo:
     StunDirection: {x: 0, y: 0}
     StunForce: 2
     StunTime: 0.05
+    HitDamage: 1
 --- !u!212 &212608022987861020
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -235,7 +235,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.7, y: 0.7}
+  m_Size: {x: 0.29, y: 0.19}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
