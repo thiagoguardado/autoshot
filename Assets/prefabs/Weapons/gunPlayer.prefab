@@ -137,7 +137,7 @@ MonoBehaviour:
   Cooldown: 0.2
   Range: 8
   Ammo: 20
-  InfiniteAmmo: 0
+  InfiniteAmmo: 1
   Shooting: 1
   Holder: {fileID: 0}
   GunDistance: 0.5

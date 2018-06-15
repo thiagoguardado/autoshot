@@ -8,8 +8,8 @@ public class CharacterDeadState : State<Character>
     public override void Enter()
     {
         base.Enter();
-        
 
+        GameManager.Instance.NotifyDeath(Agent);
         Agent.Animator.Play("dead");
         Agent.IgnoreBullets = true;
         Agent._MovementDirection = Vector2.zero;
