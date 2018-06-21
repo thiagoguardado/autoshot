@@ -12,6 +12,7 @@ public class WaypointsMovement : MonoBehaviour {
     public bool clockwise = true;
     public float speed = 1f;
     public float nextWaypointCheckThreshold = 0.1f;
+    public bool closedPath = true;
     private int currentWaypointIndex = 0;
     private Vector3 nextWaypoint
     {
@@ -26,6 +27,25 @@ public class WaypointsMovement : MonoBehaviour {
     public float directionSymbolSize = 1f;
 
 
+    private void Start()
+    {
+
+        if (closedPath)
+        {
+            currentWaypointIndex = 0;
+        } else
+        {
+            if (clockwise)
+            {
+                currentWaypointIndex = 1;
+            }
+            else
+            {
+                currentWaypointIndex = 0;
+            }
+        }
+
+    }
 
 
     private void Update()
@@ -42,16 +62,53 @@ public class WaypointsMovement : MonoBehaviour {
     {
         if ((transform.position - nextWaypoint).sqrMagnitude <= nextWaypointCheckThreshold * nextWaypointCheckThreshold)
         {
-            if (clockwise)
+
+            if (closedPath)
             {
-                currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Count;
+
+                if (clockwise)
+                {
+                    currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Count;
+                }
+                else
+                {
+                    currentWaypointIndex = (currentWaypointIndex - 1);
+                    if (currentWaypointIndex < 0)
+                        currentWaypointIndex = waypoints.Count - 1;
+                }
             }
             else
             {
-                currentWaypointIndex = (currentWaypointIndex - 1);
-                if (currentWaypointIndex < 0)
-                    currentWaypointIndex = waypoints.Count-1;
+
+                if (clockwise)
+                {
+                    if (currentWaypointIndex >= (waypoints.Count - 1))
+                    {
+                        transform.position = waypoints[0].position;
+                        currentWaypointIndex = 1;
+                    }
+                    else
+                    {
+                        currentWaypointIndex += 1;
+                    }
+
+                }
+                else
+                {
+                    if (currentWaypointIndex <= 0)
+                    {
+                        transform.position = waypoints[waypoints.Count - 1].position;
+                        currentWaypointIndex = waypoints.Count - 2;
+                    }
+                    else
+                    {
+                        currentWaypointIndex -= 1;
+                    }
+                }
             }
+
+
+
         }
     }
 
@@ -72,9 +129,11 @@ public class WaypointsMovement : MonoBehaviour {
                 DrawDirection(waypoints[i - 1].position + (waypoints[i].position - waypoints[i - 1].position) / 2, waypoints[i].position - waypoints[i - 1].position, clockwise);
             }
 
-            Debug.DrawLine(waypoints[waypoints.Count - 1].position, waypoints[0].position, lineColor);
-            DrawDirection(waypoints[waypoints.Count - 1].position + (waypoints[0].position - waypoints[waypoints.Count - 1].position) / 2, waypoints[0].position - waypoints[waypoints.Count - 1].position, clockwise);
-
+            if (closedPath)
+            {
+                Debug.DrawLine(waypoints[waypoints.Count - 1].position, waypoints[0].position, lineColor);
+                DrawDirection(waypoints[waypoints.Count - 1].position + (waypoints[0].position - waypoints[waypoints.Count - 1].position) / 2, waypoints[0].position - waypoints[waypoints.Count - 1].position, clockwise);
+            }
           
 
         }
