@@ -5,7 +5,7 @@ using UnityEngine;
 public class HurtTrigger : MonoBehaviour {
     public HitInfo HitInfo = new HitInfo();
     public Collider IgnoreCollider = null;
-    public CharacterFaction FriendFaction = CharacterFaction.Enemies;
+    public List<CharacterFaction> FriendFactions = new List<CharacterFaction>();
 
     // Use this for initialization
 
@@ -17,7 +17,7 @@ public class HurtTrigger : MonoBehaviour {
             return; 
         }
         
-        if (target.GetCharacaterFaction() != FriendFaction)
+        if (!FriendFactions.Contains(target.GetCharacaterFaction()))
         {
             HitInfo.StunDirection = other.transform.position - transform.position;
             target.ApplyHit(HitInfo);

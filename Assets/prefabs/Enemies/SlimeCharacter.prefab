@@ -302,7 +302,7 @@ MonoBehaviour:
     StunTime: 0.2
     HitDamage: 1
   IgnoreCollider: {fileID: 0}
-  FriendFaction: 1
+  FriendFactions: 01000000
 --- !u!114 &114780602409309104
 MonoBehaviour:
   m_ObjectHideFlags: 1
