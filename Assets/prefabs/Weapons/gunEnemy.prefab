@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4520435746501370}
   - component: {fileID: 114158152970916756}
   m_Layer: 0
-  m_Name: gunEnemy
+  m_Name: GunEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -140,6 +140,7 @@ MonoBehaviour:
   InfiniteAmmo: 0
   Shooting: 1
   Holder: {fileID: 0}
+  audioclip: {fileID: 8300000, guid: ffb159a21c8a04135a5616979c828fab, type: 3}
   GunDistance: 0.5
   GunSprite: {fileID: 212781407027908114}
   GunShotEffectPrefab: {fileID: 0}
@@ -147,7 +148,6 @@ MonoBehaviour:
   Spread: 0
   Shots: 1
   ShotSpeed: 24
-  MaxAmmo: 20
   HitInfo:
     StunDirection: {x: 0, y: 0}
     StunForce: 2

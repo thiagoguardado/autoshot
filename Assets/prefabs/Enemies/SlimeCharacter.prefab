@@ -261,6 +261,8 @@ MonoBehaviour:
   LockYMovement: 1
   ShouldCheckCollisions: 1
   CanPickupWeapon: 1
+  deathAudio: {fileID: 8300000, guid: 2c5292ba5cf254919a6b9e2b18e04f49, type: 3}
+  hurtAudio: {fileID: 0}
   _Ground: {fileID: 0}
   _RightWall: {fileID: 0}
   _LeftWall: {fileID: 0}

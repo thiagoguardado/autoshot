@@ -40,11 +40,11 @@ public class WeaponFactionSelector : MonoBehaviour {
 
     }
 
-    public void CharacterPickSelector(Character holderCharacter, Weapon weaponToInstantiate)
+    public void CharacterPickSelector(Character holderCharacter, FactionWeapon weaponToInstantiate)
     {
 
         // instantiate weapon
-        var currentWeaponObject = Instantiate(weaponToInstantiate);
+        var currentWeaponObject = Instantiate(weaponToInstantiate.weaponPrefab);
         currentInstantiatedWeapon = currentWeaponObject.GetComponent<Weapon>();
         currentInstantiatedWeapon.NewHolder(holderCharacter, holderCharacter.transform.position, holderCharacter._Collider, holderCharacter.gameObject, holderCharacter.friendFactions);
         currentInstantiatedWeapon.Shooting = true;
@@ -128,5 +128,6 @@ public class FactionWeapon
 {
     public CharacterFaction faction;
     public Weapon weaponPrefab;
+    public AudioClip weaponAudio;
 
 }

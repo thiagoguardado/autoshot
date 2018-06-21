@@ -38,6 +38,9 @@ public class Character : MonoBehaviour, IWeaponTarget
     public bool ShouldCheckCollisions = true;
     public bool CanPickupWeapon = true;
 
+    public AudioClip deathAudio;
+    public AudioClip hurtAudio;
+
     public GameObject _Ground = null;
     public GameObject _RightWall = null;
     public GameObject _LeftWall = null;
@@ -132,13 +135,13 @@ public class Character : MonoBehaviour, IWeaponTarget
         {
             return;
         }
-        Weapon weaponToInstantiate = null;
+        FactionWeapon weaponToInstantiate = null;
 
         for (int i = 0; i < _weaponSelector.weapons.Count; i++)
         {
             if (_weaponSelector.weapons[i].faction == characterFaction)
             {
-                weaponToInstantiate = _weaponSelector.weapons[i].weaponPrefab;
+                weaponToInstantiate = _weaponSelector.weapons[i];
                 break;
             }
         }
@@ -358,6 +361,10 @@ public class Character : MonoBehaviour, IWeaponTarget
         HitInfo = hitInfo;
         HealthPoints -= hitInfo.HitDamage;
         _StateMachine.TriggerEvent((int)EventTriggers.Stunned);
+
+        // play audio
+        AudioManager.Instance.PlaySFX(hurtAudio);
+
         return true;
     }
 

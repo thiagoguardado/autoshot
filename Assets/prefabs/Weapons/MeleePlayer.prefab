@@ -92,6 +92,7 @@ MonoBehaviour:
   InfiniteAmmo: 0
   Shooting: 1
   Holder: {fileID: 0}
+  audioclip: {fileID: 8300000, guid: d46323e22e74e46baa241cbf48c85671, type: 3}
   areaAngle: 60
   lineRenderer: {fileID: 120199390175511856}
   animationDuration: 0.075
@@ -99,6 +100,7 @@ MonoBehaviour:
     StunDirection: {x: 0, y: 0}
     StunForce: 10
     StunTime: 0.2
+    HitDamage: 1
 --- !u!120 &120199390175511856
 LineRenderer:
   m_ObjectHideFlags: 1

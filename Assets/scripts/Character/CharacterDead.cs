@@ -10,6 +10,8 @@ public class CharacterDeadState : State<Character>
         base.Enter();
 
         GameManager.Instance.NotifyDeath(Agent);
+
+
         Agent.Animator.Play("dead");
         Agent.IgnoreBullets = true;
         Agent._MovementDirection = Vector2.zero;
@@ -21,6 +23,9 @@ public class CharacterDeadState : State<Character>
         {
             Agent.DropWeapon();
         }
+
+        // play sfx
+        AudioManager.Instance.PlaySFX(Agent.deathAudio);
     }
 
    

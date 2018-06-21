@@ -32,12 +32,14 @@ public abstract class Weapon : MonoBehaviour
     public bool InfiniteAmmo = false;
     public bool Shooting = true;
     public Character Holder = null;
+    public AudioClip audioclip;
     protected bool checkSight = true;
 
     private float _CurrentCooldown = 0;
     private Color _RangeGizmosColor = new Color(1, 1, 1, 0.4f);
     private Color _TargetGizmosColor = new Color(1, 0, 0, 0.4f);
     private Color _ClosestTargetGizmosColor = new Color(0, 1, 0, 0.4f);
+    
 
     //created for safety. weapon_gun implemented awake
     protected virtual void Awake()
@@ -80,7 +82,13 @@ public abstract class Weapon : MonoBehaviour
         {
             if (_ClosestTarget != null)
             {
+                // shot
                 Shot();
+
+                // play sfx
+                AudioManager.Instance.PlaySFX(audioclip);
+
+                // setup cooldown
                 _CurrentCooldown = Cooldown;
                 
             }
