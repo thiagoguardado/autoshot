@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour {
     public delegate void WaveNotify(SpawnWave wave);
     public delegate void VoidDelegate();
 
-    public GameObjectSpawnPointDelegate OnRequestSpawn;
+    public GameObjectSpawnPointDelegate OnRequestEnemySpawn;
     public GameObjectDelegate OnNotifySpawn;
     public CharacterDelegate OnNotifyDeath;
     public LevelFinishedDelegate OnNotifyLevelFinished;
@@ -43,13 +43,13 @@ public class GameManager : MonoBehaviour {
 
     public void RequestSpawn(GameObject prefab, int spawnPoint)
     {
-        if(OnRequestSpawn != null)
+        if(OnRequestEnemySpawn != null)
         {
-            OnRequestSpawn(prefab, spawnPoint);
+            OnRequestEnemySpawn(prefab, spawnPoint);
         }
     }
 
-    public void NotifySpawn(GameObject gameObject)
+    public void NotifyEnemySpawn(GameObject gameObject)
     {
         if(OnNotifySpawn != null)
         {
