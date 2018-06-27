@@ -37,6 +37,7 @@ public class SpawnPoint : MonoBehaviour {
 
     protected void SetColor(Color color)
     {
+        color.a = 0.4f;
         spriteRendrer.color = color;
     }
 

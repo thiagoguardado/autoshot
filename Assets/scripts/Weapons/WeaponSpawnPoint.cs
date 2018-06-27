@@ -5,6 +5,17 @@ using UnityEngine;
 public class WeaponSpawnPoint: SpawnPoint {
     public List<WeaponClass> SpawnableWeponTypes;
 
+    public WeaponClass ChooseWeaponClass()
+    {
+        if (SpawnableWeponTypes.Count <= 0)
+        {
+            return WeaponClass.None;
+        }
+
+        int randomId = Random.Range(0, SpawnableWeponTypes.Count);
+        var weaponClass = SpawnableWeponTypes[randomId];
+        return weaponClass;
+    }
     void OnValidate()
     {
         SetColor(Color.red);

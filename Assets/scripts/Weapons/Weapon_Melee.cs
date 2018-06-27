@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class Weapon_Melee : Weapon
 {
-    
+
     [Header("Melee Configuration")]
+    public float hitRange = 1;
     public float areaAngle = 60f;
     public LineRenderer lineRenderer;
     public float animationDuration = 0.1f;
