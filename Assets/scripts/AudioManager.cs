@@ -5,31 +5,45 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour {
 
-    private static AudioManager instance;
+    private static AudioManager _Instance;
     public static AudioManager Instance
     {
         get
         {
-            return instance;
+            if(_Instance == null)
+            {
+                CreateInstance();
+            }
+            return _Instance;
         }
     }
 
+    public const string _ResourceName = "AudioManager";
     [Header("AudioSources")]
     public AudioSource bgmSource;
     public AudioSource sfxSource;
 
+
+    private static void CreateInstance()
+    {
+        var prefab = Resources.Load<GameObject>(_ResourceName);
+        var instance = Instantiate(prefab);
+        instance.name = "_" + _ResourceName;
+        instance.transform.SetAsFirstSibling();
+        _Instance = instance.GetComponent<AudioManager>();
+    }
+
     private void Awake()
     {
-        if (instance != null)
+        if (_Instance != null)
         {
             DestroyImmediate(gameObject);
         }
         else
         {
-            instance = this;
+            _Instance = this;
             DontDestroyOnLoad(gameObject);
         }
-
     }
 
     public void PlaySFX(AudioClip clip)

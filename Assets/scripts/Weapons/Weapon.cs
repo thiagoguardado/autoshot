@@ -5,7 +5,8 @@ using UnityEngine;
 public enum WeaponClass
 {
     Melee,
-    Gun
+    Gun,
+    None
 }
 
 
