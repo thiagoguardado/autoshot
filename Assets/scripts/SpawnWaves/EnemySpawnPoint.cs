@@ -5,16 +5,11 @@ using UnityEngine.UI;
 
 [SelectionBase]
 public class EnemySpawnPoint : SpawnPoint {
-    public int id = 0;    
-    private Text _textUi;
+    public int id = 0;
 
     void OnValidate()
     {
-        _textUi = GetComponentInChildren<Text>();
-        if(_textUi != null)
-        {
-            _textUi.text = id.ToString();
-        }
+        SetLabel(id.ToString());
         name = "SpawnPoint" + id.ToString();
     }
 
