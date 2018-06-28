@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HurtTrigger : MonoBehaviour {
+public class HurtTrigger : MonoBehaviour
+{
     public HitInfo HitInfo = new HitInfo();
     public Collider IgnoreCollider = null;
     public List<CharacterFaction> FriendFactions = new List<CharacterFaction>();
@@ -21,11 +22,11 @@ public class HurtTrigger : MonoBehaviour {
     public void OnHit(GameObject other)
     {
         IWeaponTarget target = other.GetComponent<IWeaponTarget>();
-        if(target == null)
+        if (target == null)
         {
-            return; 
+            return;
         }
-        
+
         if (!FriendFactions.Contains(target.GetCharacaterFaction()))
         {
             HitInfo.StunDirection = other.transform.position - transform.position;
@@ -41,15 +42,10 @@ public class HurtTrigger : MonoBehaviour {
 
     private void CheckOverlap()
     {
-        collider2D.OverlapCollider(contactFilter, overlapping);
 
-        for (int i = 0; i < overlapping.Length; i++)
+
+        for (int i = 0; i < collider2D.OverlapCollider(contactFilter, overlapping); i++)
         {
-            if (overlapping[i] == null)
-            {
-                return;
-            }
-
             if (overlapping[i] != IgnoreCollider)
             {
                 OnHit(overlapping[i].gameObject);
