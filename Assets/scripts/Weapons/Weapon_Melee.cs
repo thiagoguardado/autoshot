@@ -52,7 +52,6 @@ public class Weapon_Melee : Weapon
                 {
                     hitInfo.StunDirection = target.transform.position - transform.position;
                     weponTarget.ApplyHit(hitInfo);
-                    Debug.Log("Melee Hit " + target.name);
                 }
             }
         }

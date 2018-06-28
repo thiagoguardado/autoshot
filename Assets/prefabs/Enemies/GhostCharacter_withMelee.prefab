@@ -76,6 +76,7 @@ GameObject:
   - component: {fileID: 4708469988712842}
   - component: {fileID: 212801943046836320}
   - component: {fileID: 95548286075348888}
+  - component: {fileID: 114869401731846480}
   m_Layer: 9
   m_Name: sprite
   m_TagString: Untagged
@@ -258,6 +259,7 @@ MonoBehaviour:
   ReactivityPercent: 0.5
   JumpForceMax: 1
   JumpForceMin: 1
+  invencibleTimeAfterHit: 0
   UseGravity: 0
   LockYMovement: 0
   ShouldCheckCollisions: 0
@@ -328,6 +330,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5750a7c09771f1e4586cdf2c75d34d4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114869401731846480
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1958513100836884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02f2ed7db39b3f849b44d0ef4b954089, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!212 &212412704198597556

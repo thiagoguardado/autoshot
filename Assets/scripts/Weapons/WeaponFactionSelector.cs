@@ -64,8 +64,6 @@ public class WeaponFactionSelector : MonoBehaviour {
         currentInstantiatedWeapon.NewHolder(holderCharacter, holderCharacter.transform.position, holderCharacter._Collider, holderCharacter.gameObject, holderCharacter.friendFactions);
         currentInstantiatedWeapon.Shooting = true;
 
-        Debug.Log("picked weapon");
-
         // update ammo
         if (!pickedOnce)
         {

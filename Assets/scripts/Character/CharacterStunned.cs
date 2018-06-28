@@ -12,7 +12,7 @@ public class CharacterStunned : State<Character>
         HitInfo hit = Agent.HitInfo;
         Timeout = hit.StunTime;
         Agent.velocity = hit.StunDirection.normalized * hit.StunForce;
-        Agent.Animator.Play("stun");
+        Agent.Sprite.Play(Agent.Sprite.animations.stun);
     }
 
     public override void Update()

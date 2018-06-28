@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 222697767820569802}
   - component: {fileID: 114265368251062038}
   - component: {fileID: 114534829360368760}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 223776828674505966}
   - component: {fileID: 114693724642811478}
   - component: {fileID: 114194608994455180}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 4729179331723132}
   - component: {fileID: 212972837281760392}
   - component: {fileID: 114683003430772354}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: WeaponSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1675864705027196}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10.33, y: 2.2, z: -0.16015625}
+  m_LocalPosition: {x: 12.13, y: 1.4699998, z: -0.16015625}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224330441710030270}
@@ -126,7 +126,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Any
+  m_Text: Melee
 --- !u!114 &114534829360368760
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -152,8 +152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa845b0b9476c074baafdcee737cb15e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WeaponType: 2
-  SpawnTime: 3
+  WeaponType: 0
+  SpawnTime: 1
 --- !u!114 &114693724642811478
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -71,6 +71,7 @@ public class Character : MonoBehaviour, IWeaponTarget
 
 
     public Collider2D _Collider { get; private set; }
+    public CharacterSprite Sprite { get; private set; }
 
     public FiniteStateMachine<Character> _StateMachine { get; private set; }
     CharacterJumping _JumpingState = new CharacterJumping();
@@ -94,6 +95,7 @@ public class Character : MonoBehaviour, IWeaponTarget
         _PlatformLayerMask = LayerMask.GetMask("Platform", "Ground");
 
         _Collider = GetComponent<Collider2D>();
+        Sprite = GetComponentInChildren<CharacterSprite>();
 
         _IdleState.AddCondition(CheckIsDead, _DeadState);
         _IdleState.AddCondition(() => InputIsJumping, _JumpingState);
@@ -171,8 +173,6 @@ public class Character : MonoBehaviour, IWeaponTarget
         {
             CurrentWeaponSelector.CharacterDropSelector(transform.position);
             CurrentWeaponSelector = null;
-
-            Debug.Log("weapon dropped");
         }
     }
 
@@ -334,6 +334,12 @@ public class Character : MonoBehaviour, IWeaponTarget
         }
 
         return _Ground != null;
+    }
+
+    public void DestroyCharacter()
+    {
+        gameObject.SetActive(false);
+        Debug.Log("here");
     }
 
 
