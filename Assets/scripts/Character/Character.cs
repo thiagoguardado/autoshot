@@ -2,6 +2,7 @@
 using FiniteStateMachines;
 using System;
 using System.Collections.Generic;
+using System.Collections;
 
 public enum CharacterFaction
 {
@@ -33,10 +34,12 @@ public class Character : MonoBehaviour, IWeaponTarget
     public float ReactivityPercent = 0.5f;
     public float JumpForceMax = 6;
     public float JumpForceMin = 4;
+    public float invencibleTimeAfterHit = 0f;
     public bool UseGravity = true;
     public bool LockYMovement = true;
     public bool ShouldCheckCollisions = true;
     public bool CanPickupWeapon = true;
+    private bool canBeHit = true;
 
     public AudioClip deathAudio;
     public AudioClip hurtAudio;
@@ -359,6 +362,12 @@ public class Character : MonoBehaviour, IWeaponTarget
 
     bool IWeaponTarget.ApplyHit(HitInfo hitInfo)
     {
+
+        if (!canBeHit)
+        {
+            return false;
+        }
+
         if (IgnoreBullets)
         {
             return false;
@@ -371,7 +380,33 @@ public class Character : MonoBehaviour, IWeaponTarget
         // play audio
         AudioManager.Instance.PlaySFX(hurtAudio);
 
+        // start invincibility
+        StartInvincibility();
+
+
         return true;
+
+        
+    }
+
+    private void StartInvincibility()
+    {
+        canBeHit = false;
+        
+        StartCoroutine(Invincibility(invencibleTimeAfterHit, () => canBeHit = true));
+
+    }
+
+    private IEnumerator Invincibility(float duration, Action actionWhenDone)
+    {
+
+        Animator.Play("invincible", 1);
+
+        yield return new WaitForSeconds(duration);
+
+        Animator.Play("not_invincible", 1);
+
+        actionWhenDone.Invoke();
     }
 
     bool IWeaponTarget.IsActive()

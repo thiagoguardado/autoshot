@@ -6,8 +6,17 @@ public class HurtTrigger : MonoBehaviour {
     public HitInfo HitInfo = new HitInfo();
     public Collider IgnoreCollider = null;
     public List<CharacterFaction> FriendFactions = new List<CharacterFaction>();
+    private Collider2D collider2D;
+    private ContactFilter2D contactFilter = new ContactFilter2D();
+    Collider2D[] overlapping;
 
-    // Use this for initialization
+    void Awake()
+    {
+        collider2D = GetComponent<Collider2D>();
+        contactFilter.useTriggers = true;
+        overlapping = new Collider2D[5];
+    }
+
 
     public void OnHit(GameObject other)
     {
@@ -23,13 +32,38 @@ public class HurtTrigger : MonoBehaviour {
             target.ApplyHit(HitInfo);
         }
     }
-    public void OnTriggerEnter2D(Collider2D other)
+
+    void Update()
     {
 
-        if (other == IgnoreCollider)
-        {
-            return;
-        }
-        OnHit(other.gameObject);
+        CheckOverlap();
     }
+
+    private void CheckOverlap()
+    {
+        collider2D.OverlapCollider(contactFilter, overlapping);
+
+        for (int i = 0; i < overlapping.Length; i++)
+        {
+            if (overlapping[i] == null)
+            {
+                return;
+            }
+
+            if (overlapping[i] != IgnoreCollider)
+            {
+                OnHit(overlapping[i].gameObject);
+            }
+        }
+    }
+
+    //public void OnTriggerStay2D(Collider2D other)
+    //{
+
+    //    if (other == IgnoreCollider)
+    //    {
+    //        return;
+    //    }
+    //    OnHit(other.gameObject);
+    //}
 }
