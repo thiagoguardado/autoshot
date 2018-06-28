@@ -169,6 +169,7 @@ public class Character : MonoBehaviour, IWeaponTarget
             CurrentWeaponSelector.CharacterDropSelector(transform.position);
             CurrentWeaponSelector = null;
 
+            Debug.Log("weapon dropped");
         }
     }
 
@@ -341,7 +342,12 @@ public class Character : MonoBehaviour, IWeaponTarget
 
             if(CanPickupWeapon)
             {
-                PickupWeapon(box);
+                if (box.currentInstantiatedWeapon == null)
+                {
+                    PickupWeapon(box);
+                }
+
+                
             }
         }
     }

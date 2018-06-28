@@ -1862,9 +1862,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnWaves:
-  - {fileID: 11400000, guid: aab467195ede50e4c94292dd289fdd3a, type: 2}
-  - {fileID: 11400000, guid: 0d6fa0926141c96448c3fde34ca1b5ed, type: 2}
-  - {fileID: 11400000, guid: ea82127578037c44085e395f1d8d0848, type: 2}
+  - {fileID: 11400000, guid: c829bf999da0c6d40bc78d12d08517cc, type: 2}
+  - {fileID: 11400000, guid: 1f3b3758e16b87442a9f89ad38a8b249, type: 2}
+  - {fileID: 11400000, guid: a4b06d411d0c21a4da5b93ee2111e796, type: 2}
   spawnedEnemies: []
   StartTime: 3
   WaveTime: 20

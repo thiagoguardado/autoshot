@@ -53,4 +53,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpawnableObjects:
     Slime: {fileID: 114780602409309104, guid: 09a08bfbacdb5d04ea3ae1c8a91a40ef, type: 2}
+    Slime_with_Gun: {fileID: 114146121663543236, guid: f0e9503104e5f9c42ae73314b0a0de88,
+      type: 2}
+    Slime_with_Melee: {fileID: 114316162325382326, guid: 96930becceb91d84e803cdd7b0f27ede,
+      type: 2}
     Ghost: {fileID: 114266282674441016, guid: 73b8977a497ac0e4488a90eaa1870a5a, type: 2}
+    Ghost_with_Gun: {fileID: 114259325663570648, guid: 00bf53862abfe994f85ce739409d1e62,
+      type: 2}
+    Ghost_with_Melee: {fileID: 114807723725541504, guid: 2e12a0422d4516b42bfc96031e5db2d7,
+      type: 2}

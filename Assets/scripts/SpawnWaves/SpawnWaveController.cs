@@ -98,9 +98,25 @@ public class SpawnWaveController : MonoBehaviour {
             {
                 GameManager.Instance.RequestSpawn(GameManager.Instance.SpawnableObjects.Slime.gameObject, spawnPoint);
             }
+            for (int i = 0; i < spawn.slimes_with_gun; i++)
+            {
+                GameManager.Instance.RequestSpawn(GameManager.Instance.SpawnableObjects.Slime_with_Gun.gameObject, spawnPoint);
+            }
+            for (int i = 0; i < spawn.slimes_with_melee; i++)
+            {
+                GameManager.Instance.RequestSpawn(GameManager.Instance.SpawnableObjects.Slime_with_Melee.gameObject, spawnPoint);
+            }
             for (int i = 0; i < spawn.ghosts; i++)
             {
                 GameManager.Instance.RequestSpawn(GameManager.Instance.SpawnableObjects.Ghost.gameObject, spawnPoint);
+            }
+            for (int i = 0; i < spawn.ghosts_with_gun; i++)
+            {
+                GameManager.Instance.RequestSpawn(GameManager.Instance.SpawnableObjects.Ghost_with_Gun.gameObject, spawnPoint);
+            }
+            for (int i = 0; i < spawn.ghosts_with_melee; i++)
+            {
+                GameManager.Instance.RequestSpawn(GameManager.Instance.SpawnableObjects.Ghost_with_Melee.gameObject, spawnPoint);
             }
         }
     }

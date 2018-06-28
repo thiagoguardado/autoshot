@@ -7,7 +7,7 @@ public class AutoPickupWeapon : MonoBehaviour {
     private Character characterScript;
     public WeaponFactionSelector weaponSelectorPrefab;
 
-    void Awake()
+    void Start()
     {
         characterScript = GetComponent<Character>();
 

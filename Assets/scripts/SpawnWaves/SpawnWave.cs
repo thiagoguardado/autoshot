@@ -12,7 +12,11 @@ public class SpawnWave: ScriptableObject {
         [HideInInspector]
         public string name;
         public int slimes = 0;
+        public int slimes_with_gun = 0;
+        public int slimes_with_melee = 0;
         public int ghosts = 0;
+        public int ghosts_with_gun = 0;
+        public int ghosts_with_melee = 0;
     }
 
     void OnValidate()
