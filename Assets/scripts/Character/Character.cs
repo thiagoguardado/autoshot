@@ -129,7 +129,7 @@ public class Character : MonoBehaviour, IWeaponTarget
         _StateMachine.TriggerEvent((int)EventTriggers.EndState);
     }
 
-    void PickupWeapon(WeaponFactionSelector _weaponSelector)
+    public void PickupWeapon(WeaponFactionSelector _weaponSelector)
     {
         if(!CanPickupWeapon)
         {
