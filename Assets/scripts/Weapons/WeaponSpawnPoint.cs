@@ -3,39 +3,69 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class WeaponSpawnPoint: SpawnPoint {
-    public List<WeaponClass> SpawnableWeponTypes;
+    public WeaponTypes WeaponType = WeaponTypes.Any;
+    public float SpawnTime = 3;
+    private float _Timeout = 0;
+    private WeaponFactionSelector _SpawnedSelector;
 
-    public WeaponClass ChooseWeaponClass()
+    public enum WeaponTypes
     {
-        if (SpawnableWeponTypes.Count <= 0)
-        {
-            return WeaponClass.None;
-        }
-
-        int randomId = Random.Range(0, SpawnableWeponTypes.Count);
-        var weaponClass = SpawnableWeponTypes[randomId];
-        return weaponClass;
+        /*
+            GetAnyWeaponType() uses this order
+        */
+        Melee,
+        Gun,
+        Any
     }
+
+    void Update()
+    {
+        if(_SpawnedSelector == null)
+        {
+            _Timeout -= Time.deltaTime;
+            if(_Timeout <= 0)
+            {
+                SpawnSelector();
+            }
+        }
+    }
+
+    void SpawnSelector()
+    {
+        var prefab = GetPrefab(WeaponType);
+        _SpawnedSelector = Spawn(prefab).GetComponent<WeaponFactionSelector>();
+        _SpawnedSelector.UseGravity = false;
+        _Timeout = SpawnTime;
+    }
+
     void OnValidate()
     {
         SetColor(Color.red);
+        SetLabel(WeaponType.ToString());
+    }
 
-        if (SpawnableWeponTypes.Contains(WeaponClass.Gun) &&
-            SpawnableWeponTypes.Contains(WeaponClass.Melee))
+    GameObject GetPrefab(WeaponTypes weaponType)
+    {
+        if (weaponType == WeaponTypes.Any)
         {
-            SetLabel("Any");
+            weaponType = GetAnyWeaponType();
         }
-        else if (SpawnableWeponTypes.Contains(WeaponClass.Gun))
+
+        switch (weaponType)
         {
-            SetLabel("Gun");
+            case WeaponTypes.Melee:
+                return GameManager.Instance.SpawnableObjects.MeleeWeaponSelector.gameObject;
+            case WeaponTypes.Gun:
+                return GameManager.Instance.SpawnableObjects.GunWeaponSelector.gameObject;
+            default:
+                break;
         }
-        else if (SpawnableWeponTypes.Contains(WeaponClass.Melee))
-        {
-            SetLabel("Sword");
-        }
-        else
-        {
-            SetLabel("None");
-        }
+        return null;
+    }
+
+    WeaponTypes GetAnyWeaponType()
+    {
+        int i = Random.Range(0, 2);
+        return (WeaponTypes) i;
     }
 }

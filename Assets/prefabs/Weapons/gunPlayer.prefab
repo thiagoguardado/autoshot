@@ -137,7 +137,7 @@ MonoBehaviour:
   Cooldown: 0.2
   Range: 8
   Ammo: 20
-  InfiniteAmmo: 1
+  InfiniteAmmo: 0
   Shooting: 1
   Holder: {fileID: 0}
   audioclip: {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}

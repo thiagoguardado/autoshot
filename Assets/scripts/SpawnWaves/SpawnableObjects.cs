@@ -10,4 +10,6 @@ public class SpawnableObjects {
     public GhostController Ghost;
     public GhostController Ghost_with_Gun;
     public GhostController Ghost_with_Melee;
+    public WeaponFactionSelector MeleeWeaponSelector;
+    public WeaponFactionSelector GunWeaponSelector;
 }

@@ -14,29 +14,44 @@ public class WeaponFactionSelector : MonoBehaviour {
     public Color color = Color.white;    
     public List<FactionWeapon> weapons;
     public GameObject visualObject;
-    public bool useGravity = true;
+
+    private Rigidbody2D _Rigidbody;
+
+    bool _UseGravity = true;
+    public bool UseGravity
+    {
+        get
+        {
+            return _UseGravity;
+        }
+        set
+        {
+            _UseGravity = value;
+
+            if (_UseGravity)
+            {
+                _Rigidbody.bodyType = RigidbodyType2D.Dynamic;
+                visualObject.transform.GetChild(0).GetComponent<Collider2D>().enabled = true;
+            }
+            else {
+                _Rigidbody.bodyType = RigidbodyType2D.Static;
+                visualObject.transform.GetChild(0).GetComponent<Collider2D>().enabled = false;
+            }
+        }
+    }
 
     public Weapon currentInstantiatedWeapon { get; private set; }
     private int lastAmmo;
     private bool pickedOnce = false;
-
-
+    
 
     public void Awake()
     {
         visualObjectSpriteRenderer = visualObject.GetComponent<SpriteRenderer>();
         visualObjectTrigger = visualObject.GetComponent<Collider2D>();
         visualObjectSpriteRenderer.color = color;
-
-        if (useGravity)
-        {
-            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-            visualObject.transform.GetChild(0).GetComponent<Collider2D>().enabled = true;
-        }
-        else {
-            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-            visualObject.transform.GetChild(0).GetComponent<Collider2D>().enabled = false;
-        }
+        _Rigidbody = GetComponent<Rigidbody2D>();
+        UseGravity = true;
 
     }
 
@@ -69,7 +84,7 @@ public class WeaponFactionSelector : MonoBehaviour {
 
     public void CharacterDropSelector(Vector3 positionDropped)
     {
-
+        UseGravity = true;
 
         // update ammo
         lastAmmo = currentInstantiatedWeapon.Ammo;
@@ -85,12 +100,10 @@ public class WeaponFactionSelector : MonoBehaviour {
 
         // destroy weapon
         currentInstantiatedWeapon.DestroyWeapon();
-
-
+        
         // activate collision and sprite
         transform.position = positionDropped;
         ActivateBox();
-
     }
 
 

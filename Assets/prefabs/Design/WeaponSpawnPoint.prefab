@@ -126,7 +126,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Sword
+  m_Text: Any
 --- !u!114 &114534829360368760
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -152,7 +152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa845b0b9476c074baafdcee737cb15e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpawnableWeponTypes: 00000000
+  WeaponType: 2
+  SpawnTime: 3
 --- !u!114 &114693724642811478
 MonoBehaviour:
   m_ObjectHideFlags: 1

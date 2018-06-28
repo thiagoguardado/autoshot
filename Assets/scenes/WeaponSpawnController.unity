@@ -176,6 +176,16 @@ Prefab:
       propertyPath: m_Text
       value: Gun
       objectReference: {fileID: 0}
+    - target: {fileID: 114683003430772354, guid: 124d031ff5a101048a6fc3d18a687e48,
+        type: 2}
+      propertyPath: SpawnTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114683003430772354, guid: 124d031ff5a101048a6fc3d18a687e48,
+        type: 2}
+      propertyPath: WeaponType
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 124d031ff5a101048a6fc3d18a687e48, type: 2}
   m_IsPrefabParent: 0
@@ -184,7 +194,7 @@ Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1408589828}
     m_Modifications:
     - target: {fileID: 4729179331723132, guid: b6493c96ae3c22246abc7c92d04531a8, type: 2}
       propertyPath: m_LocalPosition.x
@@ -216,7 +226,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4729179331723132, guid: b6493c96ae3c22246abc7c92d04531a8, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114278345238814962, guid: b6493c96ae3c22246abc7c92d04531a8,
         type: 2}
@@ -315,7 +325,7 @@ Transform:
   - {fileID: 456812221}
   - {fileID: 579696088}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &453428123
 Prefab:
@@ -379,6 +389,11 @@ Prefab:
         type: 2}
       propertyPath: m_Text
       value: Any
+      objectReference: {fileID: 0}
+    - target: {fileID: 114683003430772354, guid: 124d031ff5a101048a6fc3d18a687e48,
+        type: 2}
+      propertyPath: SpawnTime
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 124d031ff5a101048a6fc3d18a687e48, type: 2}
@@ -787,6 +802,21 @@ Prefab:
       propertyPath: SpawnableWeponTypes.Array.data[0]
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114683003430772354, guid: 124d031ff5a101048a6fc3d18a687e48,
+        type: 2}
+      propertyPath: SpawnTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114683003430772354, guid: 124d031ff5a101048a6fc3d18a687e48,
+        type: 2}
+      propertyPath: WeaponType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265368251062038, guid: 124d031ff5a101048a6fc3d18a687e48,
+        type: 2}
+      propertyPath: m_Text
+      value: Melee
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 124d031ff5a101048a6fc3d18a687e48, type: 2}
   m_IsPrefabParent: 0
@@ -910,6 +940,58 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+--- !u!1 &1408589826
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1408589828}
+  - component: {fileID: 1408589827}
+  m_Layer: 0
+  m_Name: EnemySpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1408589827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1408589826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d50e37c526a6dc54683c1134287f49e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnWaves:
+  - {fileID: 11400000, guid: 71d19840ccfd0dd4586f51bbc71a436c, type: 2}
+  spawnedEnemies: []
+  StartTime: 3
+  WaveTime: 20
+--- !u!4 &1408589828
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1408589826}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1774564175}
+  - {fileID: 1451001130}
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1451001130 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4729179331723132, guid: b6493c96ae3c22246abc7c92d04531a8,
+    type: 2}
+  m_PrefabInternal: {fileID: 88282763}
 --- !u!1 &1589040359
 GameObject:
   m_ObjectHideFlags: 0
@@ -1150,6 +1232,11 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+--- !u!4 &1774564175 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4729179331723132, guid: b6493c96ae3c22246abc7c92d04531a8,
+    type: 2}
+  m_PrefabInternal: {fileID: 2016888069}
 --- !u!1001 &1945219183
 Prefab:
   m_ObjectHideFlags: 0
@@ -1197,7 +1284,7 @@ Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1408589828}
     m_Modifications:
     - target: {fileID: 4729179331723132, guid: b6493c96ae3c22246abc7c92d04531a8, type: 2}
       propertyPath: m_LocalPosition.x
@@ -1229,7 +1316,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4729179331723132, guid: b6493c96ae3c22246abc7c92d04531a8, type: 2}
       propertyPath: m_RootOrder
-      value: 7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114278345238814962, guid: b6493c96ae3c22246abc7c92d04531a8,
         type: 2}
@@ -1256,9 +1343,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 2032716791}
-  - component: {fileID: 2032716792}
   m_Layer: 0
-  m_Name: WeaponSpawnController
+  m_Name: WeaponSpawns
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1278,24 +1364,8 @@ Transform:
   - {fileID: 243201430}
   - {fileID: 138273936}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2032716792
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2032716790}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2af69b8b025f72c4ca7850361850397f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _GunSpawnPrefab: {fileID: 114469143384521158, guid: bf048b7321352cc43b527b5ca5635341,
-    type: 2}
-  _MeleeSpawnPrefab: {fileID: 114469143384521158, guid: 291046349b102d44b9e9f4d16174afd0,
-    type: 2}
-  SpawnRandomInterval: 3
 --- !u!4 &2108004199 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4729179331723132, guid: 124d031ff5a101048a6fc3d18a687e48,

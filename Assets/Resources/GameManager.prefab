@@ -62,3 +62,7 @@ MonoBehaviour:
       type: 2}
     Ghost_with_Melee: {fileID: 114807723725541504, guid: 2e12a0422d4516b42bfc96031e5db2d7,
       type: 2}
+    MeleeWeaponSelector: {fileID: 114469143384521158, guid: 291046349b102d44b9e9f4d16174afd0,
+      type: 2}
+    GunWeaponSelector: {fileID: 114469143384521158, guid: bf048b7321352cc43b527b5ca5635341,
+      type: 2}

@@ -189,11 +189,12 @@ MonoBehaviour:
   - faction: 0
     weaponPrefab: {fileID: 114841279745827074, guid: eb4549a0eb761e649bc72d698a3f0e55,
       type: 2}
+    weaponAudio: {fileID: 0}
   - faction: 1
     weaponPrefab: {fileID: 114841279745827074, guid: 26962dd94249ddf488a1f0c96aec7f68,
       type: 2}
+    weaponAudio: {fileID: 0}
   visualObject: {fileID: 1468837765161342}
-  useGravity: 1
 --- !u!212 &212780904506835530
 SpriteRenderer:
   m_ObjectHideFlags: 1
