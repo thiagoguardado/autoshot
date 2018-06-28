@@ -1,10 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class WeaponFactionSelector : MonoBehaviour {
-
-
     public const float cooldownToPickAgain = 1.0f;
 
     private SpriteRenderer visualObjectSpriteRenderer;
@@ -14,6 +13,9 @@ public class WeaponFactionSelector : MonoBehaviour {
     public Color color = Color.white;    
     public List<FactionWeapon> weapons;
     public GameObject visualObject;
+
+    public Action OnWeaponPickedUp;
+
 
     private Rigidbody2D _Rigidbody;
 
@@ -57,7 +59,10 @@ public class WeaponFactionSelector : MonoBehaviour {
 
     public void CharacterPickSelector(Character holderCharacter, FactionWeapon weaponToInstantiate)
     {
-
+        if(OnWeaponPickedUp != null)
+        {
+            OnWeaponPickedUp();
+        }
         // instantiate weapon
         var currentWeaponObject = Instantiate(weaponToInstantiate.weaponPrefab);
         currentInstantiatedWeapon = currentWeaponObject.GetComponent<Weapon>();

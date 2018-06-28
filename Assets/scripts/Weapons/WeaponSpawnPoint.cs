@@ -18,6 +18,12 @@ public class WeaponSpawnPoint: SpawnPoint {
         Any
     }
 
+
+    void OnWeaponPickedUp()
+    {
+        _SpawnedSelector = null;
+        _Timeout = SpawnTime;
+    }
     void Update()
     {
         if(_SpawnedSelector == null)
@@ -35,6 +41,7 @@ public class WeaponSpawnPoint: SpawnPoint {
         var prefab = GetPrefab(WeaponType);
         _SpawnedSelector = Spawn(prefab).GetComponent<WeaponFactionSelector>();
         _SpawnedSelector.UseGravity = false;
+        _SpawnedSelector.OnWeaponPickedUp += OnWeaponPickedUp;
         _Timeout = SpawnTime;
     }
 
