@@ -65,7 +65,7 @@ public class InGamePanelController : MonoBehaviour {
 
     public void Menu()
     {
-
+        GameManager.Instance.LoadMenu();
     }
 
 }

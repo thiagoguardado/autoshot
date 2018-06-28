@@ -149,6 +149,22 @@ MonoBehaviour:
       type: 2}
     GunWeaponSelector: {fileID: 114469143384521158, guid: bf048b7321352cc43b527b5ca5635341,
       type: 2}
+  levels:
+  - id: 0
+    sceneName: level0
+    isOpened: 0
+  - id: 1
+    sceneName: level1
+    isOpened: 0
+  - id: 2
+    sceneName: level2
+    isOpened: 0
+  - id: 3
+    sceneName: level3
+    isOpened: 0
+  - id: 4
+    sceneName: level4
+    isOpened: 0
 --- !u!114 &114618319279811402
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -203,7 +219,7 @@ MonoBehaviour:
   m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}

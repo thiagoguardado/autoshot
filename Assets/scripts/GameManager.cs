@@ -1,12 +1,18 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
     private static GameManager _Instance = null;
 
     public SpawnableObjects SpawnableObjects = new SpawnableObjects();
-    
+    public Level[] levels;
+
+    private const string MenuSceneName = "Menu";
+
+
     public static GameManager Instance
     {
         get
@@ -27,13 +33,15 @@ public class GameManager : MonoBehaviour {
     public delegate void VoidDelegate();
 
     public GameObjectSpawnPointDelegate OnRequestEnemySpawn;
+
     public GameObjectDelegate OnNotifySpawn;
     public CharacterDelegate OnNotifyDeath;
     public LevelFinishedDelegate OnNotifyLevelFinished;
     public WaveNotify OnNotifyWaveStarting;
 
     private InGamePanelController PanelController;
-
+    public LevelsManager LevelsManager { get; private set; }
+  
 
     private static void CreateInstance()
     {
@@ -85,6 +93,33 @@ public class GameManager : MonoBehaviour {
     }
 
 
+    public void Pause()
+    {
+        if (!PanelController.hasPanelOpened)
+        {
+            Time.timeScale = 0f;
+            PanelController.OpenPausePanel();
+        }
+        else
+        {
+            Time.timeScale = 1f;
+            PanelController.ClosePausePanel();
+        }
+
+    }
+
+    public void StartLevel(int id)
+    {
+        SceneManager.LoadScene(LevelsManager.GetLevelById(id).sceneName);
+    }
+
+
+    internal void LoadMenu()
+    {
+        SceneManager.LoadScene(MenuSceneName);
+    }
+
+
     void Awake()
     {
         if(_Instance != null)
@@ -95,6 +130,7 @@ public class GameManager : MonoBehaviour {
         {
             _Instance = this;
             PanelController = GetComponentInChildren<InGamePanelController>();
+            LevelsManager = new LevelsManager(levels);
             DontDestroyOnLoad(gameObject);
         }
     }
@@ -108,19 +144,51 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public void Pause()
+
+
+
+}
+
+public class LevelsManager
+{
+
+    public Dictionary<int,Level> levels = new Dictionary<int, Level>();
+
+    public LevelsManager(Level[] levels)
     {
-        if (!PanelController.hasPanelOpened)
+        for (int i = 0; i < levels.Length; i++)
         {
-            Time.timeScale = 0f;
-            PanelController.OpenPausePanel();
+            this.levels.Add(levels[i].id, levels[i]);
         }
-        else
-        {
-            Time.timeScale = 1f;
-            PanelController.ClosePausePanel();
-        }
-            
+
+        levels[0].isOpened = true;
+
     }
 
+    public void OpenLevel(int levelId)
+    {
+        levels[levelId].isOpened = true;
+    }
+
+    public Level GetLevelById(int id)
+    {
+        if (levels.ContainsKey(id))
+            return levels[id];
+
+        return null;
+    }
+}
+
+[System.Serializable]
+public class Level
+{
+    public int id;
+    public string sceneName;
+    [HideInInspector] public bool isOpened;
+
+    public Level(int id, string sceneName)
+    {
+        this.sceneName = sceneName;
+        this.isOpened = false;
+    }
 }
