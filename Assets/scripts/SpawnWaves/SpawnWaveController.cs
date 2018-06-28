@@ -9,11 +9,15 @@ public class SpawnWaveController : MonoBehaviour {
     public float WaveTime = 20.0f;
     float _CurrentWaveTimeout = 0;
     bool finished = false;
+    int waveCount = 0;
+    int waveTotal = 0;
 
     void Awake()
     {
         GameManager.Instance.OnNotifySpawn += OnSpawned;
         GameManager.Instance.OnNotifyDeath += OnCharacterDeath;
+
+        waveTotal = spawnWaves.Count;
     }
 
     void OnDestroy()
@@ -57,11 +61,13 @@ public class SpawnWaveController : MonoBehaviour {
         else
         {
             SpawnWave wave = spawnWaves[0];
+            waveCount += 1;
             Spawn(wave);
 
             spawnWaves.RemoveAt(0);
             _CurrentWaveTimeout = WaveTime;
 
+            GameManager.Instance.NotifyWaveChanged(waveCount,waveTotal);
             GameManager.Instance.NotifyWaveStarting(wave);
         }
     }

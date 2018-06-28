@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour {
     public delegate void CharacterDelegate(Character character);
     public delegate void LevelFinishedDelegate(bool successful);
     public delegate void WaveNotify(SpawnWave wave);
+    public delegate void WaveCount(int currentWave, int totalWaves);
     public delegate void VoidDelegate();
 
     public GameObjectSpawnPointDelegate OnRequestEnemySpawn;
@@ -38,6 +39,7 @@ public class GameManager : MonoBehaviour {
     public CharacterDelegate OnNotifyDeath;
     public LevelFinishedDelegate OnNotifyLevelFinished;
     public WaveNotify OnNotifyWaveStarting;
+    public WaveCount OnNotifyWaveChanged;
 
     private InGamePanelController PanelController;
     public LevelsManager LevelsManager { get; private set; }
@@ -89,6 +91,14 @@ public class GameManager : MonoBehaviour {
         if (OnNotifyWaveStarting != null)
         {
             OnNotifyWaveStarting(wave);
+        }
+    }
+
+    public void NotifyWaveChanged(int waveCount, int waveTotal)
+    {
+        if (OnNotifyWaveChanged != null)
+        {
+            OnNotifyWaveChanged(waveCount, waveTotal);
         }
     }
 
