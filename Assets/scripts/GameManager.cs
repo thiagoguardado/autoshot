@@ -31,7 +31,10 @@ public class GameManager : MonoBehaviour {
     public CharacterDelegate OnNotifyDeath;
     public LevelFinishedDelegate OnNotifyLevelFinished;
     public WaveNotify OnNotifyWaveStarting;
-    
+
+    private InGamePanelController PanelController;
+
+
     private static void CreateInstance()
     {
         GameObject prefab = Resources.Load<GameObject>("GameManager");
@@ -86,13 +89,38 @@ public class GameManager : MonoBehaviour {
     {
         if(_Instance != null)
         {
-            Destroy(gameObject);
+            DestroyImmediate(gameObject);
         }
         else
         {
             _Instance = this;
+            PanelController = GetComponentInChildren<InGamePanelController>();
             DontDestroyOnLoad(gameObject);
         }
+    }
+
+
+    private void Update()
+    {
+        if (Input.GetButtonDown("Cancel"))
+        {
+            Pause();
+        }
+    }
+
+    public void Pause()
+    {
+        if (!PanelController.hasPanelOpened)
+        {
+            Time.timeScale = 0f;
+            PanelController.OpenPausePanel();
+        }
+        else
+        {
+            Time.timeScale = 1f;
+            PanelController.ClosePausePanel();
+        }
+            
     }
 
 }
