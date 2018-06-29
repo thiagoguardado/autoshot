@@ -218,7 +218,7 @@ Animator:
   m_GameObject: {fileID: 1519028497252272}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 29c26cfb81722d94ba0a79958ec63920, type: 2}
+  m_Controller: {fileID: 9100000, guid: 71f7cdc0ed5048a44881f074035a4454, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -321,7 +321,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: WAVE 1 OF 3
+  m_Text: 
 --- !u!114 &114285602216183860
 MonoBehaviour:
   m_ObjectHideFlags: 1

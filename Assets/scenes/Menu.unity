@@ -705,16 +705,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuButtons:
-  - id: 0
-    button: {fileID: 1026114541}
-  - id: 1
-    button: {fileID: 90945613}
-  - id: 2
-    button: {fileID: 1390257625}
-  - id: 3
-    button: {fileID: 1838137361}
-  - id: 4
-    button: {fileID: 1320078530}
+  - button: {fileID: 1026114541}
+    levelID: 0
+  - button: {fileID: 90945613}
+    levelID: 1
+  - button: {fileID: 1390257625}
+    levelID: 2
+  - button: {fileID: 1838137361}
+    levelID: 3
+  - button: {fileID: 1320078530}
+    levelID: 4
 --- !u!114 &881226855
 MonoBehaviour:
   m_ObjectHideFlags: 0

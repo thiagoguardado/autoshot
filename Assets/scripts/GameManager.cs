@@ -42,13 +42,12 @@ public class GameManager : MonoBehaviour {
     public WaveCount OnNotifyWaveChanged;
 
     private InGamePanelController PanelController;
-    public LevelsManager LevelsManager { get; private set; }
+    public GameLevels gameLevels { get; private set; }
   
 
     private static void CreateInstance()
     {
         GameObject prefab = Resources.Load<GameObject>("GameManager");
-        
         _Instance = Instantiate(prefab).GetComponent<GameManager>();
         _Instance.name = "_GameManager";
         _Instance.transform.SetAsFirstSibling();
@@ -120,13 +119,17 @@ public class GameManager : MonoBehaviour {
 
     public void StartLevel(int id)
     {
-        SceneManager.LoadScene(LevelsManager.GetLevelById(id).sceneName);
+        ScenesManager.Instance.TransitionToScene(gameLevels.GetLevelById(id).sceneName);
+
+        //SceneManager.LoadScene(gameLevels.GetLevelById(id).sceneName);
     }
 
 
-    internal void LoadMenu()
+    public void LoadMenu()
     {
-        SceneManager.LoadScene(MenuSceneName);
+        ScenesManager.Instance.TransitionToScene(MenuSceneName);
+
+        //SceneManager.LoadScene(MenuSceneName);
     }
 
 
@@ -140,7 +143,7 @@ public class GameManager : MonoBehaviour {
         {
             _Instance = this;
             PanelController = GetComponentInChildren<InGamePanelController>();
-            LevelsManager = new LevelsManager(levels);
+            gameLevels = new GameLevels(levels);
             DontDestroyOnLoad(gameObject);
         }
     }
@@ -154,17 +157,14 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-
-
-
 }
 
-public class LevelsManager
+public class GameLevels
 {
 
     public Dictionary<int,Level> levels = new Dictionary<int, Level>();
 
-    public LevelsManager(Level[] levels)
+    public GameLevels(Level[] levels)
     {
         for (int i = 0; i < levels.Length; i++)
         {
