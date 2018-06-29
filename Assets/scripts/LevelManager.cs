@@ -62,13 +62,9 @@ public class LevelManager : MonoBehaviour {
 
         #if UNITY_EDITOR
         // if start from editor
-        foreach (int key in GameManager.Instance.gameLevels.levels.Keys)
+        if (SceneManager.GetActiveScene().name != "Menu")
         {
-            if (GameManager.Instance.gameLevels.levels[key].sceneName != "Menu")
-            {
-                StartLevel();
-                break;
-            }
+            StartLevel();
         }
         #endif
     }

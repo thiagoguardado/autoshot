@@ -15,6 +15,7 @@ public class Menu : MonoBehaviour {
 
     public MenuButton[] menuButtons;
 
+    public AudioClip resetLevelsButtonPressedAudio;
 
     private void Awake()
     {
@@ -38,6 +39,10 @@ public class Menu : MonoBehaviour {
     public void StartLevel(Button caller)
     {
 
+        // audio
+        AudioManager.Instance.PlayButtonPressAudio();
+
+        // start level
         for (int i = 0; i < menuButtons.Length; i++)
         {
             if (menuButtons[i].button == caller)
@@ -46,6 +51,15 @@ public class Menu : MonoBehaviour {
             }
         }
 
+    }
+
+    public void ResetLevels()
+    {
+
+        AudioManager.Instance.PlaySFX(resetLevelsButtonPressedAudio);
+        GameManager.Instance.gameLevels.ResetLevels();
+
+        UpdateButtonsState();
     }
 
 }

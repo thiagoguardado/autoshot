@@ -309,7 +309,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: c03bcc1ab99233641902e462b9b007c1, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -455,6 +455,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panelAnchor: {fileID: 4461805326806894}
+  panelClosedClip: {fileID: 8300000, guid: 5c32f5d57a6a4c84c9b04f3370a8735a, type: 3}
   pausePanelPrefab: {fileID: 114253765029259916, guid: 0e788abd5cc5fa1499d4a33368d158bf,
     type: 2}
   victoryPanelPrefab: {fileID: 114184416251811596, guid: 06ff7807f513abb46ad8e4348eea9f04,

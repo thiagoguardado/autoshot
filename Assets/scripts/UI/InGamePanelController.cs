@@ -7,6 +7,7 @@ public class InGamePanelController : MonoBehaviour {
 
     private Animator Animator;
     public Transform panelAnchor;
+    public AudioClip panelClosedClip;
 
     public InGamePanel pausePanelPrefab;
     public InGamePanel victoryPanelPrefab;
@@ -61,13 +62,16 @@ public class InGamePanelController : MonoBehaviour {
         Animator.SetBool(AnimatorOpenPanelBool, true);
     }
 
-    public void ClosePanel()
+    public void ClosePanel(bool playAudio)
     {
         if (hasPanelOpened)
         {
             Animator.SetBool(AnimatorOpenPanelBool, false);
 
             StartCoroutine(WaitForAnimationEnd());
+
+            if(playAudio)
+                AudioManager.Instance.PlaySFX(panelClosedClip);
         }
     }
 

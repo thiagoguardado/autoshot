@@ -111,6 +111,7 @@ public class GameManager : MonoBehaviour {
         }
         else
         {
+            PanelController.ClosePanel(true);
             Time.timeScale = 1f;
         }
 
@@ -147,9 +148,12 @@ public class GameManager : MonoBehaviour {
 
     private void Update()
     {
-        if (Input.GetButtonDown("Cancel"))
+        if (LevelManager.Instance.inGame)
         {
-            Pause();
+            if (Input.GetButtonDown("Cancel"))
+            {
+                Pause();
+            }
         }
     }
 
@@ -182,6 +186,19 @@ public class GameLevels
             return levels[id];
 
         return null;
+    }
+
+    public void ResetLevels()
+    {
+        foreach (int key in levels.Keys)
+        {
+
+            if (key == 0)
+                continue;
+
+            levels[key].isOpened = false;
+        }
+ 
     }
 }
 
