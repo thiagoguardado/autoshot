@@ -9,8 +9,8 @@ public class Menu : MonoBehaviour {
     [System.Serializable]
     public class MenuButton
     {
-        public int id;
-        public Button button; 
+        public Button button;
+        public int levelID;
     }
 
     public MenuButton[] menuButtons;
@@ -25,7 +25,7 @@ public class Menu : MonoBehaviour {
     {
         for (int i = 0; i < menuButtons.Length; i++)
         {
-            Level lvl = GameManager.Instance.LevelsManager.GetLevelById(menuButtons[i].id);
+            Level lvl = GameManager.Instance.gameLevels.GetLevelById(menuButtons[i].levelID);
             if (lvl != null)
             {
                 menuButtons[i].button.interactable = lvl.isOpened;
@@ -42,7 +42,7 @@ public class Menu : MonoBehaviour {
         {
             if (menuButtons[i].button == caller)
             {
-                GameManager.Instance.StartLevel(menuButtons[i].id);
+                GameManager.Instance.StartLevel(menuButtons[i].levelID);
             }
         }
 

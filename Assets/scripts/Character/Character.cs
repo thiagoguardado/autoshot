@@ -14,7 +14,7 @@ public enum CharacterFaction
 public class Character : MonoBehaviour, IWeaponTarget
 {
 
-    [SerializeField] private CharacterFaction characterFaction;
+    public CharacterFaction CharacterFaction;
     public List<CharacterFaction> friendFactions;
     public Animator Animator;
     public SpriteRenderer SpriteRenderer;
@@ -39,6 +39,7 @@ public class Character : MonoBehaviour, IWeaponTarget
     public bool LockYMovement = true;
     public bool ShouldCheckCollisions = true;
     public bool CanPickupWeapon = true;
+    public bool IsDead = false;
     private bool canBeHit = true;
 
     public AudioClip deathAudio;
@@ -57,6 +58,7 @@ public class Character : MonoBehaviour, IWeaponTarget
     int _GroundLayerMask;
     int _PlatformLayerMask;
     bool _Moving = false;
+
 
     [HideInInspector] public WeaponFactionSelector CurrentWeaponSelector { get; private set; }
 
@@ -144,7 +146,7 @@ public class Character : MonoBehaviour, IWeaponTarget
 
         for (int i = 0; i < _weaponSelector.weapons.Count; i++)
         {
-            if (_weaponSelector.weapons[i].faction == characterFaction)
+            if (_weaponSelector.weapons[i].faction == CharacterFaction)
             {
                 weaponToInstantiate = _weaponSelector.weapons[i];
                 break;
@@ -211,6 +213,7 @@ public class Character : MonoBehaviour, IWeaponTarget
         _MovementDirection = velocity.normalized + InputWalkDirection;
     }
     public Vector2 velocity = new Vector2();
+
 
     float GetSmoothMovementAxis(float currentVelocity, float inputVelocity, float acceleration, float maxVelocity)
     {
@@ -422,7 +425,7 @@ public class Character : MonoBehaviour, IWeaponTarget
 
     CharacterFaction IWeaponTarget.GetCharacaterFaction()
     {
-        return characterFaction;
+        return CharacterFaction;
     }
 
     public void Spring(Vector2 force)

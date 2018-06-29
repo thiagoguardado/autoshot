@@ -11,6 +11,7 @@ public class SpawnWaveController : MonoBehaviour {
     bool finished = false;
     int waveCount = 0;
     int waveTotal = 0;
+    bool startedSpawning = false;
 
     void Awake()
     {
@@ -43,8 +44,10 @@ public class SpawnWaveController : MonoBehaviour {
         }
 
         _CurrentWaveTimeout -= Time.deltaTime;
-        if (_CurrentWaveTimeout <= 0 || spawnedEnemies.Count == 0)
+
+        if((!startedSpawning && _CurrentWaveTimeout <= 0) || (startedSpawning && (_CurrentWaveTimeout <= 0 || spawnedEnemies.Count == 0)))
         {
+            startedSpawning = true;
             StartNextWave();
         }
     }

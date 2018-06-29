@@ -8,11 +8,14 @@ public class PausePanel : InGamePanel {
     public void Continue()
     {
         GameManager.Instance.Pause();
+        panelController.ClosePanel();
     }
 
 
     public void Menu()
     {
+        GameManager.Instance.Pause();
+        panelController.ClosePanel();
         panelController.Menu();
     }
 

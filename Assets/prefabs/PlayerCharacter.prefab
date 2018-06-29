@@ -182,7 +182,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc053d82c41d0b84eaa734ade3393820, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterFaction: 0
   friendFactions: 00000000
   Animator: {fileID: 95211060672920936}
   SpriteRenderer: {fileID: 212619481633951962}
@@ -199,6 +198,7 @@ MonoBehaviour:
   LockYMovement: 1
   ShouldCheckCollisions: 1
   CanPickupWeapon: 1
+  IsDead: 0
   deathAudio: {fileID: 8300000, guid: cabfae866cab347928b74b7d0ca6bfa9, type: 3}
   hurtAudio: {fileID: 8300000, guid: 130a177e727814a2ea78a886ab72213d, type: 3}
   _Ground: {fileID: 0}

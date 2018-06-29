@@ -218,7 +218,7 @@ Animator:
   m_GameObject: {fileID: 1519028497252272}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 29c26cfb81722d94ba0a79958ec63920, type: 2}
+  m_Controller: {fileID: 9100000, guid: 71f7cdc0ed5048a44881f074035a4454, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -321,7 +321,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: WAVE 1 OF 3
+  m_Text: 
 --- !u!114 &114285602216183860
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -457,8 +457,10 @@ MonoBehaviour:
   panelAnchor: {fileID: 4461805326806894}
   pausePanelPrefab: {fileID: 114253765029259916, guid: 0e788abd5cc5fa1499d4a33368d158bf,
     type: 2}
-  victoryPanelPrefab: {fileID: 0}
-  defeatPanelPrefab: {fileID: 0}
+  victoryPanelPrefab: {fileID: 114184416251811596, guid: 06ff7807f513abb46ad8e4348eea9f04,
+    type: 2}
+  defeatPanelPrefab: {fileID: 114740301665163068, guid: 8ef228a289ee86a47952fcb2539e07bf,
+    type: 2}
 --- !u!222 &222216295687780374
 CanvasRenderer:
   m_ObjectHideFlags: 1
