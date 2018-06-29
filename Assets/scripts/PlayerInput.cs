@@ -42,22 +42,25 @@ public class PlayerInput : MonoBehaviour {
 
     void Update () {
 
-        _Character.InputWalkDirection.x = Input.GetAxis("Horizontal");
-        _Character.InputIsJumping = Input.GetButton("Jump");
+        if (LevelManager.Instance.inGame)
+        {
+            _Character.InputWalkDirection.x = Input.GetAxis("Horizontal");
+            _Character.InputIsJumping = Input.GetButton("Jump");
 
-      
-        if(_TouchInputLeft)
-        {
-            _Character.InputWalkDirection.x = -1;
-        }
-        else if(_TouchInputRight)
-        {
-            _Character.InputWalkDirection.x = 1;
-        }
-        
-        if(_TouchInputJump == true)
-        {
-            _Character.InputIsJumping = true;
+
+            if (_TouchInputLeft)
+            {
+                _Character.InputWalkDirection.x = -1;
+            }
+            else if (_TouchInputRight)
+            {
+                _Character.InputWalkDirection.x = 1;
+            }
+
+            if (_TouchInputJump == true)
+            {
+                _Character.InputIsJumping = true;
+            }
         }
 	}
 }

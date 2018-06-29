@@ -19,11 +19,35 @@ public class InGamePanelController : MonoBehaviour {
 
     public bool hasPanelOpened { get { return instantiatedPanel != null; } }
 
+    private void OnEnable()
+    {
+        GameManager.Instance.OnNotifyLevelFinished += OpenFinalPanel;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.Instance.OnNotifyLevelFinished -= OpenFinalPanel;
+    }
+
     private void Awake()
     {
         Animator = GetComponent<Animator>();
     }
 
+    public void OpenPausePanel()
+    {
+        OpenPanel(pausePanelPrefab);
+    }
+
+    public void OpenVictoryPanel()
+    {
+        OpenPanel(victoryPanelPrefab);
+    }
+
+    public void OpenLosePanel()
+    {
+        OpenPanel(defeatPanelPrefab);
+    }
 
     private void OpenPanel(InGamePanel panelPrefab)
     {
@@ -37,12 +61,14 @@ public class InGamePanelController : MonoBehaviour {
         Animator.SetBool(AnimatorOpenPanelBool, true);
     }
 
-    private void ClosePanel()
+    public void ClosePanel()
     {
-        Animator.SetBool(AnimatorOpenPanelBool, false);
+        if (hasPanelOpened)
+        {
+            Animator.SetBool(AnimatorOpenPanelBool, false);
 
-        StartCoroutine(WaitForAnimationEnd());
-
+            StartCoroutine(WaitForAnimationEnd());
+        }
     }
 
     private IEnumerator WaitForAnimationEnd()
@@ -53,15 +79,18 @@ public class InGamePanelController : MonoBehaviour {
         instantiatedPanel.DestroyPanel();
     }
 
-    public void OpenPausePanel()
+    public void OpenFinalPanel(bool success)
     {
-        OpenPanel(pausePanelPrefab);
+        if (success)
+        {
+            OpenVictoryPanel();
+        }
+        else {
+            OpenLosePanel();
+        }
+
     }
 
-    public void ClosePausePanel()
-    {
-        ClosePanel();
-    }
 
     public void Menu()
     {

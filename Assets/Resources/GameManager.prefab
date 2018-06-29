@@ -457,8 +457,10 @@ MonoBehaviour:
   panelAnchor: {fileID: 4461805326806894}
   pausePanelPrefab: {fileID: 114253765029259916, guid: 0e788abd5cc5fa1499d4a33368d158bf,
     type: 2}
-  victoryPanelPrefab: {fileID: 0}
-  defeatPanelPrefab: {fileID: 0}
+  victoryPanelPrefab: {fileID: 114184416251811596, guid: 06ff7807f513abb46ad8e4348eea9f04,
+    type: 2}
+  defeatPanelPrefab: {fileID: 114740301665163068, guid: 8ef228a289ee86a47952fcb2539e07bf,
+    type: 2}
 --- !u!222 &222216295687780374
 CanvasRenderer:
   m_ObjectHideFlags: 1

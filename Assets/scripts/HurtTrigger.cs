@@ -5,7 +5,7 @@ using UnityEngine;
 public class HurtTrigger : MonoBehaviour
 {
     public HitInfo HitInfo = new HitInfo();
-    public Collider IgnoreCollider = null;
+    public Collider2D IgnoreCollider = null;
     public List<CharacterFaction> FriendFactions = new List<CharacterFaction>();
     private Collider2D collider2D;
     private ContactFilter2D contactFilter = new ContactFilter2D();
@@ -42,7 +42,6 @@ public class HurtTrigger : MonoBehaviour
 
     private void CheckOverlap()
     {
-
 
         for (int i = 0; i < collider2D.OverlapCollider(contactFilter, overlapping); i++)
         {

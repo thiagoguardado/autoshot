@@ -112,7 +112,6 @@ public class GameManager : MonoBehaviour {
         else
         {
             Time.timeScale = 1f;
-            PanelController.ClosePausePanel();
         }
 
     }
