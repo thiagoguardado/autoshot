@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour {
 
@@ -53,8 +54,24 @@ public class LevelManager : MonoBehaviour {
         Reset();
 
         DontDestroyOnLoad(gameObject);
+ 
     }
 
+    private void Start()
+    {
+
+        #if UNITY_EDITOR
+        // if start from editor
+        foreach (int key in GameManager.Instance.gameLevels.levels.Keys)
+        {
+            if (GameManager.Instance.gameLevels.levels[key].sceneName != "Menu")
+            {
+                StartLevel();
+                break;
+            }
+        }
+        #endif
+    }
 
     public void Reset()
     {

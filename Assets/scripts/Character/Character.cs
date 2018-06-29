@@ -14,7 +14,7 @@ public enum CharacterFaction
 public class Character : MonoBehaviour, IWeaponTarget
 {
 
-    public CharacterFaction CharacterFaction { get; private set; }
+    public CharacterFaction CharacterFaction;
     public List<CharacterFaction> friendFactions;
     public Animator Animator;
     public SpriteRenderer SpriteRenderer;

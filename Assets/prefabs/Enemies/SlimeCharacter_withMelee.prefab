@@ -258,6 +258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc053d82c41d0b84eaa734ade3393820, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CharacterFaction: 1
   friendFactions: 01000000
   Animator: {fileID: 95656926888961244}
   SpriteRenderer: {fileID: 212391462143770510}
