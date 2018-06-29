@@ -211,6 +211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4767db3a47b83f046a6bd31373bb1e7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  panelOpenedClip: {fileID: 8300000, guid: 657578e4be6b64dbf9b09deada272e55, type: 3}
 --- !u!114 &114293846031125178
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -273,3 +273,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bgmSource: {fileID: 82288972966409548}
   sfxSource: {fileID: 82348534558080742}
+  buttonPressAudio: {fileID: 8300000, guid: ffb159a21c8a04135a5616979c828fab, type: 3}

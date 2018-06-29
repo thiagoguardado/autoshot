@@ -111,6 +111,7 @@ public class GameManager : MonoBehaviour {
         }
         else
         {
+            PanelController.ClosePanel(true);
             Time.timeScale = 1f;
         }
 
@@ -147,9 +148,12 @@ public class GameManager : MonoBehaviour {
 
     private void Update()
     {
-        if (Input.GetButtonDown("Cancel"))
+        if (LevelManager.Instance.inGame)
         {
-            Pause();
+            if (Input.GetButtonDown("Cancel"))
+            {
+                Pause();
+            }
         }
     }
 

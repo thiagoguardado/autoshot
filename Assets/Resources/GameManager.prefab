@@ -455,6 +455,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panelAnchor: {fileID: 4461805326806894}
+  panelClosedClip: {fileID: 8300000, guid: 5c32f5d57a6a4c84c9b04f3370a8735a, type: 3}
   pausePanelPrefab: {fileID: 114253765029259916, guid: 0e788abd5cc5fa1499d4a33368d158bf,
     type: 2}
   victoryPanelPrefab: {fileID: 114184416251811596, guid: 06ff7807f513abb46ad8e4348eea9f04,
