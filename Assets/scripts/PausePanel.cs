@@ -13,6 +13,7 @@ public class PausePanel : InGamePanel {
 
     public void Menu()
     {
+        GameManager.Instance.Pause();
         panelController.Menu();
     }
 

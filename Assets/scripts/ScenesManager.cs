@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class ScenesManager : MonoBehaviour {
 
@@ -36,30 +37,31 @@ public class ScenesManager : MonoBehaviour {
     public Image fadingPanel;
     public Color fadeColor;
     public float fadeDuration;
-
+    private Coroutine fadingCoroutine;
+    private bool isTransitioning;
 
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
     }
 
-    private void Fade()
+
+    public bool TransitionToScene(string nextScene)
     {
-        StartCoroutine(Fade(fadeDuration, true));
+
+        if (isTransitioning)
+            return false;
+
+        if (fadingCoroutine != null)
+            StopCoroutine(fadingCoroutine);
+
+        isTransitioning = true;
+        fadingCoroutine = StartCoroutine(LoadScene(nextScene, () => isTransitioning = false));
+
+        return true;
     }
 
-    private void UnFade()
-    {
-        StartCoroutine(Fade(fadeDuration, false));
-    }
-
-
-    public void TransitionToScene(string nextScene)
-    {
-        StartCoroutine(LoadScene(nextScene));
-    }
-
-    IEnumerator LoadScene(string nextScene)
+    IEnumerator LoadScene(string nextScene, Action endAction = null)
     {
 
         Scene currenetScene = SceneManager.GetActiveScene();
@@ -78,7 +80,11 @@ public class ScenesManager : MonoBehaviour {
 
         yield return StartCoroutine(Fade(fadeDuration, false));
 
+        if (endAction != null)
+            endAction.Invoke();
+
         Destroy();
+
     }
 
     IEnumerator Fade(float duration, bool toAlphaOne) {
