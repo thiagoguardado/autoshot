@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,6 +22,9 @@ public class LevelManager : MonoBehaviour {
 
     public bool levelStarted { get; private set; }
     public bool levelEnded { get; private set; }
+    public bool inGame { get { return levelStarted && !levelEnded; } }
+
+    private Level currentLevel;
 
     private static void CreateInstance()
     {
@@ -31,10 +35,24 @@ public class LevelManager : MonoBehaviour {
         _Instance = instance.GetComponent<LevelManager>();
     }
 
+    private void OnEnable()
+    {
+        GameManager.Instance.OnNotifyLevelFinished += EndLevel;
+        GameManager.Instance.OnNotifyDeath += CheckPlayersAlive;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.Instance.OnNotifyLevelFinished -= EndLevel;
+        GameManager.Instance.OnNotifyDeath -= CheckPlayersAlive;
+    }
+
 
     private void Awake()
     {
         Reset();
+
+        DontDestroyOnLoad(gameObject);
     }
 
 
@@ -49,12 +67,50 @@ public class LevelManager : MonoBehaviour {
         levelStarted = true;
     }
 
-    public void EndLevel()
+    public void EndLevel(bool success)
     {
         levelEnded = true;
+
+        if (success)
+        {
+            GameManager.Instance.gameLevels.OpenLevel(currentLevel.id + 1);
+        }
+
     }
 
 
+    // check if has any player still alive
+    public void CheckPlayersAlive(Character character)
+    {
+        if (inGame)
+        {
+
+            Character[] chars = GameObject.FindObjectsOfType<Character>();
+
+            for (int i = 0; i < chars.Length; i++)
+            {
+                if (chars[i].CharacterFaction == CharacterFaction.Player && !chars[i].IsDead)
+                {
+                    return;
+                }
+            }
+
+            GameManager.Instance.NotifyLevelFinished(false);
+
+        }
+    }
 
 
+    public void StartLevel(Level levelToStart)
+    {
+        Reset();
+
+        if (ScenesManager.Instance.TransitionToScene(levelToStart.sceneName))
+        {
+            currentLevel = levelToStart;
+
+            StartLevel();
+        }
+
+    }
 }

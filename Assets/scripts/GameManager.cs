@@ -119,17 +119,14 @@ public class GameManager : MonoBehaviour {
 
     public void StartLevel(int id)
     {
-        ScenesManager.Instance.TransitionToScene(gameLevels.GetLevelById(id).sceneName);
 
-        //SceneManager.LoadScene(gameLevels.GetLevelById(id).sceneName);
+        LevelManager.Instance.StartLevel(gameLevels.GetLevelById(id));
     }
 
 
     public void LoadMenu()
     {
         ScenesManager.Instance.TransitionToScene(MenuSceneName);
-
-        //SceneManager.LoadScene(MenuSceneName);
     }
 
 

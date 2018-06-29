@@ -9,8 +9,7 @@ public class CharacterDeadState : State<Character>
     {
         base.Enter();
 
-        GameManager.Instance.NotifyDeath(Agent);
-
+        Agent.IsDead = true;
         Agent.Sprite.Play(Agent.Sprite.animations.dead);
         Agent.IgnoreBullets = true;
         Agent._MovementDirection = Vector2.zero;
@@ -25,6 +24,9 @@ public class CharacterDeadState : State<Character>
 
         // play sfx
         AudioManager.Instance.PlaySFX(Agent.deathAudio);
+
+        // notify event
+        GameManager.Instance.NotifyDeath(Agent);
     }
     
 
@@ -38,6 +40,8 @@ public class CharacterDeadState : State<Character>
         Agent.IgnoreBullets = false;
 
         Agent.CanPickupWeapon = true;
+
+        Agent.IsDead = false;
 
         if (Agent.CurrentWeaponSelector != null)
         {
