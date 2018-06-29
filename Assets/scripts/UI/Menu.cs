@@ -15,6 +15,8 @@ public class Menu : MonoBehaviour {
 
     public MenuButton[] menuButtons;
 
+    public AudioClip resetLevelsButtonPressedAudio;
+
     private void Awake()
     {
         UpdateButtonsState();
@@ -49,6 +51,15 @@ public class Menu : MonoBehaviour {
             }
         }
 
+    }
+
+    public void ResetLevels()
+    {
+
+        AudioManager.Instance.PlaySFX(resetLevelsButtonPressedAudio);
+        GameManager.Instance.gameLevels.ResetLevels();
+
+        UpdateButtonsState();
     }
 
 }

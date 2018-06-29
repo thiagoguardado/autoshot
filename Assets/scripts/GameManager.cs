@@ -187,6 +187,19 @@ public class GameLevels
 
         return null;
     }
+
+    public void ResetLevels()
+    {
+        foreach (int key in levels.Keys)
+        {
+
+            if (key == 0)
+                continue;
+
+            levels[key].isOpened = false;
+        }
+ 
+    }
 }
 
 [System.Serializable]
