@@ -19,10 +19,13 @@ public class AudioManager : MonoBehaviour {
     }
 
     public const string _ResourceName = "AudioManager";
+
     [Header("AudioSources")]
     public AudioSource bgmSource;
     public AudioSource sfxSource;
 
+    [Header("Common sounds")]
+    public AudioClip buttonPressAudio;
 
     private static void CreateInstance()
     {
@@ -49,6 +52,11 @@ public class AudioManager : MonoBehaviour {
     public void PlaySFX(AudioClip clip)
     {
         sfxSource.PlayOneShot(clip);
+    }
+
+    public void PlayButtonPressAudio()
+    {
+        PlaySFX(buttonPressAudio);
     }
 
 }

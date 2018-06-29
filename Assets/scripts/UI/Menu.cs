@@ -15,7 +15,6 @@ public class Menu : MonoBehaviour {
 
     public MenuButton[] menuButtons;
 
-
     private void Awake()
     {
         UpdateButtonsState();
@@ -38,6 +37,10 @@ public class Menu : MonoBehaviour {
     public void StartLevel(Button caller)
     {
 
+        // audio
+        AudioManager.Instance.PlayButtonPressAudio();
+
+        // start level
         for (int i = 0; i < menuButtons.Length; i++)
         {
             if (menuButtons[i].button == caller)

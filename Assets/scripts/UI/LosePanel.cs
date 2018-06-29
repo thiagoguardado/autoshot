@@ -6,6 +6,8 @@ public class LosePanel : InGamePanel {
 
     public void Menu()
     {
+        AudioManager.Instance.PlayButtonPressAudio();
+
         panelController.ClosePanel();
         panelController.Menu();
     }

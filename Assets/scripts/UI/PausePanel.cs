@@ -7,6 +7,8 @@ public class PausePanel : InGamePanel {
 
     public void Continue()
     {
+        AudioManager.Instance.PlayButtonPressAudio();
+
         GameManager.Instance.Pause();
         panelController.ClosePanel();
     }
@@ -14,6 +16,8 @@ public class PausePanel : InGamePanel {
 
     public void Menu()
     {
+        AudioManager.Instance.PlayButtonPressAudio();
+
         GameManager.Instance.Pause();
         panelController.ClosePanel();
         panelController.Menu();
