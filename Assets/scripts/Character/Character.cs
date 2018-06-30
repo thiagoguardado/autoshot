@@ -10,6 +10,7 @@ public enum CharacterFaction
     Enemies
 }
 
+[RequireComponent(typeof(PoolObject))]
 [RequireComponent(typeof(Collider2D))]
 public class Character : MonoBehaviour, IWeaponTarget
 {
@@ -18,6 +19,8 @@ public class Character : MonoBehaviour, IWeaponTarget
     public List<CharacterFaction> friendFactions;
     public Animator Animator;
     public SpriteRenderer SpriteRenderer;
+
+
 
     [HideInInspector]
     public HurtTrigger HurtTrigger;
@@ -72,6 +75,7 @@ public class Character : MonoBehaviour, IWeaponTarget
 
     public Collider2D _Collider { get; private set; }
     public CharacterSprite Sprite { get; private set; }
+    private PoolObject _PoolObject = null;
 
     public FiniteStateMachine<Character> _StateMachine { get; private set; }
     CharacterJumping _JumpingState = new CharacterJumping();
@@ -118,10 +122,29 @@ public class Character : MonoBehaviour, IWeaponTarget
 
 
         _StateMachine = new FiniteStateMachine<Character>(this);
-        _StateMachine.SetState(_IdleState);
+        
 
         WeaponCanvas = GetComponentInChildren<WeaponCanvas>();
         HurtTrigger = GetComponentInChildren<HurtTrigger>();
+        _PoolObject = GetComponent<PoolObject>();
+        _PoolObject.OnActivate += OnActivate;
+        _PoolObject.OnDeactivate += OnDeactivate;
+    }
+
+    void Destroy()
+    {
+        _PoolObject.OnActivate -= OnActivate;
+    }
+
+    void OnActivate(PoolObject poolObject)
+    {
+        gameObject.SetActive(true);
+        HealthPoints = MaxHealthPoints;
+        _StateMachine.SetState(_IdleState);
+    }
+    void OnDeactivate(PoolObject poolObject)
+    {
+        gameObject.SetActive(false);
     }
 
     void Start()
@@ -338,8 +361,7 @@ public class Character : MonoBehaviour, IWeaponTarget
 
     public void DestroyCharacter()
     {
-        gameObject.SetActive(false);
-        Debug.Log("here");
+        _PoolObject.Deactivate();
     }
 
 

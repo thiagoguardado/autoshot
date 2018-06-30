@@ -9,6 +9,11 @@ public class CharacterDeadState : State<Character>
     {
         base.Enter();
 
+        if (Agent.CurrentWeaponSelector != null)
+        {
+            Agent.DropWeapon();
+        }
+
         GameManager.Instance.NotifyDeath(Agent);
 
         Agent.Sprite.Play(Agent.Sprite.animations.dead);
@@ -18,10 +23,7 @@ public class CharacterDeadState : State<Character>
         Agent.CanPickupWeapon = false;
         SetChildrenActive(false);
 
-        if(Agent.CurrentWeaponSelector != null)
-        {
-            Agent.DropWeapon();
-        }
+        
 
         // play sfx
         AudioManager.Instance.PlaySFX(Agent.deathAudio);

@@ -102,27 +102,27 @@ public class SpawnWaveController : MonoBehaviour {
             var spawn = spawnWave.SpawnPoints[spawnPoint];
             for (int i = 0; i < spawn.slimes; i++)
             {
-                GameManager.Instance.RequestSpawn(GameManager.Instance.SpawnableObjects.Slime.gameObject, spawnPoint);
+                GameManager.Instance.RequestEnemySpawn(SpawnableObjects.Instance.SlimePool, spawnPoint);
             }
             for (int i = 0; i < spawn.slimes_with_gun; i++)
             {
-                GameManager.Instance.RequestSpawn(GameManager.Instance.SpawnableObjects.Slime_with_Gun.gameObject, spawnPoint);
+                GameManager.Instance.RequestEnemySpawn(SpawnableObjects.Instance.SlimeWithGunPool, spawnPoint);
             }
             for (int i = 0; i < spawn.slimes_with_melee; i++)
             {
-                GameManager.Instance.RequestSpawn(GameManager.Instance.SpawnableObjects.Slime_with_Melee.gameObject, spawnPoint);
+                GameManager.Instance.RequestEnemySpawn(SpawnableObjects.Instance.SlimeWithMeleePool, spawnPoint);
             }
             for (int i = 0; i < spawn.ghosts; i++)
             {
-                GameManager.Instance.RequestSpawn(GameManager.Instance.SpawnableObjects.Ghost.gameObject, spawnPoint);
+                GameManager.Instance.RequestEnemySpawn(SpawnableObjects.Instance.GhostPool, spawnPoint);
             }
             for (int i = 0; i < spawn.ghosts_with_gun; i++)
             {
-                GameManager.Instance.RequestSpawn(GameManager.Instance.SpawnableObjects.Ghost_with_Gun.gameObject, spawnPoint);
+                GameManager.Instance.RequestEnemySpawn(SpawnableObjects.Instance.GhostWithGunPool, spawnPoint);
             }
             for (int i = 0; i < spawn.ghosts_with_melee; i++)
             {
-                GameManager.Instance.RequestSpawn(GameManager.Instance.SpawnableObjects.Ghost_with_Melee.gameObject, spawnPoint);
+                GameManager.Instance.RequestEnemySpawn(SpawnableObjects.Instance.GhostWithMeleePool, spawnPoint);
             }
         }
     }

@@ -58,6 +58,7 @@ GameObject:
   - component: {fileID: 58966272452196748}
   - component: {fileID: 114461457410467436}
   - component: {fileID: 114218494347589220}
+  - component: {fileID: 114300555868495104}
   m_Layer: 9
   m_Name: GhostCharacter_withGun
   m_TagString: Character
@@ -247,6 +248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a154b08e1c2c93a4e95b3685bb75efd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponType: 1
   weaponSelectorPrefab: {fileID: 114469143384521158, guid: bf048b7321352cc43b527b5ca5635341,
     type: 2}
 --- !u!114 &114259325663570648
@@ -258,6 +260,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5750a7c09771f1e4586cdf2c75d34d4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114300555868495104
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1556045527727328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a07a293ff1a108241bcc52d160207caa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114461457410467436

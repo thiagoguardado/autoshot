@@ -46,9 +46,10 @@ public class SpawnPoint : MonoBehaviour {
         textUi.text = text;
     }
 
-    public GameObject Spawn(GameObject prefab)
+    public GameObject Spawn(ObjectPool pool)
     {
-        GameObject instance = Instantiate(prefab, GetSpawnPosition(), Quaternion.identity);
+        GameObject instance = pool.create().gameObject;
+        instance.transform.position = GetSpawnPosition();
         return instance;
     }
 

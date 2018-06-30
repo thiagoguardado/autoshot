@@ -273,6 +273,51 @@ MonoBehaviour:
       type: 2}
     GunWeaponSelector: {fileID: 114469143384521158, guid: bf048b7321352cc43b527b5ca5635341,
       type: 2}
+    Pools:
+      Slime:
+        Prefab: {fileID: 1244056567529540, guid: 09a08bfbacdb5d04ea3ae1c8a91a40ef,
+          type: 2}
+        pool: []
+        poolSize: 10
+      Slime_with_Gun:
+        Prefab: {fileID: 1859161758106288, guid: f0e9503104e5f9c42ae73314b0a0de88,
+          type: 2}
+        pool: []
+        poolSize: 10
+      Slime_with_Melee:
+        Prefab: {fileID: 1503684962455456, guid: 96930becceb91d84e803cdd7b0f27ede,
+          type: 2}
+        pool: []
+        poolSize: 10
+      Ghost:
+        Prefab: {fileID: 1790396430280826, guid: 73b8977a497ac0e4488a90eaa1870a5a,
+          type: 2}
+        pool: []
+        poolSize: 10
+      Ghost_with_Gun:
+        Prefab: {fileID: 1556045527727328, guid: 00bf53862abfe994f85ce739409d1e62,
+          type: 2}
+        pool: []
+        poolSize: 10
+      Ghost_with_Melee:
+        Prefab: {fileID: 1901216180441436, guid: 2e12a0422d4516b42bfc96031e5db2d7,
+          type: 2}
+        pool: []
+        poolSize: 10
+      MeleeWeaponSelector:
+        Prefab: {fileID: 1141023863712630, guid: 291046349b102d44b9e9f4d16174afd0,
+          type: 2}
+        pool: []
+        poolSize: 10
+      GunWeaponSelector:
+        Prefab: {fileID: 1468837765161342, guid: bf048b7321352cc43b527b5ca5635341,
+          type: 2}
+        pool: []
+        poolSize: 10
+      GunBullet:
+        Prefab: {fileID: 0}
+        pool: []
+        poolSize: 10
   levels:
   - id: 0
     sceneName: level0

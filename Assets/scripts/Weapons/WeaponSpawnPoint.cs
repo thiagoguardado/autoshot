@@ -38,8 +38,8 @@ public class WeaponSpawnPoint: SpawnPoint {
 
     void SpawnSelector()
     {
-        var prefab = GetPrefab(WeaponType);
-        _SpawnedSelector = Spawn(prefab).GetComponent<WeaponFactionSelector>();
+        var pool = GetPool(WeaponType);
+        _SpawnedSelector = Spawn(pool).GetComponent<WeaponFactionSelector>();
         _SpawnedSelector.UseGravity = false;
         _SpawnedSelector.OnWeaponPickedUp += OnWeaponPickedUp;
         _Timeout = SpawnTime;
@@ -51,7 +51,7 @@ public class WeaponSpawnPoint: SpawnPoint {
         SetLabel(WeaponType.ToString());
     }
 
-    GameObject GetPrefab(WeaponTypes weaponType)
+    ObjectPool GetPool(WeaponTypes weaponType)
     {
         if (weaponType == WeaponTypes.Any)
         {
@@ -61,12 +61,13 @@ public class WeaponSpawnPoint: SpawnPoint {
         switch (weaponType)
         {
             case WeaponTypes.Melee:
-                return GameManager.Instance.SpawnableObjects.MeleeWeaponSelector.gameObject;
+                return SpawnableObjects.Instance.MeleeWeaponSelectorPool;
             case WeaponTypes.Gun:
-                return GameManager.Instance.SpawnableObjects.GunWeaponSelector.gameObject;
+                return SpawnableObjects.Instance.GunWeaponSelectorPool;
             default:
                 break;
         }
+
         return null;
     }
 
