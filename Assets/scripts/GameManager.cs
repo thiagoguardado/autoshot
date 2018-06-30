@@ -7,11 +7,11 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour {
     private static GameManager _Instance = null;
 
-    public SpawnableObjects SpawnableObjects = new SpawnableObjects();
     public Level[] levels;
-
     private const string MenuSceneName = "Menu";
 
+    [HideInInspector]
+    public Transform PoolParent = null;
 
     public static GameManager Instance
     {
@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public delegate void GameObjectSpawnPointDelegate(GameObject prefab, int spawnPoint);
+    public delegate void SpawnPoolDelegate(ObjectPool pool, int spawnPoint);
     public delegate void GameObjectDelegate(GameObject gameObject);
     public delegate void CharacterDelegate(Character character);
     public delegate void LevelFinishedDelegate(bool successful);
@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour {
     public delegate void WaveCount(int currentWave, int totalWaves);
     public delegate void VoidDelegate();
 
-    public GameObjectSpawnPointDelegate OnRequestEnemySpawn;
+    public SpawnPoolDelegate OnRequestSpawnEnemy;
 
     public GameObjectDelegate OnNotifySpawn;
     public CharacterDelegate OnNotifyDeath;
@@ -42,8 +42,8 @@ public class GameManager : MonoBehaviour {
     public WaveCount OnNotifyWaveChanged;
 
     private InGamePanelController PanelController;
+
     public GameLevels gameLevels { get; private set; }
-  
 
     private static void CreateInstance()
     {
@@ -53,11 +53,12 @@ public class GameManager : MonoBehaviour {
         _Instance.transform.SetAsFirstSibling();
     }
 
-    public void RequestSpawn(GameObject prefab, int spawnPoint)
+
+    public void RequestEnemySpawn(ObjectPool pool, int spawnPoint)
     {
-        if(OnRequestEnemySpawn != null)
+        if(OnRequestSpawnEnemy != null)
         {
-            OnRequestEnemySpawn(prefab, spawnPoint);
+            OnRequestSpawnEnemy(pool, spawnPoint);
         }
     }
 

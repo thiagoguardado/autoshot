@@ -3,11 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(PoolObject))]
 public class WeaponFactionSelector : MonoBehaviour {
     public const float cooldownToPickAgain = 1.0f;
 
     private SpriteRenderer visualObjectSpriteRenderer;
     private Collider2D visualObjectTrigger;
+    private PoolObject _PoolObject;
 
     public WeaponClass weaponClass;
     public Color color = Color.white;    
@@ -46,16 +48,25 @@ public class WeaponFactionSelector : MonoBehaviour {
     private int lastAmmo;
     private bool pickedOnce = false;
     
-
     public void Awake()
     {
         visualObjectSpriteRenderer = visualObject.GetComponent<SpriteRenderer>();
         visualObjectTrigger = visualObject.GetComponent<Collider2D>();
         visualObjectSpriteRenderer.color = color;
         _Rigidbody = GetComponent<Rigidbody2D>();
-        UseGravity = true;
+        _PoolObject = GetComponent<PoolObject>();
+        _PoolObject.OnActivate += OnActivate;
+        _PoolObject.OnDeactivate += OnDeactivate;
+    }
+
+    public void OnDestroy()
+    {
+        _PoolObject.OnActivate -= OnActivate;
+        _PoolObject.OnDeactivate -= OnDeactivate;
 
     }
+
+  
 
     public void CharacterPickSelector(Character holderCharacter, FactionWeapon weaponToInstantiate)
     {
@@ -87,6 +98,7 @@ public class WeaponFactionSelector : MonoBehaviour {
 
     public void CharacterDropSelector(Vector3 positionDropped)
     {
+        transform.parent = null;
         UseGravity = true;
 
         // update ammo
@@ -119,7 +131,16 @@ public class WeaponFactionSelector : MonoBehaviour {
     private void DeactivateBox()
     {
         visualObject.SetActive(false);
+    }
 
+    public void OnActivate(PoolObject poolObject)
+    {
+        UseGravity = true;
+        gameObject.SetActive(true);
+    }
+    public void OnDeactivate(PoolObject poolObject)
+    {
+        gameObject.SetActive(false);
     }
 
     private void ActivateBox()

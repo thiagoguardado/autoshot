@@ -53,7 +53,7 @@ public abstract class Weapon : MonoBehaviour
     {
         if(Holder != null)
         {
-            transform.position = Holder.transform.position;
+          //  transform.position = Holder.transform.position;
         }
         FindClosestTarget();
         ShootingRoutine();
@@ -64,6 +64,7 @@ public abstract class Weapon : MonoBehaviour
     public void NewHolder(Character holder, Vector3 holderPosition, Collider2D holderCollider, GameObject holderTarget, List<CharacterFaction> holderFriendFactions)
     {
         Holder = holder;
+        transform.parent = holder.transform;
         IgnoreCollider = holderCollider;
         IgnoreTarget = holderTarget;
         transform.position = holderPosition;

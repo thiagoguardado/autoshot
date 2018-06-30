@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 58916973137908612}
   - component: {fileID: 114780602409309104}
   - component: {fileID: 114585689728011390}
+  - component: {fileID: 114791563428664638}
   m_Layer: 9
   m_Name: SlimeCharacter
   m_TagString: Character
@@ -103,7 +104,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1244056567529540}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 11.22, y: 7.35, z: 0}
+  m_LocalPosition: {x: -41.72, y: 53.37, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4979635412380880}
@@ -357,6 +358,17 @@ MonoBehaviour:
     Length: 1
     NormalDebugColor: {r: 1, g: 1, b: 1, a: 1}
     HitDebugColor: {r: 0, g: 1, b: 0, a: 1}
+--- !u!114 &114791563428664638
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1244056567529540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a07a293ff1a108241bcc52d160207caa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212575246054374438
 SpriteRenderer:
   m_ObjectHideFlags: 1

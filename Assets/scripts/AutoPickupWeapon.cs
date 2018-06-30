@@ -3,18 +3,42 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AutoPickupWeapon : MonoBehaviour {
-
-    private Character characterScript;
+    public WeaponClass weaponType;
+    private Character _Character;
     public WeaponFactionSelector weaponSelectorPrefab;
+
+    void Awake()
+    {
+        _Character = GetComponent<Character>();
+    }
 
     void Start()
     {
-        characterScript = GetComponent<Character>();
+        PickupWeapon();
+    }
 
-        WeaponFactionSelector weapon = Instantiate(weaponSelectorPrefab, transform.position, Quaternion.identity);
-        characterScript.PickupWeapon(weapon);
+    void PickupWeapon()
+    {
+        ObjectPool pool = null;
+        switch (weaponType)
+        {
+            case WeaponClass.Gun:
+                pool = SpawnableObjects.Instance.GunWeaponSelectorPool;
+                break;
+            case WeaponClass.Melee:
+                pool = SpawnableObjects.Instance.MeleeWeaponSelectorPool;
+                break;
+        }
 
+        if(pool == null)
+        {
+            return;
+        }
+
+        WeaponFactionSelector selector = pool.create().GetComponent<WeaponFactionSelector>();
+        selector.transform.position = transform.position;
+        selector.transform.parent = transform;
+        _Character.PickupWeapon(selector);
     }
 	
-
 }

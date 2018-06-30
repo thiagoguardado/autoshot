@@ -9,19 +9,23 @@ public class CharacterDeadState : State<Character>
     {
         base.Enter();
 
+
         Agent.IsDead = true;
+
+        if (Agent.CurrentWeaponSelector != null)
+        {
+            Agent.DropWeapon();
+        }
+
+        GameManager.Instance.NotifyDeath(Agent);
+
         Agent.Sprite.Play(Agent.Sprite.animations.dead);
         Agent.IgnoreBullets = true;
         Agent._MovementDirection = Vector2.zero;
 
         Agent.CanPickupWeapon = false;
         SetChildrenActive(false);
-
-        if(Agent.CurrentWeaponSelector != null)
-        {
-            Agent.DropWeapon();
-        }
-
+        
         // play sfx
         AudioManager.Instance.PlaySFX(Agent.deathAudio);
 

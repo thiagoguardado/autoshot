@@ -16,15 +16,15 @@ public class EnemySpawnPoint : SpawnPoint {
     protected override void Awake()
     {
         base.Awake();
-        GameManager.Instance.OnRequestEnemySpawn += OnSpawnEnemy;
+        GameManager.Instance.OnRequestSpawnEnemy += OnSpawnEnemy;
     }
 
     void OnDestroy()
     {
-        GameManager.Instance.OnRequestEnemySpawn -= OnSpawnEnemy;
+        GameManager.Instance.OnRequestSpawnEnemy -= OnSpawnEnemy;
     }
 
-    void OnSpawnEnemy(GameObject prefab, int spawnPoint)
+    void OnSpawnEnemy(ObjectPool pool, int spawnPoint)
     {
         if(!enabled)
         {
@@ -32,7 +32,7 @@ public class EnemySpawnPoint : SpawnPoint {
         }
         if(spawnPoint == id)
         {
-            var instance = Spawn(prefab);
+            var instance = Spawn(pool);
             GameManager.Instance.NotifyEnemySpawn(instance);
         }
     }   
