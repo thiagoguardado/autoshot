@@ -201,12 +201,12 @@ MonoBehaviour:
   - faction: 0
     weaponPrefab: {fileID: 114158152970916756, guid: 8e418077a906a874a96a9158594f0cd6,
       type: 2}
-    weaponAudio: {fileID: 0}
   - faction: 1
     weaponPrefab: {fileID: 114158152970916756, guid: 8d4988d0d177e684cb864a2498fe1d93,
       type: 2}
-    weaponAudio: {fileID: 0}
   visualObject: {fileID: 1332041960163076}
+  weaponCollectedAudio: {fileID: 8300000, guid: 0994c12e202f342459a4212e7287f7e8,
+    type: 3}
 --- !u!212 &212364928904429624
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -111,10 +111,10 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 243537397358693714, guid: 8e4c263d83e152345a398cb71268c4cc,
     type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -273,7 +273,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86fabc0caa4f5bb44bee741f0fbd0774, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: 8e4c263d83e152345a398cb71268c4cc, type: 2}
+  noBGMSnapshot: {fileID: 245188642151077290, guid: 8e4c263d83e152345a398cb71268c4cc,
+    type: 2}
+  reducedBGMVolumeSNapshot: {fileID: 245422846896320354, guid: 8e4c263d83e152345a398cb71268c4cc,
+    type: 2}
+  normalVolumeSnapshot: {fileID: 24500006, guid: 8e4c263d83e152345a398cb71268c4cc,
+    type: 2}
+  highPitchSnapshot: {fileID: 245929691959489682, guid: 8e4c263d83e152345a398cb71268c4cc,
+    type: 2}
+  lowPitchSnapshot: {fileID: 245294352800748546, guid: 8e4c263d83e152345a398cb71268c4cc,
+    type: 2}
   bgmSource: {fileID: 82288972966409548}
   sfxSource: {fileID: 82348534558080742}
-  gameClip: {fileID: 0}
+  gameClip: {fileID: 8300000, guid: 51ebaf6de844475499d2a468f52b1923, type: 3}
+  menuClip: {fileID: 8300000, guid: 4e3d988e73eb3804783c434c93a4eac0, type: 3}
   buttonPressAudio: {fileID: 8300000, guid: ffb159a21c8a04135a5616979c828fab, type: 3}

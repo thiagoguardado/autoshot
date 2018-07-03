@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,14 +32,19 @@ public class GameManager : MonoBehaviour {
     public delegate void WaveNotify(SpawnWave wave);
     public delegate void WaveCount(int currentWave, int totalWaves);
     public delegate void VoidDelegate();
+    public delegate void FinishedChangingScene(string newSceneName);
+    public delegate void StartedChangingScene();
 
     public SpawnPoolDelegate OnRequestSpawnEnemy;
-
     public GameObjectDelegate OnNotifySpawn;
     public CharacterDelegate OnNotifyDeath;
     public LevelFinishedDelegate OnNotifyLevelFinished;
     public WaveNotify OnNotifyWaveStarting;
     public WaveCount OnNotifyWaveChanged;
+    public StartedChangingScene OnStartSceneChange;
+    public FinishedChangingScene OnFinishSceneChange;
+    public VoidDelegate OnScenePaused;
+    public VoidDelegate OnSceneUnPaused;
 
     private InGamePanelController PanelController;
 
@@ -102,6 +107,29 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    public void NotifySceneStartedChanging()
+    {
+        if (OnStartSceneChange != null)
+            OnStartSceneChange();
+    }
+
+    public void NotifySceneFinishedChanging(string newScene)
+    {
+        if (OnFinishSceneChange != null)
+            OnFinishSceneChange(newScene);
+    }
+
+    public void NotifyPause()
+    {
+        if (OnScenePaused != null)
+            OnScenePaused();
+    }
+
+    public void NotifyUnPause()
+    {
+        if (OnSceneUnPaused != null)
+            OnSceneUnPaused();
+    }
 
     public void Pause()
     {
@@ -109,11 +137,13 @@ public class GameManager : MonoBehaviour {
         {
             Time.timeScale = 0f;
             PanelController.OpenPausePanel();
+            NotifyPause();
         }
         else
         {
             PanelController.ClosePanel(true);
             Time.timeScale = 1f;
+            NotifyUnPause();
         }
 
     }

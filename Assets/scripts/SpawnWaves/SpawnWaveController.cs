@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -42,6 +42,10 @@ public class SpawnWaveController : MonoBehaviour {
             return;
         }
         if(finished)
+        {
+            return;
+        }
+        if (!LevelManager.Instance.inGame)
         {
             return;
         }
