@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -43,11 +43,15 @@ public class WeaponSpawnPoint: SpawnPoint {
         _SpawnedSelector.UseGravity = false;
         _SpawnedSelector.OnWeaponPickedUp += OnWeaponPickedUp;
         _Timeout = SpawnTime;
+
+        // play effect
+        VisualEffects.Instance.PlayWeaponSpawnEffect(_SpawnedSelector.transform);
     }
 
     void OnValidate()
     {
         SetColor(Color.red);
+        labelText = WeaponType.ToString();
         SetLabel(WeaponType.ToString());
     }
 

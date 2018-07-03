@@ -53,5 +53,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnEffect: {fileID: 1488183589398192, guid: e8e797a0146bdc24a88393d742993e5c,
     type: 2}
+  weaponSpawnEffect: {fileID: 1138618743138642, guid: bfdeb33adb2f6e248bc698cd5ee8ed5e,
+    type: 2}
   hurtEffect: {fileID: 1434248609741650, guid: 7595152e9186e1648935ea080f4594d0, type: 2}
   dieEffect: {fileID: 1726609808932004, guid: 401bdbd02131ea7418a48c53ec8bb5a6, type: 2}

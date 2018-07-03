@@ -2101,7 +2101,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1641201845}
-  - component: {fileID: 1641201844}
   m_Layer: 0
   m_Name: WeaponSpawnController
   m_TagString: Untagged
@@ -2109,17 +2108,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1641201844
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1641201843}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2af69b8b025f72c4ca7850361850397f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1641201845
 Transform:
   m_ObjectHideFlags: 0
@@ -2363,9 +2351,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2090331979}
-  - {fileID: 1665593169}
   - {fileID: 378045799}
   - {fileID: 1165202211}
+  - {fileID: 1665593169}
   - {fileID: 216798045}
   - {fileID: 496775515}
   m_Father: {fileID: 376772180}

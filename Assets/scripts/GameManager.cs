@@ -166,6 +166,7 @@ public class GameManager : MonoBehaviour {
         if(_Instance != null)
         {
             DestroyImmediate(gameObject);
+            return;
         }
         else
         {

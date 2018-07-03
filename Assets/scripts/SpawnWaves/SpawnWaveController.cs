@@ -64,9 +64,14 @@ public class SpawnWaveController : MonoBehaviour {
         if(spawnWaves.Count == 0)
         {
             finished = true;
+            
 
-            bool successful = spawnedEnemies.Count == 0;
-            GameManager.Instance.NotifyLevelFinished(successful);
+            if (spawnedEnemies.Count <= 0)
+            {
+                GameManager.Instance.NotifyLevelFinished(true);
+            }
+
+            
         }
         else
         {

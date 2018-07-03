@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,8 +32,10 @@ public class VisualEffects : MonoBehaviour {
 
 
     public GameObject spawnEffect;
+    public GameObject weaponSpawnEffect;
     public GameObject hurtEffect;
     public GameObject dieEffect;
+
 
 
     public void PlayHurtEffect(Transform parent)
@@ -51,6 +53,10 @@ public class VisualEffects : MonoBehaviour {
         InstantiateEffect(spawnEffect, parent);
     }
 
+    public void PlayWeaponSpawnEffect(Transform parent)
+    {
+        InstantiateEffect(weaponSpawnEffect, parent);
+    }
 
     private void InstantiateEffect(GameObject effect, Transform parent)
     {

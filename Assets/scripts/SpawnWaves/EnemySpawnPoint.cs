@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,6 +9,7 @@ public class EnemySpawnPoint : SpawnPoint {
 
     void OnValidate()
     {
+        labelText = id.ToString();
         SetLabel(id.ToString());
         name = "SpawnPoint" + id.ToString();
     }
