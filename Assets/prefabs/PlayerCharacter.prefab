@@ -85,7 +85,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1183761254623452}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.78, z: 0}
+  m_LocalPosition: {x: 0, y: 1.057, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4717634169704314}
@@ -98,7 +98,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1342326907693296}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 14.19, y: 7.03, z: 0}
+  m_LocalPosition: {x: 16.182, y: 4.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4139422978414008}
@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21dde2a81622e654aae8176869bfce4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CanvasPrefab: {fileID: 114064481859236454, guid: 4e355fd1425164044b9c95425b4b12e4,
+  CanvasPrefab: {fileID: 114038875694470116, guid: 3788bd1eb03a5d24e9a1b4d3161737b4,
     type: 2}
   CanvasAnchor: {fileID: 4234101688797600}
 --- !u!114 &114028504734456622
@@ -194,6 +194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc053d82c41d0b84eaa734ade3393820, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CharacterFaction: 0
   friendFactions: 00000000
   Animator: {fileID: 95211060672920936}
   SpriteRenderer: {fileID: 212619481633951962}
