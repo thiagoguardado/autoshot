@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,6 +23,9 @@ public class AudioManager : MonoBehaviour {
     [Header("AudioSources")]
     public AudioSource bgmSource;
     public AudioSource sfxSource;
+
+    [Header("Music")]
+    public AudioClip gameClip;
 
     [Header("Common sounds")]
     public AudioClip buttonPressAudio;
