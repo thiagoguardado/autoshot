@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -59,6 +59,12 @@ public class Menu : MonoBehaviour {
         AudioManager.Instance.PlaySFX(resetLevelsButtonPressedAudio);
         GameManager.Instance.gameLevels.ResetLevels();
 
+        UpdateButtonsState();
+    }
+
+    public void OpenAllLevels()
+    {
+        GameManager.Instance.gameLevels.OpenAll();
         UpdateButtonsState();
     }
 

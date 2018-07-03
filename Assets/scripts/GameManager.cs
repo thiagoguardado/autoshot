@@ -231,6 +231,19 @@ public class GameLevels
         }
  
     }
+
+    public void OpenAll()
+    {
+        foreach (int key in levels.Keys)
+        {
+
+            if (key == 0)
+                continue;
+
+            levels[key].isOpened = true;
+        }
+
+    }
 }
 
 [System.Serializable]
