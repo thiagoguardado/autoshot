@@ -411,6 +411,9 @@ public class Character : MonoBehaviour, IWeaponTarget
         // play audio
         AudioManager.Instance.PlaySFX(hurtAudio);
 
+        // play effects
+        VisualEffects.Instance.PlayHurtEffect(transform);
+
         // start invincibility
         StartInvincibility();
 

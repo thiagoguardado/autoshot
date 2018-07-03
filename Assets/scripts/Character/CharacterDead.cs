@@ -29,6 +29,9 @@ public class CharacterDeadState : State<Character>
         // play sfx
         AudioManager.Instance.PlaySFX(Agent.deathAudio);
 
+        // play effects
+        VisualEffects.Instance.PlayDieEffect(Agent.transform);
+
         // notify event
         GameManager.Instance.NotifyDeath(Agent);
     }

@@ -16,6 +16,7 @@ public class SpawnWaveController : MonoBehaviour {
     void Awake()
     {
         GameManager.Instance.OnNotifySpawn += OnSpawned;
+        GameManager.Instance.OnNotifySpawn += PlayCharacterSpawnEffect;
         GameManager.Instance.OnNotifyDeath += OnCharacterDeath;
 
         waveTotal = spawnWaves.Count;
@@ -24,8 +25,10 @@ public class SpawnWaveController : MonoBehaviour {
     void OnDestroy()
     {
         GameManager.Instance.OnNotifySpawn -= OnSpawned;
+        GameManager.Instance.OnNotifySpawn -= PlayCharacterSpawnEffect;
         GameManager.Instance.OnNotifyDeath -= OnCharacterDeath;
     }
+
 
     void Start()
     {
@@ -128,5 +131,10 @@ public class SpawnWaveController : MonoBehaviour {
                 GameManager.Instance.RequestEnemySpawn(SpawnableObjects.Instance.GhostWithMeleePool, spawnPoint);
             }
         }
+    }
+
+    private void PlayCharacterSpawnEffect(GameObject gameObject)
+    {
+        VisualEffects.Instance.PlaySpawnEffect(gameObject.transform);
     }
 }
