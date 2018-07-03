@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +15,7 @@ public class WeaponFactionSelector : MonoBehaviour {
     public Color color = Color.white;    
     public List<FactionWeapon> weapons;
     public GameObject visualObject;
+    public AudioClip weaponCollectedAudio;
 
     public Action OnWeaponPickedUp;
 
@@ -93,6 +94,10 @@ public class WeaponFactionSelector : MonoBehaviour {
 
         // deactivate collision and sprite
         DeactivateBox();
+
+        // play audio
+        if(holderCharacter.CharacterFaction == CharacterFaction.Player)
+            AudioManager.Instance.PlaySFX(weaponCollectedAudio);
     }
 
 
@@ -167,6 +172,5 @@ public class FactionWeapon
 {
     public CharacterFaction faction;
     public Weapon weaponPrefab;
-    public AudioClip weaponAudio;
 
 }

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -40,6 +40,8 @@ public class ScenesManager : MonoBehaviour {
     private Coroutine fadingCoroutine;
     private bool isTransitioning;
 
+ 
+
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
@@ -66,6 +68,8 @@ public class ScenesManager : MonoBehaviour {
 
         Scene currenetScene = SceneManager.GetActiveScene();
 
+        GameManager.Instance.NotifySceneStartedChanging();
+
         yield return StartCoroutine(Fade(fadeDuration, true));
 
         AsyncOperation loadingAsync = SceneManager.LoadSceneAsync(nextScene, LoadSceneMode.Additive);
@@ -77,6 +81,8 @@ public class ScenesManager : MonoBehaviour {
 
         while (!unloadingAsync.isDone)
             yield return null;
+
+        GameManager.Instance.NotifySceneFinishedChanging(nextScene);
 
         yield return StartCoroutine(Fade(fadeDuration, false));
 

@@ -140,11 +140,11 @@ MonoBehaviour:
   InfiniteAmmo: 0
   Shooting: 1
   Holder: {fileID: 0}
-  audioclip: {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
+  shotAudioclip: {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
+  lastShotAudioClip: {fileID: 8300000, guid: 19f89c6e740e7447f9e12a8310d3e973, type: 3}
   GunDistance: 0.5
   GunSprite: {fileID: 212781407027908114}
   GunShotEffectPrefab: {fileID: 0}
-  ShotPrefab: {fileID: 1912672064594474, guid: 0cd9d51641d37e4408a48fcfb9f6eb49, type: 2}
   Spread: 0
   Shots: 1
   ShotSpeed: 24

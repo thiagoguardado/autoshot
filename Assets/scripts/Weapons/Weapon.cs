@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -33,7 +33,8 @@ public abstract class Weapon : MonoBehaviour
     public bool InfiniteAmmo = false;
     public bool Shooting = true;
     public Character Holder = null;
-    public AudioClip audioclip;
+    public AudioClip shotAudioclip;
+    public AudioClip lastShotAudioClip;
     protected bool checkSight = true;
 
     private float _CurrentCooldown = 0;
@@ -88,7 +89,13 @@ public abstract class Weapon : MonoBehaviour
                 Shot();
 
                 // play sfx
-                AudioManager.Instance.PlaySFX(audioclip);
+                if (Ammo <= 0 && !InfiniteAmmo)
+                {
+                    AudioManager.Instance.PlaySFX(lastShotAudioClip);
+                }
+                else {
+                    AudioManager.Instance.PlaySFX(shotAudioclip);
+                }
 
                 // setup cooldown
                 _CurrentCooldown = Cooldown;
