@@ -44,22 +44,19 @@ public class PlayerInput : MonoBehaviour {
 
         if (LevelManager.Instance.inGame)
         {
-            _Character.InputWalkDirection.x = Input.GetAxis("Horizontal");
+            _Character.InputWalkDirection.x = Input.GetAxisRaw("Horizontal");
             _Character.InputIsJumping = Input.GetButton("Jump");
-
-
-            if (_TouchInputLeft)
+            
+            if(InputCanvas.Instance != null)
             {
-                _Character.InputWalkDirection.x = -1;
-            }
-            else if (_TouchInputRight)
-            {
-                _Character.InputWalkDirection.x = 1;
-            }
-
-            if (_TouchInputJump == true)
-            {
-                _Character.InputIsJumping = true;
+                if(_Character.InputWalkDirection == Vector2.zero)
+                {
+                    _Character.InputWalkDirection = InputCanvas.Instance.Axis.direction;
+                }
+                if(!_Character.InputIsJumping)
+                {
+                    _Character.InputIsJumping = InputCanvas.Instance.jumping;
+                }
             }
         }
 	}

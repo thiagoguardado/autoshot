@@ -201,7 +201,7 @@ MonoBehaviour:
   HurtTrigger: {fileID: 0}
   WeaponCanvas: {fileID: 0}
   WalkingMaxSpeed: 8
-  WalkingAcceleration: 240
+  WalkingAcceleration: 45
   SpringedAcceleration: 3
   ReactivityPercent: 0.5
   JumpForceMax: 12
