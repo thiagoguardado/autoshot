@@ -246,7 +246,7 @@ PlayerSettings:
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
   AndroidKeystoreName: C:/dev/pos/game_design/autoshot/user.keystore
-  AndroidKeyaliasName: 
+  AndroidKeyaliasName: spicefrogg
   AndroidTVCompatibility: 1
   AndroidIsGame: 1
   AndroidEnableTango: 0
