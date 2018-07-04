@@ -14,13 +14,36 @@ MonoBehaviour:
   SpawnPoints:
   - name: 0
     slimes: 1
+    slimes_with_gun: 0
+    slimes_with_melee: 1
     ghosts: 0
+    ghosts_with_gun: 0
+    ghosts_with_melee: 0
   - name: 1
     slimes: 1
+    slimes_with_gun: 0
+    slimes_with_melee: 0
     ghosts: 1
+    ghosts_with_gun: 0
+    ghosts_with_melee: 1
   - name: 2
     slimes: 1
+    slimes_with_gun: 0
+    slimes_with_melee: 0
     ghosts: 0
+    ghosts_with_gun: 1
+    ghosts_with_melee: 0
   - name: 3
     slimes: 0
+    slimes_with_gun: 1
+    slimes_with_melee: 0
     ghosts: 1
+    ghosts_with_gun: 0
+    ghosts_with_melee: 0
+  - name: 4
+    slimes: 0
+    slimes_with_gun: 0
+    slimes_with_melee: 1
+    ghosts: 0
+    ghosts_with_gun: 0
+    ghosts_with_melee: 1

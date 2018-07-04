@@ -23,7 +23,7 @@ MonoBehaviour:
     slimes: 1
     slimes_with_gun: 0
     slimes_with_melee: 0
-    ghosts: 2
+    ghosts: 1
     ghosts_with_gun: 0
     ghosts_with_melee: 0
   - name: 2
