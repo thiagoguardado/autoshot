@@ -107,6 +107,7 @@ public class AudioManager : MonoBehaviour {
         bgmSource.clip = newBGM;
         bgmSource.loop = true;
         bgmSource.Play();
+        isPlayingHighPitch = false;
     }
 
 
