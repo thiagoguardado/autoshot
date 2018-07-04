@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 using UnityEngine.UI;
 [RequireComponent(typeof(BoxCollider2D))]
@@ -88,9 +91,9 @@ public class SpawnPoint : MonoBehaviour {
         Gizmos.color = gizmosColor;
         Gizmos.DrawCube(transform.position, boxCollider.size);
         //Gizmos.DrawWireCube(transform.position, spriteRendrer.size);
-
+#if UNITY_EDITOR
         Handles.Label(transform.position, labelText);
-
+#endif
     }
 
 }

@@ -63,7 +63,7 @@ public class SpawnWaveController : MonoBehaviour {
     {
         if(spawnWaves.Count == 0)
         {
-            finished = true;
+            //finished = true;
             
 
             if (spawnedEnemies.Count <= 0)

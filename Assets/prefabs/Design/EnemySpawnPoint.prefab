@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 114278345238814962}
   - component: {fileID: 61673676331950568}
   m_Layer: 14
-  m_Name: EnemySpawnPoint
+  m_Name: SpawnPoint1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
