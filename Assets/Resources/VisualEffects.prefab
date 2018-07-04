@@ -61,3 +61,7 @@ MonoBehaviour:
   ghostHurtEffect: {fileID: 1434248609741650, guid: e4036e6340f220b41a09d5af17072dea,
     type: 2}
   dieEffect: {fileID: 1726609808932004, guid: 401bdbd02131ea7418a48c53ec8bb5a6, type: 2}
+  ghostDieEffect: {fileID: 1726609808932004, guid: b0a1c7939f24312458becc94546a974b,
+    type: 2}
+  slimeDieEffect: {fileID: 1726609808932004, guid: 5ab8a827bdb52f543bd080c895100f8b,
+    type: 2}
