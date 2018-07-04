@@ -98,14 +98,19 @@ public abstract class Weapon : MonoBehaviour
                 if (Ammo <= 0 && !InfiniteAmmo)
                 {
                     AudioManager.Instance.PlaySFX(lastShotAudioClip);
+                    Holder.DropWeapon();
+
                 }
-                else {
+                else
+                {
                     AudioManager.Instance.PlaySFX(shotAudioclip);
                 }
 
                 // setup cooldown
                 _CurrentCooldown = Cooldown;
-                
+
+
+
             }
         }
        
