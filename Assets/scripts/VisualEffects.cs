@@ -34,18 +34,49 @@ public class VisualEffects : MonoBehaviour {
     public GameObject spawnEffect;
     public GameObject weaponSpawnEffect;
     public GameObject hurtEffect;
+    public GameObject slimeHurtEffect;
+    public GameObject ghostHurtEffect;
+    
     public GameObject dieEffect;
+    public GameObject ghostDieEffect;
+    public GameObject slimeDieEffect;
 
-
-
-    public void PlayHurtEffect(Transform parent)
+    public void PlayHurtEffect(Transform parent, CharacterTypes characterType)
     {
-        InstantiateEffect(hurtEffect, parent);
+        switch (characterType)
+        {
+            case CharacterTypes.Player:
+                InstantiateEffect(hurtEffect, parent);
+                break;
+            case CharacterTypes.Slime:
+                InstantiateEffect(slimeHurtEffect, parent);
+                break;
+            case CharacterTypes.Ghost:
+                InstantiateEffect(ghostHurtEffect, parent);
+                break;
+            default:
+                InstantiateEffect(hurtEffect, parent);
+                break;
+        }
     }
 
-    public void PlayDieEffect(Transform parent)
+    public void PlayDieEffect(Transform parent, CharacterTypes characterType)
     {
-        InstantiateEffect(dieEffect, parent);
+        switch (characterType)
+        {
+            case CharacterTypes.Player:
+                InstantiateEffect(dieEffect, parent);
+                break;
+            case CharacterTypes.Slime:
+                InstantiateEffect(slimeDieEffect, parent);
+                break;
+            case CharacterTypes.Ghost:
+                InstantiateEffect(ghostDieEffect, parent);
+                break;
+            default:
+                InstantiateEffect(dieEffect, parent);
+                break;
+        }
     }
 
     public void PlaySpawnEffect(Transform parent)

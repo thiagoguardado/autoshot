@@ -9,12 +9,18 @@ public enum CharacterFaction
     Player,
     Enemies
 }
+public enum CharacterTypes
+{
+    Player,
+    Slime,
+    Ghost
+}
 
 [RequireComponent(typeof(PoolObject))]
 [RequireComponent(typeof(Collider2D))]
 public class Character : MonoBehaviour, IWeaponTarget
 {
-
+    public CharacterTypes CharacterType = CharacterTypes.Slime;
     public CharacterFaction CharacterFaction;
     public List<CharacterFaction> friendFactions;
     public Animator Animator;
@@ -416,7 +422,7 @@ public class Character : MonoBehaviour, IWeaponTarget
         AudioManager.Instance.PlaySFX(hurtAudio);
 
         // play effects
-        VisualEffects.Instance.PlayHurtEffect(transform);
+        VisualEffects.Instance.PlayHurtEffect(transform, CharacterType);
 
         // start invincibility
         StartInvincibility();
