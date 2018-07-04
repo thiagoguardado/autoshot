@@ -1572,8 +1572,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a700297320175f4284ad6285054d4c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 899769256}
   Speed: 8
+  ShakeMagnitude: 0.1
+  ShakeTime: 0.1
   CameraBounds: {fileID: 1534749491}
 --- !u!81 &820635447
 AudioListener:
@@ -1751,11 +1752,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
---- !u!1 &899769256 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1342326907693296, guid: c2cf6b4c75d97f04daa8848f57e51166,
-    type: 2}
-  m_PrefabInternal: {fileID: 676104149}
 --- !u!4 &964233391 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4268552536733900, guid: 561cb8efca12b8543ae19ed238f9f11b,

@@ -56,4 +56,8 @@ MonoBehaviour:
   weaponSpawnEffect: {fileID: 1138618743138642, guid: bfdeb33adb2f6e248bc698cd5ee8ed5e,
     type: 2}
   hurtEffect: {fileID: 1434248609741650, guid: 7595152e9186e1648935ea080f4594d0, type: 2}
+  slimeHurtEffect: {fileID: 1434248609741650, guid: 8ead16f28b453754d84eaf8f58cc83ba,
+    type: 2}
+  ghostHurtEffect: {fileID: 1434248609741650, guid: e4036e6340f220b41a09d5af17072dea,
+    type: 2}
   dieEffect: {fileID: 1726609808932004, guid: 401bdbd02131ea7418a48c53ec8bb5a6, type: 2}
