@@ -134,7 +134,7 @@ MonoBehaviour:
   IconSprite: {fileID: 21300000, guid: 32237401c091c954c990fc399d10e75a, type: 3}
   weaponClass: 0
   Name: Gun
-  Cooldown: 0.2
+  Cooldown: 0.3
   Range: 8
   Ammo: 20
   InfiniteAmmo: 0
@@ -145,7 +145,7 @@ MonoBehaviour:
   GunDistance: 0.5
   GunSprite: {fileID: 212781407027908114}
   GunShotEffectPrefab: {fileID: 0}
-  Spread: 0
+  Spread: 10
   Shots: 1
   ShotSpeed: 24
   HitInfo:

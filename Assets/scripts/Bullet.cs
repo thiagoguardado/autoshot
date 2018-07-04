@@ -65,6 +65,14 @@ public class Bullet : MonoBehaviour {
     }
     void OnHit(GameObject hitTarget)
     {
+        if(FriendFactions.Count > 0)
+        {
+            if(FriendFactions[0] == CharacterFaction.Player)
+            {
+                GameManager.Instance.RequestScreenShake();
+            }
+        }
+        
         var target = hitTarget.GetComponent<IWeaponTarget>();
         if (target != null)
         {

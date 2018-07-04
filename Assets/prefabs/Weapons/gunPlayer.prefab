@@ -147,7 +147,7 @@ MonoBehaviour:
   GunShotEffectPrefab: {fileID: 0}
   Spread: 0
   Shots: 1
-  ShotSpeed: 24
+  ShotSpeed: 30
   HitInfo:
     StunDirection: {x: 0, y: 0}
     StunForce: 2

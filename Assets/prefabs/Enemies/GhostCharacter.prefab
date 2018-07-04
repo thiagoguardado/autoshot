@@ -331,6 +331,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02f2ed7db39b3f849b44d0ef4b954089, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RecoilCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.49786377
+      value: 0.98125076
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 0
+    m_RotationOrder: 0
 --- !u!114 &114822945113051232
 MonoBehaviour:
   m_ObjectHideFlags: 1

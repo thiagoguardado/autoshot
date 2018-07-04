@@ -41,6 +41,13 @@ public class Weapon_Melee : Weapon
     private void HitTargets()
     {
 
+        if(friendFactions.Count > 0)
+        {
+            if(friendFactions[0] == CharacterFaction.Player)
+            {
+                GameManager.Instance.RequestScreenShake();
+            }
+        }
         foreach (var target in _Targets)
         {
             float angle = Mathf.Abs(Vector3.Angle(targetDirection, target.transform.position - transform.position));

@@ -7,7 +7,8 @@ public class CharacterSprite : MonoBehaviour {
     private Animator _Animator;
     Character _Character;
     public CharacterSpriteAnimations animations = new CharacterSpriteAnimations();
-
+    public AnimationCurve RecoilCurve;
+    private Coroutine _RecoilCoroutine = null;
     void Awake()
     {
         _Character = transform.parent.GetComponent<Character>();
@@ -23,6 +24,35 @@ public class CharacterSprite : MonoBehaviour {
     {
         Debug.Log("1");
         _Character.DestroyCharacter();
+    }
+
+
+
+    public void Recoil(Vector2 direction)
+    {
+        if(_RecoilCoroutine != null)
+        {
+            StopCoroutine(_RecoilCoroutine);
+            _RecoilCoroutine = null;
+        }
+        _RecoilCoroutine = StartCoroutine(RecoilRoutine(direction));
+    }
+
+    IEnumerator RecoilRoutine(Vector2 direction)
+    {
+        float recoilTime = 0.1f;
+        float recoilMagnitude = 0.25f;
+        
+        Vector2 targetPosition = direction * recoilMagnitude;
+        float timeout = recoilTime;
+        while (timeout > 0)
+        {
+            float t = 1 - (timeout / recoilTime);
+            transform.localPosition = Vector2.Lerp(Vector2.zero, targetPosition, RecoilCurve.Evaluate(t));
+            timeout -= Time.deltaTime;
+            yield return null;
+        }
+        yield return null;
     }
 
     public class CharacterSpriteAnimations

@@ -80,6 +80,7 @@ public class WeaponFactionSelector : MonoBehaviour {
         currentInstantiatedWeapon = currentWeaponObject.GetComponent<Weapon>();
         currentInstantiatedWeapon.NewHolder(holderCharacter, holderCharacter.transform.position, holderCharacter._Collider, holderCharacter.gameObject, holderCharacter.friendFactions);
         currentInstantiatedWeapon.Shooting = true;
+        currentInstantiatedWeapon.OnAttack += holderCharacter.Recoil;
 
         // update ammo
         if (!pickedOnce)
@@ -118,6 +119,7 @@ public class WeaponFactionSelector : MonoBehaviour {
             return;
         }
 
+        currentInstantiatedWeapon.OnAttack = null;
         // destroy weapon
         currentInstantiatedWeapon.DestroyWeapon();
         

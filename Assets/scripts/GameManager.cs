@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour {
     public FinishedChangingScene OnFinishSceneChange;
     public VoidDelegate OnScenePaused;
     public VoidDelegate OnSceneUnPaused;
+    public VoidDelegate OnRequestScreenshake;
 
     private InGamePanelController PanelController;
 
@@ -158,6 +159,14 @@ public class GameManager : MonoBehaviour {
     public void LoadMenu()
     {
         ScenesManager.Instance.TransitionToScene(MenuSceneName);
+    }
+
+    public void RequestScreenShake()
+    {
+        if(OnRequestScreenshake != null)
+        {
+            OnRequestScreenshake();
+        }
     }
 
 

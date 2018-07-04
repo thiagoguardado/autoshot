@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -36,7 +37,7 @@ public abstract class Weapon : MonoBehaviour
     public AudioClip shotAudioclip;
     public AudioClip lastShotAudioClip;
     protected bool checkSight = true;
-
+    public Action<Vector2> OnAttack; //attack direction
     private float _CurrentCooldown = 0;
     private Color _RangeGizmosColor = new Color(1, 1, 1, 0.4f);
     private Color _TargetGizmosColor = new Color(1, 0, 0, 0.4f);
@@ -87,6 +88,11 @@ public abstract class Weapon : MonoBehaviour
             {
                 // shot
                 Shot();
+                if(OnAttack != null)
+                {
+                    OnAttack((_ClosestTarget.transform.position - transform.position).normalized);
+                }
+                
 
                 // play sfx
                 if (Ammo <= 0 && !InfiniteAmmo)

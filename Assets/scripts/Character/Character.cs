@@ -191,6 +191,10 @@ public class Character : MonoBehaviour, IWeaponTarget
         }
     }
 
+    public void Recoil(Vector2 attackDirection)
+    {
+        Sprite.Recoil(-attackDirection);
+    }
     public void DropWeapon()
 
     {
