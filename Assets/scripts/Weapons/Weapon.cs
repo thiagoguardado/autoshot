@@ -1,11 +1,13 @@
-﻿using System.Collections;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public enum WeaponClass
 {
     Melee,
-    Gun
+    Gun,
+    None
 }
 
 
@@ -32,9 +34,10 @@ public abstract class Weapon : MonoBehaviour
     public bool InfiniteAmmo = false;
     public bool Shooting = true;
     public Character Holder = null;
-    public AudioClip audioclip;
+    public AudioClip shotAudioclip;
+    public AudioClip lastShotAudioClip;
     protected bool checkSight = true;
-
+    public Action<Vector2> OnAttack; //attack direction
     private float _CurrentCooldown = 0;
     private Color _RangeGizmosColor = new Color(1, 1, 1, 0.4f);
     private Color _TargetGizmosColor = new Color(1, 0, 0, 0.4f);
@@ -52,7 +55,7 @@ public abstract class Weapon : MonoBehaviour
     {
         if(Holder != null)
         {
-            transform.position = Holder.transform.position;
+          //  transform.position = Holder.transform.position;
         }
         FindClosestTarget();
         ShootingRoutine();
@@ -63,6 +66,7 @@ public abstract class Weapon : MonoBehaviour
     public void NewHolder(Character holder, Vector3 holderPosition, Collider2D holderCollider, GameObject holderTarget, List<CharacterFaction> holderFriendFactions)
     {
         Holder = holder;
+        transform.parent = holder.transform;
         IgnoreCollider = holderCollider;
         IgnoreTarget = holderTarget;
         transform.position = holderPosition;
@@ -84,13 +88,29 @@ public abstract class Weapon : MonoBehaviour
             {
                 // shot
                 Shot();
+                if(OnAttack != null)
+                {
+                    OnAttack((_ClosestTarget.transform.position - transform.position).normalized);
+                }
+                
 
                 // play sfx
-                AudioManager.Instance.PlaySFX(audioclip);
+                if (Ammo <= 0 && !InfiniteAmmo)
+                {
+                    AudioManager.Instance.PlaySFX(lastShotAudioClip);
+                    Holder.DropWeapon();
+
+                }
+                else
+                {
+                    AudioManager.Instance.PlaySFX(shotAudioclip);
+                }
 
                 // setup cooldown
                 _CurrentCooldown = Cooldown;
-                
+
+
+
             }
         }
        

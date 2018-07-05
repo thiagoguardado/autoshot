@@ -2,21 +2,31 @@
 using FiniteStateMachines;
 using System;
 using System.Collections.Generic;
+using System.Collections;
 
 public enum CharacterFaction
 {
     Player,
     Enemies
 }
+public enum CharacterTypes
+{
+    Player,
+    Slime,
+    Ghost
+}
 
+[RequireComponent(typeof(PoolObject))]
 [RequireComponent(typeof(Collider2D))]
 public class Character : MonoBehaviour, IWeaponTarget
 {
-
-    [SerializeField] private CharacterFaction characterFaction;
+    public CharacterTypes CharacterType = CharacterTypes.Slime;
+    public CharacterFaction CharacterFaction;
     public List<CharacterFaction> friendFactions;
     public Animator Animator;
     public SpriteRenderer SpriteRenderer;
+
+
 
     [HideInInspector]
     public HurtTrigger HurtTrigger;
@@ -33,10 +43,13 @@ public class Character : MonoBehaviour, IWeaponTarget
     public float ReactivityPercent = 0.5f;
     public float JumpForceMax = 6;
     public float JumpForceMin = 4;
+    public float invencibleTimeAfterHit = 0f;
     public bool UseGravity = true;
     public bool LockYMovement = true;
     public bool ShouldCheckCollisions = true;
     public bool CanPickupWeapon = true;
+    public bool IsDead = false;
+    private bool canBeHit = true;
 
     public AudioClip deathAudio;
     public AudioClip hurtAudio;
@@ -55,6 +68,7 @@ public class Character : MonoBehaviour, IWeaponTarget
     int _PlatformLayerMask;
     bool _Moving = false;
 
+
     [HideInInspector] public WeaponFactionSelector CurrentWeaponSelector { get; private set; }
 
     [HideInInspector]
@@ -68,6 +82,8 @@ public class Character : MonoBehaviour, IWeaponTarget
 
 
     public Collider2D _Collider { get; private set; }
+    public CharacterSprite Sprite { get; private set; }
+    private PoolObject _PoolObject = null;
 
     public FiniteStateMachine<Character> _StateMachine { get; private set; }
     CharacterJumping _JumpingState = new CharacterJumping();
@@ -91,6 +107,7 @@ public class Character : MonoBehaviour, IWeaponTarget
         _PlatformLayerMask = LayerMask.GetMask("Platform", "Ground");
 
         _Collider = GetComponent<Collider2D>();
+        Sprite = GetComponentInChildren<CharacterSprite>();
 
         _IdleState.AddCondition(CheckIsDead, _DeadState);
         _IdleState.AddCondition(() => InputIsJumping, _JumpingState);
@@ -113,10 +130,29 @@ public class Character : MonoBehaviour, IWeaponTarget
 
 
         _StateMachine = new FiniteStateMachine<Character>(this);
-        _StateMachine.SetState(_IdleState);
+        
 
         WeaponCanvas = GetComponentInChildren<WeaponCanvas>();
         HurtTrigger = GetComponentInChildren<HurtTrigger>();
+        _PoolObject = GetComponent<PoolObject>();
+        _PoolObject.OnActivate += OnActivate;
+        _PoolObject.OnDeactivate += OnDeactivate;
+    }
+
+    void Destroy()
+    {
+        _PoolObject.OnActivate -= OnActivate;
+    }
+
+    void OnActivate(PoolObject poolObject)
+    {
+        gameObject.SetActive(true);
+        HealthPoints = MaxHealthPoints;
+        _StateMachine.SetState(_IdleState);
+    }
+    void OnDeactivate(PoolObject poolObject)
+    {
+        gameObject.SetActive(false);
     }
 
     void Start()
@@ -129,7 +165,7 @@ public class Character : MonoBehaviour, IWeaponTarget
         _StateMachine.TriggerEvent((int)EventTriggers.EndState);
     }
 
-    void PickupWeapon(WeaponFactionSelector _weaponSelector)
+    public void PickupWeapon(WeaponFactionSelector _weaponSelector)
     {
         if(!CanPickupWeapon)
         {
@@ -139,7 +175,7 @@ public class Character : MonoBehaviour, IWeaponTarget
 
         for (int i = 0; i < _weaponSelector.weapons.Count; i++)
         {
-            if (_weaponSelector.weapons[i].faction == characterFaction)
+            if (_weaponSelector.weapons[i].faction == CharacterFaction)
             {
                 weaponToInstantiate = _weaponSelector.weapons[i];
                 break;
@@ -161,6 +197,10 @@ public class Character : MonoBehaviour, IWeaponTarget
         }
     }
 
+    public void Recoil(Vector2 attackDirection)
+    {
+        Sprite.Recoil(-attackDirection);
+    }
     public void DropWeapon()
 
     {
@@ -168,7 +208,6 @@ public class Character : MonoBehaviour, IWeaponTarget
         {
             CurrentWeaponSelector.CharacterDropSelector(transform.position);
             CurrentWeaponSelector = null;
-
         }
     }
 
@@ -207,6 +246,7 @@ public class Character : MonoBehaviour, IWeaponTarget
         _MovementDirection = velocity.normalized + InputWalkDirection;
     }
     public Vector2 velocity = new Vector2();
+
 
     float GetSmoothMovementAxis(float currentVelocity, float inputVelocity, float acceleration, float maxVelocity)
     {
@@ -332,6 +372,11 @@ public class Character : MonoBehaviour, IWeaponTarget
         return _Ground != null;
     }
 
+    public void DestroyCharacter()
+    {
+        _PoolObject.Deactivate();
+    }
+
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -341,7 +386,12 @@ public class Character : MonoBehaviour, IWeaponTarget
 
             if(CanPickupWeapon)
             {
-                PickupWeapon(box);
+                if (box.currentInstantiatedWeapon == null)
+                {
+                    PickupWeapon(box);
+                }
+
+                
             }
         }
     }
@@ -353,6 +403,12 @@ public class Character : MonoBehaviour, IWeaponTarget
 
     bool IWeaponTarget.ApplyHit(HitInfo hitInfo)
     {
+
+        if (!canBeHit)
+        {
+            return false;
+        }
+
         if (IgnoreBullets)
         {
             return false;
@@ -365,7 +421,36 @@ public class Character : MonoBehaviour, IWeaponTarget
         // play audio
         AudioManager.Instance.PlaySFX(hurtAudio);
 
+        // play effects
+        VisualEffects.Instance.PlayHurtEffect(transform, CharacterType);
+
+        // start invincibility
+        StartInvincibility();
+
+
         return true;
+
+        
+    }
+
+    private void StartInvincibility()
+    {
+        canBeHit = false;
+        
+        StartCoroutine(Invincibility(invencibleTimeAfterHit, () => canBeHit = true));
+
+    }
+
+    private IEnumerator Invincibility(float duration, Action actionWhenDone)
+    {
+
+        Animator.Play("invincible", 1);
+
+        yield return new WaitForSeconds(duration);
+
+        Animator.Play("not_invincible", 1);
+
+        actionWhenDone.Invoke();
     }
 
     bool IWeaponTarget.IsActive()
@@ -375,7 +460,7 @@ public class Character : MonoBehaviour, IWeaponTarget
 
     CharacterFaction IWeaponTarget.GetCharacaterFaction()
     {
-        return characterFaction;
+        return CharacterFaction;
     }
 
     public void Spring(Vector2 force)

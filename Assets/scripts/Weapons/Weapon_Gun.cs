@@ -8,7 +8,6 @@ public class Weapon_Gun : Weapon
     public float GunDistance = 1.0f;
     public SpriteRenderer GunSprite;
     public GameObject GunShotEffectPrefab;
-    public GameObject ShotPrefab = null;
 
     [Header("Gun Shot Configuration")]
     public float Spread = 1.0f;
@@ -77,17 +76,16 @@ public class Weapon_Gun : Weapon
         Vector2 spreadedDirection = new Vector2();
         spreadedDirection.x = (cos * _ShotDirection.x) - (sin * _ShotDirection.y);
         spreadedDirection.y = (sin * _ShotDirection.x) + (cos * _ShotDirection.y);
-
-        if (ShotPrefab != null)
+        ObjectPool bulletPool = SpawnableObjects.Instance.GunBulletPool;
+        if (bulletPool != null)
         {
-            GameObject bulletObject = Instantiate(ShotPrefab, transform.position, Quaternion.identity);
-            var bullet = bulletObject.GetComponent<Bullet>();
+            Bullet bullet = bulletPool.create().GetComponent<Bullet>();
+            bullet.transform.position = transform.position;
             bullet.FriendFactions = friendFactions;
             bullet.HitInfo = HitInfo;
-            Physics2D.IgnoreCollision(bullet.GetComponent<Collider2D>(), IgnoreCollider);
             bullet.IgnoreCollider = IgnoreCollider;
 
-            var rigidBody = bulletObject.GetComponent<Rigidbody2D>();
+            var rigidBody = bullet.GetComponent<Rigidbody2D>();
             rigidBody.velocity = spreadedDirection * ShotSpeed;
         }
 

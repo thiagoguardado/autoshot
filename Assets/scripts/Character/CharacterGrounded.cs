@@ -11,11 +11,11 @@ public class CharacterIdle :  State<Character>
         Agent.Move();
         if(Agent.InputWalkDirection.x != 0)
         {
-            Agent.Animator.Play("walk");
+            Agent.Sprite.Play(Agent.Sprite.animations.walk);
         }
         else
         {
-            Agent.Animator.Play("idle");
+            Agent.Sprite.Play(Agent.Sprite.animations.idle);
         }
     }
 }

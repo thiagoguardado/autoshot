@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 58916973137908612}
   - component: {fileID: 114780602409309104}
   - component: {fileID: 114585689728011390}
+  - component: {fileID: 114791563428664638}
   m_Layer: 9
   m_Name: SlimeCharacter
   m_TagString: Character
@@ -75,6 +76,7 @@ GameObject:
   - component: {fileID: 4063843432377870}
   - component: {fileID: 212858651705116900}
   - component: {fileID: 95009382642982174}
+  - component: {fileID: 114048751617749144}
   m_Layer: 9
   m_Name: sprite
   m_TagString: Untagged
@@ -102,7 +104,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1244056567529540}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 11.22, y: 7.35, z: 0}
+  m_LocalPosition: {x: -41.72, y: 53.37, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4979635412380880}
@@ -234,6 +236,35 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114048751617749144
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1434108949222690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02f2ed7db39b3f849b44d0ef4b954089, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RecoilCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.49786377
+      value: 0.9937515
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 0
+    m_RotationOrder: 0
 --- !u!114 &114067202546252792
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -245,7 +276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc053d82c41d0b84eaa734ade3393820, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterFaction: 1
+  CharacterFaction: 1
   friendFactions: 01000000
   Animator: {fileID: 95009382642982174}
   SpriteRenderer: {fileID: 212858651705116900}
@@ -257,10 +288,12 @@ MonoBehaviour:
   ReactivityPercent: 0.5
   JumpForceMax: 1
   JumpForceMin: 1
+  invencibleTimeAfterHit: 0
   UseGravity: 1
   LockYMovement: 1
   ShouldCheckCollisions: 1
   CanPickupWeapon: 1
+  IsDead: 0
   deathAudio: {fileID: 8300000, guid: 2c5292ba5cf254919a6b9e2b18e04f49, type: 3}
   hurtAudio: {fileID: 0}
   _Ground: {fileID: 0}
@@ -303,7 +336,7 @@ MonoBehaviour:
     StunForce: 10
     StunTime: 0.2
     HitDamage: 1
-  IgnoreCollider: {fileID: 0}
+  IgnoreCollider: {fileID: 58916973137908612}
   FriendFactions: 01000000
 --- !u!114 &114780602409309104
 MonoBehaviour:
@@ -343,6 +376,17 @@ MonoBehaviour:
     Length: 1
     NormalDebugColor: {r: 1, g: 1, b: 1, a: 1}
     HitDebugColor: {r: 0, g: 1, b: 0, a: 1}
+--- !u!114 &114791563428664638
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1244056567529540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a07a293ff1a108241bcc52d160207caa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212575246054374438
 SpriteRenderer:
   m_ObjectHideFlags: 1

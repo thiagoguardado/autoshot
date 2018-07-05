@@ -1,0 +1,89 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1487538855043188}
+  m_IsPrefabParent: 1
+--- !u!1 &1487538855043188
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4324555198023630}
+  - component: {fileID: 114858410354534118}
+  m_Layer: 0
+  m_Name: SpawnableObjects
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4324555198023630
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1487538855043188}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -41.058212, y: 53.751095, z: -0.15779987}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114858410354534118
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1487538855043188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8503e1c3436ff9488cd753f6521ac53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SlimePool:
+    Prefab: {fileID: 114791563428664638, guid: 09a08bfbacdb5d04ea3ae1c8a91a40ef, type: 2}
+    poolInitialSize: 10
+    parent: {fileID: 0}
+  SlimeWithGunPool:
+    Prefab: {fileID: 114083183057482974, guid: f0e9503104e5f9c42ae73314b0a0de88, type: 2}
+    poolInitialSize: 10
+    parent: {fileID: 0}
+  SlimeWithMeleePool:
+    Prefab: {fileID: 114767334428124522, guid: 96930becceb91d84e803cdd7b0f27ede, type: 2}
+    poolInitialSize: 10
+    parent: {fileID: 0}
+  GhostPool:
+    Prefab: {fileID: 114822945113051232, guid: 73b8977a497ac0e4488a90eaa1870a5a, type: 2}
+    poolInitialSize: 10
+    parent: {fileID: 0}
+  GhostWithGunPool:
+    Prefab: {fileID: 114300555868495104, guid: 00bf53862abfe994f85ce739409d1e62, type: 2}
+    poolInitialSize: 10
+    parent: {fileID: 0}
+  GhostWithMeleePool:
+    Prefab: {fileID: 114655493131909580, guid: 2e12a0422d4516b42bfc96031e5db2d7, type: 2}
+    poolInitialSize: 10
+    parent: {fileID: 0}
+  MeleeWeaponSelectorPool:
+    Prefab: {fileID: 114090236129089688, guid: 291046349b102d44b9e9f4d16174afd0, type: 2}
+    poolInitialSize: 10
+    parent: {fileID: 0}
+  GunWeaponSelectorPool:
+    Prefab: {fileID: 114244612209089218, guid: bf048b7321352cc43b527b5ca5635341, type: 2}
+    poolInitialSize: 10
+    parent: {fileID: 0}
+  GunBulletPool:
+    Prefab: {fileID: 114801414460940082, guid: 0cd9d51641d37e4408a48fcfb9f6eb49, type: 2}
+    poolInitialSize: 100
+    parent: {fileID: 0}

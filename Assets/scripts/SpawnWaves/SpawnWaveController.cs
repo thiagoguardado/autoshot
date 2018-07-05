@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,18 +9,26 @@ public class SpawnWaveController : MonoBehaviour {
     public float WaveTime = 20.0f;
     float _CurrentWaveTimeout = 0;
     bool finished = false;
+    int waveCount = 0;
+    int waveTotal = 0;
+    bool startedSpawning = false;
 
     void Awake()
     {
         GameManager.Instance.OnNotifySpawn += OnSpawned;
+        GameManager.Instance.OnNotifySpawn += PlayCharacterSpawnEffect;
         GameManager.Instance.OnNotifyDeath += OnCharacterDeath;
+
+        waveTotal = spawnWaves.Count;
     }
 
     void OnDestroy()
     {
         GameManager.Instance.OnNotifySpawn -= OnSpawned;
+        GameManager.Instance.OnNotifySpawn -= PlayCharacterSpawnEffect;
         GameManager.Instance.OnNotifyDeath -= OnCharacterDeath;
     }
+
 
     void Start()
     {
@@ -37,10 +45,16 @@ public class SpawnWaveController : MonoBehaviour {
         {
             return;
         }
+        if (!LevelManager.Instance.inGame)
+        {
+            return;
+        }
 
         _CurrentWaveTimeout -= Time.deltaTime;
-        if (_CurrentWaveTimeout <= 0 || spawnedEnemies.Count == 0)
+
+        if((!startedSpawning && _CurrentWaveTimeout <= 0) || (startedSpawning && (_CurrentWaveTimeout <= 0 || spawnedEnemies.Count == 0)))
         {
+            startedSpawning = true;
             StartNextWave();
         }
     }
@@ -49,19 +63,26 @@ public class SpawnWaveController : MonoBehaviour {
     {
         if(spawnWaves.Count == 0)
         {
-            finished = true;
+            //finished = true;
+            
 
-            bool successful = spawnedEnemies.Count == 0;
-            GameManager.Instance.NotifyLevelFinished(successful);
+            if (spawnedEnemies.Count <= 0)
+            {
+                GameManager.Instance.NotifyLevelFinished(true);
+            }
+
+            
         }
         else
         {
             SpawnWave wave = spawnWaves[0];
+            waveCount += 1;
             Spawn(wave);
 
             spawnWaves.RemoveAt(0);
             _CurrentWaveTimeout = WaveTime;
 
+            GameManager.Instance.NotifyWaveChanged(waveCount,waveTotal);
             GameManager.Instance.NotifyWaveStarting(wave);
         }
     }
@@ -96,12 +117,33 @@ public class SpawnWaveController : MonoBehaviour {
             var spawn = spawnWave.SpawnPoints[spawnPoint];
             for (int i = 0; i < spawn.slimes; i++)
             {
-                GameManager.Instance.RequestSpawn(GameManager.Instance.SpawnableObjects.Slime.gameObject, spawnPoint);
+                GameManager.Instance.RequestEnemySpawn(SpawnableObjects.Instance.SlimePool, spawnPoint);
+            }
+            for (int i = 0; i < spawn.slimes_with_gun; i++)
+            {
+                GameManager.Instance.RequestEnemySpawn(SpawnableObjects.Instance.SlimeWithGunPool, spawnPoint);
+            }
+            for (int i = 0; i < spawn.slimes_with_melee; i++)
+            {
+                GameManager.Instance.RequestEnemySpawn(SpawnableObjects.Instance.SlimeWithMeleePool, spawnPoint);
             }
             for (int i = 0; i < spawn.ghosts; i++)
             {
-                GameManager.Instance.RequestSpawn(GameManager.Instance.SpawnableObjects.Ghost.gameObject, spawnPoint);
+                GameManager.Instance.RequestEnemySpawn(SpawnableObjects.Instance.GhostPool, spawnPoint);
+            }
+            for (int i = 0; i < spawn.ghosts_with_gun; i++)
+            {
+                GameManager.Instance.RequestEnemySpawn(SpawnableObjects.Instance.GhostWithGunPool, spawnPoint);
+            }
+            for (int i = 0; i < spawn.ghosts_with_melee; i++)
+            {
+                GameManager.Instance.RequestEnemySpawn(SpawnableObjects.Instance.GhostWithMeleePool, spawnPoint);
             }
         }
+    }
+
+    private void PlayCharacterSpawnEffect(GameObject gameObject)
+    {
+        VisualEffects.Instance.PlaySpawnEffect(gameObject.transform);
     }
 }

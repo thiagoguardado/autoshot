@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class Weapon_Melee : Weapon
 {
-    
+
     [Header("Melee Configuration")]
+    public float hitRange = 1;
     public float areaAngle = 60f;
     public LineRenderer lineRenderer;
     public float animationDuration = 0.1f;
@@ -40,6 +41,13 @@ public class Weapon_Melee : Weapon
     private void HitTargets()
     {
 
+        if(friendFactions.Count > 0)
+        {
+            if(friendFactions[0] == CharacterFaction.Player)
+            {
+                GameManager.Instance.RequestScreenShake();
+            }
+        }
         foreach (var target in _Targets)
         {
             float angle = Mathf.Abs(Vector3.Angle(targetDirection, target.transform.position - transform.position));
@@ -51,7 +59,6 @@ public class Weapon_Melee : Weapon
                 {
                     hitInfo.StunDirection = target.transform.position - transform.position;
                     weponTarget.ApplyHit(hitInfo);
-                    Debug.Log("Melee Hit " + target.name);
                 }
             }
         }

@@ -3,23 +3,76 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class Bullet : MonoBehaviour {
-    [HideInInspector]
-    public Collider2D IgnoreCollider;
+[RequireComponent(typeof(Collider2D))]
+[RequireComponent(typeof(PoolObject))]
+public class Bullet : MonoBehaviour {   
     [HideInInspector]
     public HitInfo HitInfo;
     [HideInInspector]
     public List<CharacterFaction> FriendFactions = new List<CharacterFaction>();
 
-    Rigidbody2D _RigidBody;
+    
+    private Rigidbody2D _RigidBody;
+    private Collider2D _Collider;
+    private Collider2D _IgnoreCollider = null;
+    private PoolObject _PoolObject;
+
+
    
     void Awake()
     {
         _RigidBody = GetComponent<Rigidbody2D>();
+        _Collider = GetComponent<Collider2D>();
+        _PoolObject = GetComponent<PoolObject>();
+        _PoolObject.OnActivate += OnActivate;
+        _PoolObject.OnDeactivate += OnDeactivate;
     }
    
+    void OnDestroy()
+    {
+        _PoolObject.OnActivate -= OnActivate;
+        _PoolObject.OnDeactivate -= OnDeactivate;
+    }
+
+    public Collider2D IgnoreCollider
+    {
+        get
+        {
+            return _IgnoreCollider;
+        }
+        set
+        {
+            if (_IgnoreCollider != null)
+            {
+                Physics2D.IgnoreCollision(_Collider, _IgnoreCollider, false);
+            }
+            _IgnoreCollider = value;
+            if (_IgnoreCollider != null)
+            {
+                Physics2D.IgnoreCollision(_Collider, _IgnoreCollider, true);
+            }
+        }
+    }
+
+    void OnActivate(PoolObject poolObject)
+    {
+        gameObject.SetActive(true);
+    }
+    void OnDeactivate(PoolObject poolObject)
+    {
+        IgnoreCollider = null;
+        gameObject.SetActive(false);
+    }
     void OnHit(GameObject hitTarget)
     {
+        if(FriendFactions.Count > 0)
+        {
+            if(FriendFactions[0] == CharacterFaction.Player)
+            {
+                GameManager.Instance.RequestScreenShake();
+            }
+        }
+        
         var target = hitTarget.GetComponent<IWeaponTarget>();
         if (target != null)
         {
