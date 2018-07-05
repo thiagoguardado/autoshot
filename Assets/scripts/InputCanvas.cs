@@ -2,10 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 [RequireComponent(typeof(Canvas))]
 public class InputCanvas : MonoBehaviour {
     private static InputCanvas _Instance = null;
+    
     public static InputCanvas Instance
     {
         get
@@ -22,12 +23,33 @@ public class InputCanvas : MonoBehaviour {
         var prefab = Resources.Load<GameObject>("InputCanvas");
         _Instance = Instantiate(prefab).GetComponent<InputCanvas>();
     }
-
+   
     public Action OnPause;
-    public bool jumping { get; set; }
+    bool _jumping = false;
+    private Color EnabledColor = new Color(.5f, .5f, .5f, 0.6f);
+    private Color DisabledColor = new Color(1, 1, 1, 0.6f);
+    public bool jumping
+    {
+        get
+        {
+            return _jumping;
+        }
+        set
+        {
+            _jumping = value;
+            if(JumpButtonImage != null)
+            {
+                JumpButtonImage.color = _jumping ? EnabledColor : DisabledColor;
+            }
+        }
+    }
+    public Image JumpButtonImage;
     public Vector2 direction = new Vector2();
     public UiAxis Axis;
+
     private Canvas _Canvas;
+
+    
 
     void Awake()
     {
